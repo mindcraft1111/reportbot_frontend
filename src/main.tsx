@@ -1,10 +1,26 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter } from "react-router";
+import { Routes } from "react-router";
+import { Route } from "react-router";
+import LandingPage from "./components/pages/landing-page";
+import AboutPage from "./components/pages/about-page";
+import AuthLayout from "./components/layouts/auth-layout";
+import LoginPage from "./components/pages/login-page";
+import Register from "./components/pages/register-page";
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <App />
-  </StrictMode>,
-)
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<LandingPage />} />
+        <Route path="about" element={<AboutPage />} />
+
+        <Route element={<AuthLayout />}>
+          <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/register" element={<Register />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
+  </StrictMode>
+);
