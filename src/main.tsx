@@ -7,9 +7,9 @@ import { Routes } from "react-router";
 import { Route } from "react-router";
 import LandingPage from "./components/pages/landing-page";
 import AboutPage from "./components/pages/about-page";
-import AuthLayout from "./components/layouts/auth-layout";
 import LoginPage from "./components/pages/login-page";
 import Register from "./components/pages/register-page";
+import CommLayout from './components/layouts/comm-layout';
 import MainLayout from "./components/layouts/main-layout";
 import ReportPage from "./components/pages/report-page";
 
@@ -17,17 +17,15 @@ createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route index element={<LandingPage />} />
-
+        <Route element={<CommLayout />}>
+          <Route index element={<LandingPage />} />
+        </Route>
         <Route element={<MainLayout />}>
           <Route path="report" element={<ReportPage />} />
           <Route path="about" element={<AboutPage />} />
         </Route>
-
-        <Route element={<AuthLayout />}>
-          <Route path="/auth/login" element={<LoginPage />} />
-          <Route path="/auth/register" element={<Register />} />
-        </Route>
+        <Route path="/auth/login" element={<LoginPage />} />
+        <Route path="/auth/register" element={<Register />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
