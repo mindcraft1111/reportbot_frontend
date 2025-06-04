@@ -22,7 +22,7 @@ function HeroSection() {
     <section
       className="text-center py-24 px-6 text-white bg-cover bg-center bg-no-repeat"
       style={{
-        backgroundImage: "url('../../src/assets/landing/hero.png')",
+        backgroundImage: "url('/assets/landing/hero.png')",
       }}
     >
       <h1 className="text-4xl md:text-6xl font-bold mb-4">
@@ -82,7 +82,7 @@ function Feature({ title, description }: { title: string; description: string })
 }
 
 function FeatureVisualSection() {
-  const src = "../../src/assets/landing/feature";
+  const src = "/assets/landing/feature";
   const items = [
     {
       title: "이커머스 리뷰의 AI 기반 분석",
