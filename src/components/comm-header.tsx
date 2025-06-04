@@ -1,4 +1,4 @@
-import logo from "@assets/logo.png";
+import logo from "/assets/logo.png"
 import { useContext } from "react";
 import { useNavigate } from "react-router";
 import { AuthContext } from "@/contexts/AuthContext";

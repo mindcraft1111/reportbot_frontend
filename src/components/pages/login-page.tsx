@@ -1,5 +1,5 @@
 import { buttonBase, gradientBlueButton } from '@/styles/classnames';
-import logo from "@assets/logo.png";
+import logo from "/assets/logo.png";
 
 export default function LoginPage() {
   return (
