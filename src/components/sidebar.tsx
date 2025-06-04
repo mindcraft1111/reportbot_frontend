@@ -1,6 +1,5 @@
 import {
   Calendar,
-  ChevronDown,
   Home,
   Inbox,
   Search,
@@ -13,17 +12,10 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
 
 // Menu items.
 const items = [
