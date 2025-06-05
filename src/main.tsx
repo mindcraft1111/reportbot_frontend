@@ -12,6 +12,7 @@ import Register from "./components/pages/register-page";
 import CommLayout from './components/layouts/comm-layout';
 import MainLayout from "./components/layouts/main-layout";
 import ReportPage from "./components/pages/report-page";
+import TestPage from "./components/pages/test-page";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -26,6 +27,7 @@ createRoot(document.getElementById("root")!).render(
         </Route>
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<Register />} />
+        <Route path="/test" element={<TestPage />} />
       </Routes>
     </BrowserRouter>
   </StrictMode>
