@@ -20,29 +20,14 @@ import {
 // Menu items.
 const items = [
   {
-    title: "Home",
-    url: "/",
+    title: "Report",
+    url: "/report",
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
-    icon: Inbox,
-  },
-  {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
-  },
-  {
-    title: "Search",
-    url: "#",
+    title: "Reviews",
+    url: "/get-reviews",
     icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
   },
 ];
 
