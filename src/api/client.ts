@@ -1,0 +1,42 @@
+import type { LoginSchema } from "@/components/pages/login-page";
+import type { RegisterSchema } from "@/components/pages/register-page";
+
+export const register = async (args: RegisterSchema) => {
+  const res = await fetch("http://localhost:8000/api/register/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(args),
+  });
+
+  const result = await res.json();
+
+  console.log(result);
+
+  return {
+    success: res.ok,
+    status: res.status,
+    data: res.ok ? result : null,
+    error: res.ok ? null : result,
+  };
+};
+
+export const login = async (args: LoginSchema) => {
+  const res = await fetch("http://localhost:8000/api/register/", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(args),
+  });
+
+  const result = await res.json();
+
+  return {
+    success: res.ok,
+    status: res.status,
+    data: res.ok ? result : null,
+    error: res.ok ? null : result,
+  };
+};

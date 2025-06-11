@@ -9,10 +9,11 @@ import LandingPage from "./components/pages/landing-page";
 import AboutPage from "./components/pages/about-page";
 import LoginPage from "./components/pages/login-page";
 import Register from "./components/pages/register-page";
-import CommLayout from './components/layouts/comm-layout';
+import CommLayout from "./components/layouts/comm-layout";
 import MainLayout from "./components/layouts/main-layout";
 import ReportPage from "./components/pages/report-page";
 import TestPage from "./components/pages/test-page";
+import { Toaster } from "sonner";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -29,6 +30,7 @@ createRoot(document.getElementById("root")!).render(
         <Route path="/auth/register" element={<Register />} />
         <Route path="/test" element={<TestPage />} />
       </Routes>
+      <Toaster />
     </BrowserRouter>
   </StrictMode>
 );
