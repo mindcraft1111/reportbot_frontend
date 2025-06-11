@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button";
 import logo from "/assets/logo.png";
 import { Link } from "react-router";
 import { cn } from "@/lib/utils";
-import * as apiClient from "../../api/client";
+import * as apiClient from "../api/client";
 import { toast } from "sonner";
 
 const formSchema = z.object({
