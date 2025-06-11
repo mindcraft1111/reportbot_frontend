@@ -11,25 +11,33 @@ import CommLayout from "./components/layouts/comm-layout";
 import { Toaster } from "sonner";
 import LandingPage from "./pages/landing-page";
 import ReportPage from "./pages/report-page";
-import AboutPage from "./pages/about-page";
 import LoginPage from "./pages/login-page";
 import Register from "./pages/register-page";
 import PromptTestPage from "./pages/test-page";
+import PromptTestPage2 from "./pages/prompt-test-page";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route element={<CommLayout />}>
-          <Route index element={<LandingPage />} />
-          <Route path="/test" element={<PromptTestPage />} />
-          <Route path="report" element={<ReportPage />} />
-          <Route path="about" element={<AboutPage />} />
-        </Route>
-        <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/auth/register" element={<Register />} />
-      </Routes>
-      <Toaster />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<CommLayout />}>
+            <Route index element={<LandingPage />} />{" "}
+            <Route path="/test" element={<PromptTestPage />} />
+            <Route path="report" element={<ReportPage />} />
+            <Route
+              path="/prompt-test/:product_id"
+              element={<PromptTestPage2 />}
+            />
+          </Route>
+          <Route path="/auth/login" element={<LoginPage />} />
+          <Route path="/auth/register" element={<Register />} />
+        </Routes>
+        <Toaster />
+      </BrowserRouter>
+    </QueryClientProvider>
   </StrictMode>
 );
