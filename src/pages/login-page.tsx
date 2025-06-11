@@ -54,9 +54,9 @@ export default function LoginPage() {
     <div className="bg-[linear-gradient(90deg,_#ffffff_0%,_#e6f1ff_0%,_#fff5f2_61%)]">
       <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
         <div className="max-w-md w-full">
-          <a href="/">
+          <Link to="/">
             <img src={logo} alt="logo" className="w-40 mb-8 mx-auto block" />
-          </a>
+          </Link>
           <div className="p-8 rounded-2xl bg-white shadow">
             <h2 className="text-slate-900 text-center text-3xl font-semibold">
               로그인
