@@ -15,6 +15,7 @@ import * as apiClient from "../api/client";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useChat } from "@ai-sdk/react";
 
 const formSchema = z.object({
   prompt: z.string().min(5, "Prompt must be at least 5 characters."),
