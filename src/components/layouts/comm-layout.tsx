@@ -1,5 +1,5 @@
 import { Outlet } from "react-router";
-import Commheader from '../comm-header';
+import Commheader from "../comm-header";
 
 export default function CommLayout() {
   return (

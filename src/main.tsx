@@ -7,7 +7,6 @@ import { Routes } from "react-router";
 import { Route } from "react-router";
 
 import CommLayout from "./components/layouts/comm-layout";
-import MainLayout from "./components/layouts/main-layout";
 
 import { Toaster } from "sonner";
 import LandingPage from "./pages/landing-page";
@@ -23,14 +22,12 @@ createRoot(document.getElementById("root")!).render(
       <Routes>
         <Route element={<CommLayout />}>
           <Route index element={<LandingPage />} />
-        </Route>
-        <Route element={<MainLayout />}>
+          <Route path="/test" element={<PromptTestPage />} />
           <Route path="report" element={<ReportPage />} />
           <Route path="about" element={<AboutPage />} />
         </Route>
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/register" element={<Register />} />
-        <Route path="/test" element={<PromptTestPage />} />
       </Routes>
       <Toaster />
     </BrowserRouter>
