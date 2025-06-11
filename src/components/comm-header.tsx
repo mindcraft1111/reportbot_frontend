@@ -25,6 +25,14 @@ export default function Commheader() {
           </li>
           <li className="">
             <Link
+              to={"/prompt-test/1"}
+              className="hover:text-blue-400 text-blue-700 block font-medium text-[15px]"
+            >
+              테스트2
+            </Link>
+          </li>
+          <li className="">
+            <Link
               to={"/report"}
               className="hover:text-blue-400 text-blue-700 block font-medium text-[15px]"
             >
