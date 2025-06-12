@@ -17,15 +17,19 @@ import useAnimatedText from "@/hooks/useTextAnimation";
 import { Spinner } from "./spinner";
 
 const formSchema = z.object({
-  prompt: z.string().min(5, "Prompt must be at least 5 characters."),
+  user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
+  product1: z.string(),
+  product2: z.string(),
 });
 
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
 export default function StreamingPrompt({
   category_name_ko,
+  category_id,
 }: {
   category_name_ko: string;
+  category_id: string;
 }) {
   const [geminiResponse, setGeminiResponse] = useState<string>("");
   const [isStreaming, setIsStreaming] = useState(false);
@@ -34,7 +38,9 @@ export default function StreamingPrompt({
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      prompt: "",
+      user_prompt: "",
+      product1: "",
+      product2: "",
     },
   });
 
@@ -42,13 +48,23 @@ export default function StreamingPrompt({
     setGeminiResponse("");
     setIsStreaming(true);
 
+    const id = parseInt(category_id);
+    const product1 = ((id - 1) * 2 + 1).toString();
+    const product2 = (parseInt(product1) + 1).toString();
+
+    const payload = {
+      ...values,
+      product1,
+      product2,
+    };
+
     try {
       const response = await fetch("http://localhost:8000/api/ai/streaming/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(payload),
       });
 
       if (!response.ok || !response.body) {
@@ -64,10 +80,8 @@ export default function StreamingPrompt({
         if (done) break;
 
         buffer += decoder.decode(value, { stream: true });
-
-        // Split by "data: " and parse each JSON
         const chunks = buffer.split("data: ");
-        buffer = chunks.pop() ?? ""; // keep incomplete chunk
+        buffer = chunks.pop() ?? "";
 
         for (const chunk of chunks) {
           const trimmed = chunk.trim();
@@ -77,7 +91,7 @@ export default function StreamingPrompt({
             const json = JSON.parse(trimmed);
             setGeminiResponse((prev) => prev + json.text);
           } catch {
-            // ignore parse errors
+            // ignore
           }
         }
       }
@@ -110,7 +124,7 @@ export default function StreamingPrompt({
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="prompt"
+                name="user_prompt"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Enter Prompt</FormLabel>

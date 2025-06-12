@@ -9,11 +9,7 @@ type Product = {
 };
 
 const categoryList = [
-  {
-    category_id: 1,
-    category_name_ko: "헤드폰",
-    category_name_en: "Headphone",
-  },
+  { category_id: 1, category_name_ko: "헤드폰", category_name_en: "Headphone" },
   {
     category_id: 2,
     category_name_ko: "고양이 용품",
@@ -36,21 +32,35 @@ const categoryList = [
   },
 ];
 
-export default function PromptSidebar() {
+export default function PromptSidebar({
+  category_id,
+}: {
+  category_id: string;
+}) {
   return (
-    <aside className="w-64 h-screen overflow-y-auto bg-gray-100  border-r p-4">
+    <aside className="w-48 h-screen overflow-y-auto bg-gray-100 border-r p-4">
       <h2 className="text-xl mb-4 text-blue-700">Products</h2>
       <ul className="space-y-2">
-        {categoryList.map((category) => (
-          <li key={category.category_id}>
-            <Link
-              to={`/prompt-test/${category.category_id}?category_name_ko=${category.category_name_ko}`}
-              className="block px-3 py-2 rounded-md hover:bg-gray-200 transition-colors text-sm"
+        {categoryList.map((category) => {
+          const isActive = String(category.category_id) === category_id;
+          return (
+            <li
+              key={category.category_id}
+              className={isActive ? "bg-blue-100 rounded-md" : ""}
             >
-              {category.category_name_ko}
-            </Link>
-          </li>
-        ))}
+              <Link
+                to={`/prompt-test/${category.category_id}?category_name_ko=${category.category_name_ko}`}
+                className={`block px-3 py-2 rounded-md transition-colors text-sm ${
+                  isActive
+                    ? "text-blue-800 font-semibold"
+                    : "hover:bg-gray-200 text-gray-700"
+                }`}
+              >
+                {category.category_name_ko}
+              </Link>
+            </li>
+          );
+        })}
       </ul>
     </aside>
   );
