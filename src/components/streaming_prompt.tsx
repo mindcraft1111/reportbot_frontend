@@ -20,7 +20,11 @@ const formSchema = z.object({
 
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
-export default function Prompt({ product_id }: { product_id: string }) {
+export default function StreamingPrompt({
+  category_name_ko,
+}: {
+  category_name_ko: string;
+}) {
   const [geminiResponse, setGeminiResponse] = useState<string>("");
   const [isStreaming, setIsStreaming] = useState(false);
 
@@ -85,7 +89,7 @@ export default function Prompt({ product_id }: { product_id: string }) {
   return (
     <main className="flex-1 p-6">
       <h1 className="text-2xl font-bold mb-4">
-        Prompt for Product ID: {product_id}
+        Prompt for : {category_name_ko}
       </h1>
 
       <div className="flex flex-col lg:flex-row gap-6">

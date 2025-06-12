@@ -1,19 +1,25 @@
-import { useParams } from "react-router";
+import { useLocation, useParams } from "react-router";
 import PromptSidebar from "@/components/prompt-sidebar";
 import StreamingPrompt from "@/components/streaming_prompt";
 
 const TOTAL_PROMPT = 30;
 
 export default function PromptTestPage2() {
-  const { product_id } = useParams<{ product_id: string }>();
+  const { category_id } = useParams<{
+    category_id: string;
+  }>();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const categoryNameKo = searchParams.get("category_name_ko");
 
   return (
     <div className="flex h-screen">
       <PromptSidebar />
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {product_id &&
+        {category_id &&
+          categoryNameKo &&
           Array.from({ length: TOTAL_PROMPT }).map((_, i) => (
-            <StreamingPrompt key={i} product_id={product_id} />
+            <StreamingPrompt key={i} category_name_ko={categoryNameKo} />
           ))}
       </div>
     </div>
