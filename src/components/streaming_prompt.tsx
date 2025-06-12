@@ -15,6 +15,7 @@ import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import useAnimatedText from "@/hooks/useTextAnimation";
 import { Spinner } from "./spinner";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
@@ -139,7 +140,11 @@ export default function StreamingPrompt({
         <div className="w-full">
           <div className="border rounded-lg bg-muted p-4 h-128 overflow-auto whitespace-pre-wrap font-mono text-sm">
             <h2 className="font-semibold mb-2">AI Response:</h2>
-            {animatedText || (isStreaming && "Waiting for AI response...")}
+            {isStreaming && !animatedText ? (
+              "Waiting for AI response..."
+            ) : (
+              <MarkdownRenderer content={animatedText} />
+            )}
           </div>
         </div>
 
