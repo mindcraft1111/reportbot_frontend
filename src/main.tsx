@@ -29,7 +29,7 @@ createRoot(document.getElementById("root")!).render(
             <Route path="/test" element={<PromptTestPage />} />
             <Route path="report" element={<ReportPage />} />
             <Route
-              path="/prompt-test/:product_id"
+              path="/prompt-test/:category_id"
               element={<PromptTestPage2 />}
             />
           </Route>

@@ -13,6 +13,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { toast } from "sonner";
+import useAnimatedText from "@/hooks/useTextAnimation";
+import { Spinner } from "./spinner";
 
 const formSchema = z.object({
   prompt: z.string().min(5, "Prompt must be at least 5 characters."),
@@ -20,9 +22,14 @@ const formSchema = z.object({
 
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
-export default function Prompt({ product_id }: { product_id: string }) {
+export default function StreamingPrompt({
+  category_name_ko,
+}: {
+  category_name_ko: string;
+}) {
   const [geminiResponse, setGeminiResponse] = useState<string>("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const animatedText = useAnimatedText(geminiResponse);
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -85,12 +92,20 @@ export default function Prompt({ product_id }: { product_id: string }) {
   return (
     <main className="flex-1 p-6">
       <h1 className="text-2xl font-bold mb-4">
-        Prompt for Product ID: {product_id}
+        Prompt for : {category_name_ko}
       </h1>
 
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* Form Section */}
-        <div className="lg:w-1/2 w-full">
+      <div className="flex flex-col gap-6">
+        {/* Gemini Response Section at the top */}
+        <div className="w-full">
+          <div className="border rounded-lg bg-muted p-4 h-128 overflow-auto whitespace-pre-wrap font-mono text-sm">
+            <h2 className="font-semibold mb-2">AI Response:</h2>
+            {animatedText || (isStreaming && "Waiting for AI response...")}
+          </div>
+        </div>
+
+        {/* Prompt Input at the bottom */}
+        <div className="w-full">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
@@ -104,7 +119,13 @@ export default function Prompt({ product_id }: { product_id: string }) {
                         placeholder="Type your prompt here..."
                         {...field}
                         disabled={isStreaming}
-                        className="min-h-[150px]"
+                        className="min-h-[100px]"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault(); // Prevent newline
+                            form.handleSubmit(onSubmit)(); // Trigger form submit
+                          }
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -113,18 +134,17 @@ export default function Prompt({ product_id }: { product_id: string }) {
               />
 
               <Button type="submit" disabled={isStreaming}>
-                {isStreaming ? "Streaming..." : "Submit Prompt"}
+                {isStreaming ? (
+                  <>
+                    <Spinner />
+                    <span className="ml-2">Streaming...</span>
+                  </>
+                ) : (
+                  "Submit Prompt"
+                )}
               </Button>
             </form>
           </Form>
-        </div>
-
-        {/* Gemini Response Section */}
-        <div className="lg:w-1/2 w-full">
-          <div className="border rounded-lg bg-muted p-4 h-64 overflow-auto whitespace-pre-wrap">
-            <h2 className="font-semibold mb-2">AI Response:</h2>
-            {geminiResponse || (isStreaming && "Waiting for AI response...")}
-          </div>
         </div>
       </div>
     </main>
