@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from "react"; // ✅ Add useEffect
+import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import useAnimatedText from "@/hooks/useTextAnimation";
 import { Spinner } from "./spinner";
@@ -44,14 +44,20 @@ export default function StreamingPrompt({
     },
   });
 
-  // ✅ Clear input & response when category_id changes
+  const abortControllerRef = useRef<AbortController | null>(null);
+
   useEffect(() => {
+    // Reset form and response
     form.reset({
       user_prompt: "",
       product1: "",
       product2: "",
     });
     setGeminiResponse("");
+
+    // Abort any ongoing fetch
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
   }, [category_id, form]);
 
   const onSubmit = async (values: Gemini_Prompt) => {
@@ -68,6 +74,9 @@ export default function StreamingPrompt({
       product2,
     };
 
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
     try {
       const response = await fetch("http://localhost:8000/api/ai/streaming/", {
         method: "POST",
@@ -75,6 +84,7 @@ export default function StreamingPrompt({
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
       if (!response.ok || !response.body) {
@@ -101,15 +111,20 @@ export default function StreamingPrompt({
             const json = JSON.parse(trimmed);
             setGeminiResponse((prev) => prev + json.text);
           } catch {
-            // ignore
+            // Ignore malformed chunk
           }
         }
       }
-    } catch (err) {
-      console.error(err);
-      toast.error("Streaming failed.");
+    } catch (err: any) {
+      if (err.name === "AbortError") {
+        console.warn("Fetch aborted due to category_id change.");
+      } else {
+        console.error(err);
+        toast.error("Streaming failed.");
+      }
     } finally {
       setIsStreaming(false);
+      abortControllerRef.current = null;
     }
   };
 
