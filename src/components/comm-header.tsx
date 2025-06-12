@@ -15,23 +15,15 @@ export default function Commheader() {
         </Link>
 
         <ul className="flex gap-2">
-          <li className="">
+          <li>
             <Link
-              to={"/test"}
+              to={"/prompt-test/1?category_name_ko=헤드폰"}
               className="hover:text-blue-400 text-blue-700 block font-medium text-[15px]"
             >
               테스트
             </Link>
           </li>
-          <li className="">
-            <Link
-              to={"/prompt-test/1?category_name_ko=헤드폰"}
-              className="hover:text-blue-400 text-blue-700 block font-medium text-[15px]"
-            >
-              테스트2
-            </Link>
-          </li>
-          <li className="">
+          <li>
             <Link
               to={"/report"}
               className="hover:text-blue-400 text-blue-700 block font-medium text-[15px]"
