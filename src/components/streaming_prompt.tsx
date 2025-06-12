@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect } from "react"; // ✅ Add useEffect
 import { toast } from "sonner";
 import useAnimatedText from "@/hooks/useTextAnimation";
 import { Spinner } from "./spinner";
@@ -43,6 +43,16 @@ export default function StreamingPrompt({
       product2: "",
     },
   });
+
+  // ✅ Clear input & response when category_id changes
+  useEffect(() => {
+    form.reset({
+      user_prompt: "",
+      product1: "",
+      product2: "",
+    });
+    setGeminiResponse("");
+  }, [category_id, form]);
 
   const onSubmit = async (values: Gemini_Prompt) => {
     setGeminiResponse("");
@@ -110,7 +120,7 @@ export default function StreamingPrompt({
       </h1>
 
       <div className="flex flex-col gap-6">
-        {/* Gemini Response Section at the top */}
+        {/* Gemini Response Section */}
         <div className="w-full">
           <div className="border rounded-lg bg-muted p-4 h-128 overflow-auto whitespace-pre-wrap font-mono text-sm">
             <h2 className="font-semibold mb-2">AI Response:</h2>
@@ -118,7 +128,7 @@ export default function StreamingPrompt({
           </div>
         </div>
 
-        {/* Prompt Input at the bottom */}
+        {/* Prompt Input Form */}
         <div className="w-full">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -136,8 +146,8 @@ export default function StreamingPrompt({
                         className="min-h-[100px]"
                         onKeyDown={(e) => {
                           if (e.key === "Enter" && !e.shiftKey) {
-                            e.preventDefault(); // Prevent newline
-                            form.handleSubmit(onSubmit)(); // Trigger form submit
+                            e.preventDefault();
+                            form.handleSubmit(onSubmit)();
                           }
                         }}
                       />
