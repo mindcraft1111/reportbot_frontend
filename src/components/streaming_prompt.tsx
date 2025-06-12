@@ -11,21 +11,25 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import useAnimatedText from "@/hooks/useTextAnimation";
 import { Spinner } from "./spinner";
 
 const formSchema = z.object({
-  prompt: z.string().min(5, "Prompt must be at least 5 characters."),
+  user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
+  product1: z.string(),
+  product2: z.string(),
 });
 
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
 export default function StreamingPrompt({
   category_name_ko,
+  category_id,
 }: {
   category_name_ko: string;
+  category_id: string;
 }) {
   const [geminiResponse, setGeminiResponse] = useState<string>("");
   const [isStreaming, setIsStreaming] = useState(false);
@@ -34,13 +38,44 @@ export default function StreamingPrompt({
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      prompt: "",
+      user_prompt: "",
+      product1: "",
+      product2: "",
     },
   });
+
+  const abortControllerRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    // Reset form and response
+    form.reset({
+      user_prompt: "",
+      product1: "",
+      product2: "",
+    });
+    setGeminiResponse("");
+
+    // Abort any ongoing fetch
+    abortControllerRef.current?.abort();
+    abortControllerRef.current = null;
+  }, [category_id, form]);
 
   const onSubmit = async (values: Gemini_Prompt) => {
     setGeminiResponse("");
     setIsStreaming(true);
+
+    const id = parseInt(category_id);
+    const product1 = ((id - 1) * 2 + 1).toString();
+    const product2 = (parseInt(product1) + 1).toString();
+
+    const payload = {
+      ...values,
+      product1,
+      product2,
+    };
+
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
 
     try {
       const response = await fetch("http://localhost:8000/api/ai/streaming/", {
@@ -48,7 +83,8 @@ export default function StreamingPrompt({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(values),
+        body: JSON.stringify(payload),
+        signal: controller.signal,
       });
 
       if (!response.ok || !response.body) {
@@ -64,10 +100,8 @@ export default function StreamingPrompt({
         if (done) break;
 
         buffer += decoder.decode(value, { stream: true });
-
-        // Split by "data: " and parse each JSON
         const chunks = buffer.split("data: ");
-        buffer = chunks.pop() ?? ""; // keep incomplete chunk
+        buffer = chunks.pop() ?? "";
 
         for (const chunk of chunks) {
           const trimmed = chunk.trim();
@@ -77,15 +111,20 @@ export default function StreamingPrompt({
             const json = JSON.parse(trimmed);
             setGeminiResponse((prev) => prev + json.text);
           } catch {
-            // ignore parse errors
+            // Ignore malformed chunk
           }
         }
       }
-    } catch (err) {
-      console.error(err);
-      toast.error("Streaming failed.");
+    } catch (err: any) {
+      if (err.name === "AbortError") {
+        console.warn("Fetch aborted due to category_id change.");
+      } else {
+        console.error(err);
+        toast.error("Streaming failed.");
+      }
     } finally {
       setIsStreaming(false);
+      abortControllerRef.current = null;
     }
   };
 
@@ -96,7 +135,7 @@ export default function StreamingPrompt({
       </h1>
 
       <div className="flex flex-col gap-6">
-        {/* Gemini Response Section at the top */}
+        {/* Gemini Response Section */}
         <div className="w-full">
           <div className="border rounded-lg bg-muted p-4 h-128 overflow-auto whitespace-pre-wrap font-mono text-sm">
             <h2 className="font-semibold mb-2">AI Response:</h2>
@@ -104,13 +143,13 @@ export default function StreamingPrompt({
           </div>
         </div>
 
-        {/* Prompt Input at the bottom */}
+        {/* Prompt Input Form */}
         <div className="w-full">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
                 control={form.control}
-                name="prompt"
+                name="user_prompt"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Enter Prompt</FormLabel>
@@ -122,8 +161,8 @@ export default function StreamingPrompt({
                         className="min-h-[100px]"
                         onKeyDown={(e) => {
                           if (e.key === "Enter" && !e.shiftKey) {
-                            e.preventDefault(); // Prevent newline
-                            form.handleSubmit(onSubmit)(); // Trigger form submit
+                            e.preventDefault();
+                            form.handleSubmit(onSubmit)();
                           }
                         }}
                       />

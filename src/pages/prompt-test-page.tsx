@@ -14,12 +14,12 @@ export default function PromptTestPage2() {
 
   return (
     <div className="flex h-screen">
-      <PromptSidebar />
+      {category_id && <PromptSidebar category_id={category_id} />}
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {category_id &&
           categoryNameKo &&
           Array.from({ length: TOTAL_PROMPT }).map((_, i) => (
-            <StreamingPrompt key={i} category_name_ko={categoryNameKo} />
+            <StreamingPrompt key={i} category_name_ko={categoryNameKo} category_id={category_id}  />
           ))}
       </div>
     </div>
