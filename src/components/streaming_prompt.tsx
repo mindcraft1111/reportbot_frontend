@@ -15,6 +15,7 @@ import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import useAnimatedText from "@/hooks/useTextAnimation";
 import { Spinner } from "./spinner";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
@@ -99,14 +100,14 @@ export default function StreamingPrompt({
       while (true) {
         const { done, value } = await reader.read();
         if (done) {
-          console.log("Stream completed");
+          // console.log("Stream completed");
           break;
         }
 
         // Decode the chunk
         const chunk = decoder.decode(value, { stream: true });
         chunkCount++;
-        console.log(`Chunk ${chunkCount}:`, JSON.stringify(chunk));
+        // console.log(`Chunk ${chunkCount}:`, JSON.stringify(chunk));
 
         buffer += chunk;
 
@@ -126,7 +127,7 @@ export default function StreamingPrompt({
 
               // Check for completion
               if (parsed.done) {
-                console.log("Stream marked as done");
+                // console.log("Stream marked as done");
                 continue;
               }
 
@@ -164,7 +165,7 @@ export default function StreamingPrompt({
         }
       }
 
-      console.log(`Total chunks received: ${chunkCount}`);
+      // console.log(`Total chunks received: ${chunkCount}`);
     } catch (err: any) {
       if (err.name === "AbortError") {
         console.warn("Fetch aborted due to category_id change.");
@@ -189,7 +190,11 @@ export default function StreamingPrompt({
         <div className="w-full">
           <div className="border rounded-lg bg-muted p-4 h-128 overflow-auto whitespace-pre-wrap font-mono text-sm">
             <h2 className="font-semibold mb-2">AI Response:</h2>
-            {animatedText || (isStreaming && "Waiting for AI response...")}
+            {isStreaming && !animatedText ? (
+              "Waiting for AI response..."
+            ) : (
+              <MarkdownRenderer content={animatedText} />
+            )}
           </div>
         </div>
 
