@@ -1,13 +1,5 @@
 import { Link } from "react-router";
 
-type Product = {
-  product_id: number;
-  product_name: string;
-  brand: string;
-  product_price: number;
-  discount_rate: number;
-};
-
 const categoryList = [
   { category_id: 1, category_name_ko: "헤드폰", category_name_en: "Headphone" },
   {
