@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { toast } from "sonner";
 import useAnimatedText from "@/hooks/useTextAnimation";
+import { Spinner } from "./spinner";
 
 const formSchema = z.object({
   prompt: z.string().min(5, "Prompt must be at least 5 characters."),
@@ -94,9 +95,17 @@ export default function StreamingPrompt({
         Prompt for : {category_name_ko}
       </h1>
 
-      <div className="flex flex-col lg:flex-row gap-6">
-        {/* Form Section */}
-        <div className="lg:w-1/2 w-full">
+      <div className="flex flex-col gap-6">
+        {/* Gemini Response Section at the top */}
+        <div className="w-full">
+          <div className="border rounded-lg bg-muted p-4 h-128 overflow-auto whitespace-pre-wrap font-mono text-sm">
+            <h2 className="font-semibold mb-2">AI Response:</h2>
+            {animatedText || (isStreaming && "Waiting for AI response...")}
+          </div>
+        </div>
+
+        {/* Prompt Input at the bottom */}
+        <div className="w-full">
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               <FormField
@@ -110,7 +119,13 @@ export default function StreamingPrompt({
                         placeholder="Type your prompt here..."
                         {...field}
                         disabled={isStreaming}
-                        className="min-h-[150px]"
+                        className="min-h-[100px]"
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter" && !e.shiftKey) {
+                            e.preventDefault(); // Prevent newline
+                            form.handleSubmit(onSubmit)(); // Trigger form submit
+                          }
+                        }}
                       />
                     </FormControl>
                     <FormMessage />
@@ -119,18 +134,17 @@ export default function StreamingPrompt({
               />
 
               <Button type="submit" disabled={isStreaming}>
-                {isStreaming ? "Streaming..." : "Submit Prompt"}
+                {isStreaming ? (
+                  <>
+                    <Spinner />
+                    <span className="ml-2">Streaming...</span>
+                  </>
+                ) : (
+                  "Submit Prompt"
+                )}
               </Button>
             </form>
           </Form>
-        </div>
-
-        {/* Gemini Response Section */}
-        <div className="lg:w-1/2 w-full">
-          <div className="border rounded-lg bg-muted p-4 h-64 overflow-auto whitespace-pre-wrap font-mono text-sm">
-            <h2 className="font-semibold mb-2">AI Response:</h2>
-            {animatedText || (isStreaming && "Waiting for AI response...")}
-          </div>
         </div>
       </div>
     </main>
