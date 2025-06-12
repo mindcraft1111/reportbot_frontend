@@ -15,7 +15,6 @@ import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import useAnimatedText from "@/hooks/useTextAnimation";
 import { Spinner } from "./spinner";
-import MarkdownRenderer from "./MarkdownRenderer";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
@@ -89,39 +88,89 @@ export default function StreamingPrompt({
       });
 
       if (!response.ok || !response.body) {
-        throw new Error("Response error");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
 
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let buffer = "";
+      let chunkCount = 0;
 
       while (true) {
         const { done, value } = await reader.read();
-        if (done) break;
+        if (done) {
+          console.log("Stream completed");
+          break;
+        }
 
-        buffer += decoder.decode(value, { stream: true });
-        const chunks = buffer.split("data: ");
-        buffer = chunks.pop() ?? "";
+        // Decode the chunk
+        const chunk = decoder.decode(value, { stream: true });
+        chunkCount++;
+        console.log(`Chunk ${chunkCount}:`, JSON.stringify(chunk));
 
-        for (const chunk of chunks) {
-          const trimmed = chunk.trim();
-          if (!trimmed) continue;
+        buffer += chunk;
 
-          try {
-            const json = JSON.parse(trimmed);
-            setGeminiResponse((prev) => prev + json.text);
-          } catch {
-            // Ignore malformed chunk
+        // Split by double newline (SSE format)
+        const lines = buffer.split("\n\n");
+        buffer = lines.pop() || ""; // Keep incomplete line
+
+        for (const line of lines) {
+          const trimmedLine = line.trim();
+          if (!trimmedLine) continue;
+
+          if (trimmedLine.startsWith("data: ")) {
+            const jsonStr = trimmedLine.substring(6);
+
+            try {
+              const parsed = JSON.parse(jsonStr);
+
+              // Check for completion
+              if (parsed.done) {
+                console.log("Stream marked as done");
+                continue;
+              }
+
+              // Check for error
+              if (parsed.error) {
+                console.error("Server error:", parsed.error);
+                toast.error(parsed.error);
+                continue;
+              }
+
+              // Add text if present
+              if (parsed.text) {
+                setGeminiResponse((prev) => prev + parsed.text);
+              }
+            } catch (parseError) {
+              console.warn("Failed to parse JSON:", jsonStr, parseError);
+            }
           }
         }
       }
+
+      // Process any remaining buffer
+      if (buffer.trim()) {
+        const trimmedBuffer = buffer.trim();
+        if (trimmedBuffer.startsWith("data: ")) {
+          const jsonStr = trimmedBuffer.substring(6);
+          try {
+            const parsed = JSON.parse(jsonStr);
+            if (parsed.text) {
+              setGeminiResponse((prev) => prev + parsed.text);
+            }
+          } catch (parseError) {
+            console.warn("Failed to parse final buffer:", jsonStr, parseError);
+          }
+        }
+      }
+
+      console.log(`Total chunks received: ${chunkCount}`);
     } catch (err: any) {
       if (err.name === "AbortError") {
         console.warn("Fetch aborted due to category_id change.");
       } else {
-        console.error(err);
-        toast.error("Streaming failed.");
+        console.error("Streaming error:", err);
+        toast.error(`Streaming failed: ${err.message}`);
       }
     } finally {
       setIsStreaming(false);
@@ -140,11 +189,7 @@ export default function StreamingPrompt({
         <div className="w-full">
           <div className="border rounded-lg bg-muted p-4 h-128 overflow-auto whitespace-pre-wrap font-mono text-sm">
             <h2 className="font-semibold mb-2">AI Response:</h2>
-            {isStreaming && !animatedText ? (
-              "Waiting for AI response..."
-            ) : (
-              <MarkdownRenderer content={animatedText} />
-            )}
+            {animatedText || (isStreaming && "Waiting for AI response...")}
           </div>
         </div>
 
