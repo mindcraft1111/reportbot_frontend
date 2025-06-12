@@ -13,6 +13,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { toast } from "sonner";
+import useAnimatedText from "@/hooks/useTextAnimation";
 
 const formSchema = z.object({
   prompt: z.string().min(5, "Prompt must be at least 5 characters."),
@@ -27,6 +28,7 @@ export default function StreamingPrompt({
 }) {
   const [geminiResponse, setGeminiResponse] = useState<string>("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const animatedText = useAnimatedText(geminiResponse);
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -125,9 +127,9 @@ export default function StreamingPrompt({
 
         {/* Gemini Response Section */}
         <div className="lg:w-1/2 w-full">
-          <div className="border rounded-lg bg-muted p-4 h-64 overflow-auto whitespace-pre-wrap">
+          <div className="border rounded-lg bg-muted p-4 h-64 overflow-auto whitespace-pre-wrap font-mono text-sm">
             <h2 className="font-semibold mb-2">AI Response:</h2>
-            {geminiResponse || (isStreaming && "Waiting for AI response...")}
+            {animatedText || (isStreaming && "Waiting for AI response...")}
           </div>
         </div>
       </div>
