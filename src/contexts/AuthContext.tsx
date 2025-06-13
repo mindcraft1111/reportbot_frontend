@@ -1,4 +1,9 @@
-import React, { createContext, useState, useEffect, type ReactNode } from "react";
+import React, {
+  createContext,
+  useState,
+  useEffect,
+  type ReactNode,
+} from "react";
 
 interface User {
   id: string;
@@ -14,14 +19,16 @@ interface AuthContextType {
   logout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+export const AuthContext = createContext<AuthContextType | undefined>(
+  undefined
+);
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
 // export const AuthProvider = ({ children }: { children: ReactNode }) => {
-export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
 
@@ -44,13 +51,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
       throw error;
     }
   };
-  
+
   // 로그아웃
   const logout = () => {
     setUser(null);
     setToken(null);
     localStorage.removeItem("token");
-  }
+  };
 
   const isLoggedIn = !!token && !!user;
 
@@ -59,24 +66,27 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({children}) => {
       {children}
     </AuthContext.Provider>
   );
-}
+};
 
 interface FakeLoginResponse {
   token: string;
   user: User;
 }
 
-const fakeLoginApi = async (email: string, password: string): Promise<FakeLoginResponse> => {
+const fakeLoginApi = async (
+  email: string,
+  password: string
+): Promise<FakeLoginResponse> => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (email === "test@example.com" && password === "password") {
         resolve({
           token: "fake-token-123456",
-          user: { id: "1", name: "Test User", email }
+          user: { id: "1", name: "Test User", email },
         });
       } else {
         reject(new Error("Invalid credentials"));
       }
     }, 1000);
   });
-}
+};

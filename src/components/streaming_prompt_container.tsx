@@ -5,30 +5,48 @@ import AIResponsePanel from "./ai_response_panel";
 import PromptForm from "./prompt_form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useAIData } from "@/contexts/AIResponseContext";
 
-// Zod schema for form validation
 const formSchema = z.object({
   user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
   product1: z.string(),
   product2: z.string(),
 });
 
-// Type for form values
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
-// Props type for the component
+export type PageType =
+  | "coverPage"
+  | "contentsPage"
+  | "overviewPage"
+  | "swotPage"
+  | "selfProductPage"
+  | "competitorPage"
+  | "comparisonPage"
+  | "improvementPage"
+  | "expectationGapPage"
+  | "solutionPage"
+  | "executionPlanPage"
+  | "executionKPIPage"
+  | "conclusionPage"
+  | "executiveSummaryPage";
+
 interface StreamingPromptContainerProps {
   category_id: string;
   category_name_ko: string;
+  page: PageType;
 }
 
 const StreamingPromptContainer = ({
   category_id,
   category_name_ko,
+  page,
 }: StreamingPromptContainerProps) => {
   const [response, setResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+
+  const { dispatch } = useAIData();
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -59,6 +77,8 @@ const StreamingPromptContainer = ({
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
+    let finalResponse = "";
+
     try {
       const response = await fetch("http://localhost:8000/api/ai/streaming/", {
         method: "POST",
@@ -76,14 +96,12 @@ const StreamingPromptContainer = ({
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let buffer = "";
-      let chunkCount = 0;
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
-        chunkCount++;
         buffer += chunk;
 
         const lines = buffer.split("\n\n");
@@ -100,7 +118,6 @@ const StreamingPromptContainer = ({
               const parsed = JSON.parse(jsonStr);
 
               if (parsed.done) continue;
-
               if (parsed.error) {
                 console.error("Server error:", parsed.error);
                 toast.error(parsed.error);
@@ -108,7 +125,11 @@ const StreamingPromptContainer = ({
               }
 
               if (parsed.text) {
-                setResponse((prev) => prev + parsed.text);
+                setResponse((prev) => {
+                  const next = prev + parsed.text;
+                  finalResponse = next;
+                  return next;
+                });
               }
             } catch (parseError) {
               console.warn("Failed to parse JSON:", jsonStr, parseError);
@@ -116,10 +137,42 @@ const StreamingPromptContainer = ({
           }
         }
       }
+
+      setIsStreaming(false);
+
+      // 🧼 Clean ```json or ``` wrapper
+      let cleaned = finalResponse.trim();
+      if (cleaned.startsWith("```json")) {
+        cleaned = cleaned
+          .replace(/^```json/, "")
+          .replace(/```$/, "")
+          .trim();
+      } else if (cleaned.startsWith("```")) {
+        cleaned = cleaned.replace(/^```/, "").replace(/```$/, "").trim();
+      }
+
+      // ✨ Convert JS-style keys to strict JSON (wrap keys in quotes)
+      cleaned = cleaned.replace(/([{,]\s*)([a-zA-Z0-9_]+)(\s*:)/g, '$1"$2"$3');
+
+      try {
+        const parsedData = JSON.parse(cleaned);
+
+        dispatch({
+          type: "SET_PAGE_DATA",
+          page,
+          payload: parsedData,
+        });
+      } catch (jsonError) {
+        console.error(
+          "Parsing cleaned AI response failed:",
+          jsonError,
+          cleaned
+        );
+        toast.warning("응답 파싱에 실패했습니다.");
+      }
     } catch (err) {
       console.error("Fetch error:", err);
       toast.error("Something went wrong while streaming response.");
-    } finally {
       setIsStreaming(false);
     }
   };
@@ -133,7 +186,7 @@ const StreamingPromptContainer = ({
         <AIResponsePanel response={response} isStreaming={isStreaming} />
         <PromptForm
           form={form}
-          onSubmit={handleSubmit} // ✅ This is a (values) => Promise<void>
+          onSubmit={handleSubmit}
           isStreaming={isStreaming}
         />
       </section>
