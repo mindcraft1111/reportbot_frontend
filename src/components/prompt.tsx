@@ -1,100 +1,39 @@
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import * as apiClient from "../api/client";
-import { useMutation } from "@tanstack/react-query";
-import { useState } from "react";
-import { toast } from "sonner";
+import StreamingPrompt from "./streaming_prompt";
+import Swot from "./pdf-segments/page_01/swot";
 
-const formSchema = z.object({
-  prompt: z.string().min(5, "Prompt must be at least 5 characters."),
-});
+const dummyData = {
+  R_3_1: "브랜드 인지도",
+  R_3_2:
+    "우리 제품은 국내 소비자에게 높은 인지도를 보유하고 있으며, 고객 만족도 또한 매우 높습니다.",
+  R_3_3: "기술 인프라 부족",
+  R_3_4:
+    "내부 시스템이 노후화되어 신기술 도입이 어렵고, 운영 효율성에 영향을 미치고 있습니다.",
+  R_3_5: "친환경 시장 확대",
+  R_3_6:
+    "소비자들의 환경 인식이 높아지면서 친환경 제품에 대한 수요가 급증하고 있습니다.",
+  R_3_7: "신규 경쟁사 등장",
+  R_3_8: "글로벌 브랜드가 국내 시장에 진입하면서 경쟁이 심화되고 있습니다.",
+};
 
-export type Gemini_Prompt = z.infer<typeof formSchema>;
+<Swot {...dummyData} />;
 
-export default function Prompt({ product_id }: { product_id: string }) {
-  const [geminiResponse, setGeminiResponse] = useState<string | null>(null);
-
-  const form = useForm<Gemini_Prompt>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      prompt: "",
-    },
-  });
-
-  const mutation = useMutation({
-    mutationFn: (values: Gemini_Prompt) => apiClient.chat_with_gemini(values),
-    onSuccess: (result) => {
-      if (!result.success) {
-        toast.error("에러가 발생하였습니다.");
-        return;
-      }
-
-      setGeminiResponse(result.data.response);
-    },
-    onError: () => {
-      toast.error("Something went wrong while fetching the response.");
-    },
-  });
-
-  const onSubmit = (values: Gemini_Prompt) => {
-    mutation.mutate(values);
-  };
-
+export default function Prompt({
+  key,
+  category_name_ko,
+  category_id,
+}: {
+  key: string;
+  category_name_ko: string;
+  category_id: string;
+}) {
   return (
-    <main className="flex-1 p-6">
-      <h1 className="text-2xl font-bold mb-4">
-        Prompt for Product ID: {product_id}
-      </h1>
-
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-          <FormField
-            control={form.control}
-            name="prompt"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Enter Prompt</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Type your prompt here..."
-                    {...field}
-                    disabled={mutation.isPending}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button type="submit" disabled={mutation.isPending}>
-            {mutation.isPending ? "Fetching..." : "Submit Prompt"}
-          </Button>
-        </form>
-      </Form>
-
-      {mutation.isPending && (
-        <p className="mt-4 text-sm text-muted-foreground">
-          Waiting for AI response...
-        </p>
-      )}
-
-      {geminiResponse && (
-        <div className="mt-6 p-4 border rounded-lg bg-muted">
-          <h2 className="font-semibold mb-2">AI Response:</h2>
-          <p>{geminiResponse}</p>
-        </div>
-      )}
-    </main>
+    <article className="flex">
+      <StreamingPrompt
+        key={key}
+        category_name_ko={category_name_ko}
+        category_id={category_id}
+      />
+      <Swot {...dummyData} />
+    </article>
   );
 }

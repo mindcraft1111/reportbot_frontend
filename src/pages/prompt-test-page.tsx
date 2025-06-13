@@ -1,6 +1,6 @@
 import { useLocation, useParams } from "react-router";
 import PromptSidebar from "@/components/prompt-sidebar";
-import StreamingPrompt from "@/components/streaming_prompt";
+import StreamingPromptContainer from "@/components/streaming_prompt_container";
 
 const TOTAL_PROMPT = 30;
 
@@ -19,7 +19,11 @@ export default function PromptTestPage2() {
         {category_id &&
           categoryNameKo &&
           Array.from({ length: TOTAL_PROMPT }).map((_, i) => (
-            <StreamingPrompt key={i} category_name_ko={categoryNameKo} category_id={category_id}  />
+            <StreamingPromptContainer
+              key={i}
+              category_name_ko={categoryNameKo}
+              category_id={category_id}
+            />
           ))}
       </div>
     </div>
