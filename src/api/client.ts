@@ -1,4 +1,4 @@
-import type { Gemini_Prompt } from "@/components/prompt";
+import type { Gemini_Prompt } from "@/components/non-streaming-prompt";
 import type { LoginSchema } from "@/pages/login-page";
 import type { RegisterSchema } from "@/pages/register-page";
 
