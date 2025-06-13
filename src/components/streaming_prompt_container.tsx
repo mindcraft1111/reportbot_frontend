@@ -137,7 +137,6 @@ const StreamingPromptContainer = ({
           isStreaming={isStreaming}
         />
       </section>
-      <section>{response}</section>
     </main>
   );
 };
