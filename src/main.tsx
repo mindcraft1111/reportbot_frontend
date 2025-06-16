@@ -23,10 +23,10 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <AIDataProvider>
-          <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
+        <QueryClientProvider client={queryClient}>
+          <AIDataProvider>
             <Routes>
               <Route element={<CommLayout />}>
                 <Route index element={<LandingPage />} />{" "}
@@ -41,9 +41,9 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/auth/register" element={<Register />} />
             </Routes>
             <Toaster position="bottom-right" richColors />
-          </BrowserRouter>
-        </AIDataProvider>
-      </QueryClientProvider>
-    </AuthProvider>
+          </AIDataProvider>
+        </QueryClientProvider>
+      </AuthProvider>
+    </BrowserRouter>
   </StrictMode>
 );

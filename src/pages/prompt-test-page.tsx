@@ -27,7 +27,7 @@ export default function PromptTestPage2() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const categoryNameKo = searchParams.get("category_name_ko");
-  const { state } = useAIData();
+  const { state, chunkConstraints } = useAIData();
 
   return (
     <div className="flex h-screen">
@@ -35,7 +35,7 @@ export default function PromptTestPage2() {
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {category_id &&
           categoryNameKo &&
-          (Object.entries(state) as [PageType, any][]).map(
+          (Object.entries(chunkConstraints) as [PageType, any][]).map(
             ([pageKey, constraint], i) => (
               <StreamingPromptContainer
                 key={i}
