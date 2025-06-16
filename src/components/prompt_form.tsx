@@ -3,7 +3,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,7 +25,6 @@ const PromptForm = ({ form, onSubmit, isStreaming }: PromptFormProps) => (
         name="user_prompt"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Enter Prompt</FormLabel>
             <FormControl>
               <Textarea
                 placeholder="Type your prompt here..."
@@ -46,14 +44,14 @@ const PromptForm = ({ form, onSubmit, isStreaming }: PromptFormProps) => (
         )}
       />
 
-      <Button type="submit" disabled={isStreaming}>
+      <Button type="submit" disabled={isStreaming} className="bg-blue-600">
         {isStreaming ? (
           <>
             <Spinner />
-            <span className="ml-2">Streaming...</span>
+            <span className="ml-2">AI의 응답을 기다리는 중입니다...</span>
           </>
         ) : (
-          "Submit Prompt"
+          "프롬프트 테스트"
         )}
       </Button>
     </form>

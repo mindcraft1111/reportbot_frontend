@@ -17,9 +17,8 @@ import ExecutionPlanPage_10 from "@/components/report/10-execution-plan";
 import ExecutionKPIPage_11 from "@/components/report/11-execution-kpi";
 import ConclusionPage_12 from "@/components/report/12-conclusion";
 import ExecutiveSummaryPage_13 from "@/components/report/13-executive-summary";
-import { useAIData } from "@/contexts/AIResponseContext";
-
-const TOTAL_PROMPT = 30;
+import { useAIData } from "../contexts/AiResponseContext";
+import type { PageType } from "@/components/streaming_prompt_container"; // or wherever you defined it
 
 export default function PromptTestPage2() {
   const { category_id } = useParams<{
@@ -36,14 +35,17 @@ export default function PromptTestPage2() {
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {category_id &&
           categoryNameKo &&
-          Array.from({ length: TOTAL_PROMPT }).map((_, i) => (
-            <StreamingPromptContainer
-              key={i}
-              category_name_ko={categoryNameKo}
-              category_id={category_id}
-              page={"coverPage"}
-            />
-          ))}
+          (Object.entries(state) as [PageType, any][]).map(
+            ([pageKey, constraint], i) => (
+              <StreamingPromptContainer
+                key={i}
+                category_name_ko={categoryNameKo}
+                category_id={category_id}
+                page={pageKey}
+                constraint={constraint}
+              />
+            )
+          )}
       </div>
 
       <div

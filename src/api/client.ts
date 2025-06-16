@@ -10,6 +10,7 @@ export type UserAndToken = {
   user: {
     company: string;
     id: number;
+    email: string;
     join_date: string;
     name: string;
     phone: string;

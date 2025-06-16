@@ -16,7 +16,7 @@ import Register from "./pages/register-page";
 import PromptTestPage from "./pages/test-page";
 import PromptTestPage2 from "./pages/prompt-test-page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AIDataProvider from "./contexts/AIResponseContext";
+import AIDataProvider from "./contexts/AiResponseContext";
 import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();

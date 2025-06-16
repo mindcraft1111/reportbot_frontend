@@ -1,5 +1,5 @@
 // context/AIDataContext.tsx
-import { createContext, useReducer, useContext, ReactNode } from "react";
+import { createContext, useReducer, useContext, type ReactNode } from "react";
 
 // -----------------------------
 // Default data for initialization

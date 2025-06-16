@@ -15,7 +15,6 @@ import logo from "/assets/logo.png";
 import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import * as apiClient from "../api/client";
 import { buttonBase, gradientBlueButton } from "@/styles/classnames";
 import { useAuthContext } from "@/contexts/AuthContext";
 

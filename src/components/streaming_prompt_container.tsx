@@ -5,7 +5,9 @@ import AIResponsePanel from "./ai_response_panel";
 import PromptForm from "./prompt_form";
 import { toast } from "sonner";
 import { z } from "zod";
-import { useAIData } from "@/contexts/AIResponseContext";
+import { useAIData } from "../contexts/AiResponseContext";
+import { DataGoal } from "./data-goal";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
@@ -35,16 +37,18 @@ interface StreamingPromptContainerProps {
   category_id: string;
   category_name_ko: string;
   page: PageType;
+  constraint: any;
 }
 
 const StreamingPromptContainer = ({
   category_id,
-  category_name_ko,
   page,
+  constraint,
 }: StreamingPromptContainerProps) => {
   const [response, setResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const authContext = useAuthContext();
 
   const { dispatch } = useAIData();
 
@@ -72,6 +76,8 @@ const StreamingPromptContainer = ({
       ...values,
       product1,
       product2,
+      chunk_constraint: constraint,
+      chunk_type: page,
     };
 
     const controller = new AbortController();
@@ -79,15 +85,21 @@ const StreamingPromptContainer = ({
 
     let finalResponse = "";
 
+    const userEmail = authContext.user?.user.email;
+    const username = userEmail?.split("@")[0];
+
     try {
-      const response = await fetch("http://localhost:8000/api/ai/streaming/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      });
+      const response = await fetch(
+        `http://localhost:8000/promptTest/${username}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        }
+      );
 
       if (!response.ok || !response.body) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -179,11 +191,10 @@ const StreamingPromptContainer = ({
 
   return (
     <main className="p-6">
-      <h1 className="text-2xl font-bold mb-4">
-        Prompt for: {category_name_ko}
-      </h1>
+      <h1 className="text-2xl mb-4">{page.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
+        <DataGoal constraint={constraint} />
         <PromptForm
           form={form}
           onSubmit={handleSubmit}
