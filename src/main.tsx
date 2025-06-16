@@ -40,7 +40,7 @@ createRoot(document.getElementById("root")!).render(
               <Route path="/auth/login" element={<LoginPage />} />
               <Route path="/auth/register" element={<Register />} />
             </Routes>
-            <Toaster position="bottom-right" richColors />
+            <Toaster position="top-right" richColors />
           </AIDataProvider>
         </QueryClientProvider>
       </AuthProvider>

@@ -1,4 +1,4 @@
-import { useLocation, useParams } from "react-router";
+import { useLocation, useNavigate, useParams } from "react-router";
 import PromptSidebar from "@/components/prompt-sidebar";
 import StreamingPromptContainer from "@/components/streaming_prompt_container";
 import A4Layout from "@/components/layouts/A4-layout";
@@ -18,7 +18,9 @@ import ExecutionKPIPage_11 from "@/components/report/11-execution-kpi";
 import ConclusionPage_12 from "@/components/report/12-conclusion";
 import ExecutiveSummaryPage_13 from "@/components/report/13-executive-summary";
 import { useAIData } from "../contexts/AiResponseContext";
-import type { PageType } from "@/components/streaming_prompt_container"; // or wherever you defined it
+import type { PageType } from "@/components/streaming_prompt_container";
+import { useRequireLogin } from "@/hooks/useRequireLogin";
+import { useRef } from "react";
 
 export default function PromptTestPage2() {
   const { category_id } = useParams<{
@@ -28,6 +30,9 @@ export default function PromptTestPage2() {
   const searchParams = new URLSearchParams(location.search);
   const categoryNameKo = searchParams.get("category_name_ko");
   const { state, chunkConstraints } = useAIData();
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  useRequireLogin();
 
   return (
     <div className="flex h-screen">

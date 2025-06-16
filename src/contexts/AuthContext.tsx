@@ -60,14 +60,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return response;
       }
     } catch (error) {
-      toast.error("Login failed");
+      toast.error("로그인 실패");
       console.error("Login failed", error);
     }
   };
 
   const logout = async () => {
     if (!user) {
-      console.log("🙄 이미 로그아웃 상태입니다.");
+      console.log("이미 로그아웃 상태입니다.");
       return;
     }
 
@@ -77,12 +77,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     );
 
     if (!response.success) {
-      toast.error("🙄 로그아웃 실패.");
+      toast.error("서버 에러 : 로그아웃 실패");
+    } else {
+      setUser(null);
+      setIsLoggedIn(false);
+      localStorage.removeItem("userAndToken");
     }
-
-    setUser(null);
-    setIsLoggedIn(false);
-    localStorage.removeItem("userAndToken");
   };
 
   return (

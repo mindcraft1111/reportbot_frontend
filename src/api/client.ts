@@ -93,26 +93,27 @@ export const logout = async (
   accessToken: string,
   refreshToken: string
 ): Promise<{ success: boolean; message: string }> => {
-  const res = await fetch("http://localhost:8000/api/logout/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${accessToken}`,
-    },
-    body: JSON.stringify({ refresh: refreshToken }),
-  });
+  try {
+    const res = await fetch("http://localhost:8000/api/logout/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ refresh: refreshToken }),
+    });
 
-  const result = await res.json();
+    const result = await res.json();
 
-  if (!res.ok) {
     return {
       success: res.ok,
-      message: result.detail,
+      message: result.detail || "로그아웃 실패",
+    };
+  } catch (err: any) {
+    // For network or unexpected errors
+    return {
+      success: false,
+      message: err.message || "네트워크 오류",
     };
   }
-
-  return {
-    success: res.ok,
-    message: result.detail,
-  };
 };

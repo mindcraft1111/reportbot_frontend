@@ -191,7 +191,7 @@ const StreamingPromptContainer = ({
 
   return (
     <main className="p-6">
-      <h1 className="text-2xl mb-4">{page.toLowerCase()}</h1>
+      <h1 className="text-2xl mb-4">chunk_type: {page.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
         <DataGoal constraint={constraint} />
