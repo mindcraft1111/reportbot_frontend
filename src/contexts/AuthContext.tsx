@@ -37,6 +37,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (stored) {
       const parsed: UserAndToken = JSON.parse(stored);
       setUser(parsed);
+      setIsLoggedIn(true);
     }
   }, []);
 
