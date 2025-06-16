@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import logo from "/assets/logo.png";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { cn } from "@/lib/utils";
 import * as apiClient from "../api/client";
 import { toast } from "sonner";
@@ -32,6 +32,7 @@ const formSchema = z.object({
 export type RegisterSchema = z.infer<typeof formSchema>;
 
 export default function Register() {
+  const navigator = useNavigate();
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,15 +47,18 @@ export default function Register() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log("회원가입 데이터", values);
-    // TODO: send values to your /api/register backend
+
     const result = await apiClient.register(values);
 
-    if (!result.success) {
-      const errorMessage =
-        result.error?.message ?? String(result.error) ?? "Unknown error";
-
-      toast.error(errorMessage);
+    if (!result.success && result.error) {
+      Object.entries(result.error).forEach(([_, message]) => {
+        if (message) {
+          toast.error(String(message));
+        }
+      });
     }
+    toast.success("🎉 회원가입에 성공하셨습니다.");
+    navigator("/auth/login/");
   }
 
   return (

@@ -2,9 +2,11 @@ import logo from "/assets/logo.png";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "@/contexts/AuthContext";
+import HeaderAvatar from "./avatar";
+import AuthButton from "./auth-button";
 
 export default function Commheader() {
-  const navivate = useNavigate();
+  const navigate = useNavigate();
   const auth = useContext(AuthContext);
 
   return (
@@ -35,29 +37,11 @@ export default function Commheader() {
 
         <div className="flex space-x-4">
           {auth?.isLoggedIn ? (
-            <>
-              <button id="toggleOpen" className="lg:hidden cursor-pointer">
-                <svg
-                  className="w-7 h-7"
-                  fill="#000"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-              </button>
-            </>
+            <HeaderAvatar />
           ) : (
-            <button
-              className="px-4 py-2 text-sm rounded-full font-medium cursor-pointer tracking-wide text-slate-900 border border-gray-400 bg-transparent hover:bg-gray-50 transition-all"
-              onClick={() => navivate("/auth/login")}
-            >
+            <AuthButton onClick={() => navigate("/auth/login")}>
               Login
-            </button>
+            </AuthButton>
           )}
         </div>
       </div>

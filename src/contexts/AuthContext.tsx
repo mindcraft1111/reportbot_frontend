@@ -3,19 +3,20 @@ import React, {
   useState,
   useEffect,
   type ReactNode,
+  useContext,
 } from "react";
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-}
+import { toast } from "sonner";
+import * as apiClient from "../api/client";
+import { type AuthResponse } from "../api/client";
+import { type UserAndToken } from "../api/client";
 
 interface AuthContextType {
-  user: User | null;
-  token: string | null;
+  user: UserAndToken | null;
   isLoggedIn: boolean;
-  login: (email: string, password: string) => Promise<void>;
+  login: (values: {
+    email: string;
+    password: string;
+  }) => Promise<AuthResponse | undefined>;
   logout: () => void;
 }
 
@@ -27,66 +28,77 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
-// export const AuthProvider = ({ children }: { children: ReactNode }) => {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
+  const [user, setUser] = useState<UserAndToken | null>(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("token");
-    if (storedToken) {
-      setToken(storedToken);
+    const stored = localStorage.getItem("userAndToken");
+    if (stored) {
+      const parsed: UserAndToken = JSON.parse(stored);
+      setUser(parsed);
     }
   }, []);
 
-  // 로그인
-  const login = async (email: string, password: string) => {
+  const login = async (values: {
+    email: string;
+    password: string;
+  }): Promise<AuthResponse | undefined> => {
     try {
-      const response = await fakeLoginApi(email, password);
-      setToken(response.token);
-      setUser(response.user);
-      localStorage.setItem("token", response.token);
+      const response = await apiClient.login(values);
+      console.log(response);
+
+      if (response.error) {
+        return response;
+      }
+
+      if (response.success && response.data) {
+        setUser(response.data);
+        setIsLoggedIn(true);
+        localStorage.setItem("userAndToken", JSON.stringify(response.data));
+        return response;
+      }
     } catch (error) {
+      toast.error("Login failed");
       console.error("Login failed", error);
-      throw error;
     }
   };
 
-  // 로그아웃
-  const logout = () => {
+  const logout = async () => {
+    if (!user) {
+      console.log("🙄 이미 로그아웃 상태입니다.");
+      return;
+    }
+
+    const response = await apiClient.logout(
+      user.tokens.accessToken,
+      user.tokens.refreshToken
+    );
+
+    if (!response.success) {
+      toast.error("🙄 로그아웃 실패.");
+    }
+
     setUser(null);
-    setToken(null);
-    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    localStorage.removeItem("userAndToken");
   };
 
-  const isLoggedIn = !!token && !!user;
-
   return (
-    <AuthContext.Provider value={{ user, token, isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-interface FakeLoginResponse {
-  token: string;
-  user: User;
-}
+export const useAuthContext = () => {
+  const context = useContext(AuthContext);
 
-const fakeLoginApi = async (
-  email: string,
-  password: string
-): Promise<FakeLoginResponse> => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (email === "test@example.com" && password === "password") {
-        resolve({
-          token: "fake-token-123456",
-          user: { id: "1", name: "Test User", email },
-        });
-      } else {
-        reject(new Error("Invalid credentials"));
-      }
-    }, 1000);
-  });
+  if (!context) {
+    throw new Error(
+      "useAuthContext must be used within an AuthContextProvider"
+    );
+  }
+
+  return context;
 };
