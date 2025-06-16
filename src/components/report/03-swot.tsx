@@ -1,15 +1,16 @@
+import { useAIData } from "@/contexts/AiResponseContext";
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
-  r_3_1: string; // 강점 제목 (예: "기술력", "고객 만족도" 등)
-  r_3_2: string; // 강점에 대한 상세 설명
-
-  r_3_3: string; // 약점 제목 (예: "낮은 브랜드 인지도" 등)
-  r_3_4: string; // 약점에 대한 상세 설명
-
-  r_3_5: string; // 기회 요인 제목 (예: "시장 성장" 등)
-  r_3_6: string; // 기회 요인에 대한 상세 설명
-
-  r_3_7: string; // 위협 요인 제목 (예: "신규 경쟁사 등장" 등)
-  r_3_8: string; // 위협 요인에 대한 상세 설명
+  r_3_1: string; // 강점 제목
+  r_3_2: string; // 강점 설명
+  r_3_3: string; // 약점 제목
+  r_3_4: string; // 약점 설명
+  r_3_5: string; // 기회 제목
+  r_3_6: string; // 기회 설명
+  r_3_7: string; // 위협 제목
+  r_3_8: string; // 위협 설명
+  isCurrentWorkingPage?: boolean; // AI 작업 중 여부
 };
 
 function SwotPage_03({
@@ -21,9 +22,12 @@ function SwotPage_03({
   r_3_6,
   r_3_7,
   r_3_8,
+  isCurrentWorkingPage = false,
 }: Props) {
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <p>
         본 분석은 SWOT 프레임워크를 활용하여 자사 제품의 강점(Strengths),
         약점(Weaknesses), 기회(Opportunities), 위협(Threats)을 체계적으로

@@ -1,4 +1,5 @@
 // context/AIDataContext.tsx
+import type { ChunkType } from "@/components/streaming_prompt_container";
 import {
   createContext,
   useReducer,
@@ -311,22 +312,28 @@ const AIDataContext = createContext<{
   state: GlobalState;
   dispatch: React.Dispatch<Action>;
   chunkConstraints: ChunkConstraints;
-  currentPage: string | null;
-  handlePromptFocus: (chunkType: string) => void;
+  currentFocusPage: ChunkType | null;
+  handlePromptFocus: (chunkType: ChunkType) => void;
+  currentlyWorkingPage: ChunkType | null;
+  setCurrentlyWorkingPage: React.Dispatch<
+    React.SetStateAction<ChunkType | null>
+  >;
 } | null>(null);
 
 export const AIDataProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const location = useLocation(); // ✅ access router location
-  const [currentPage, setCurrentpage] = useState<string | null>("coverPage");
+  const [currentFocusPage, setCurrentFocusPage] = useState<ChunkType | null>("coverPage");
+  const [currentlyWorkingPage, setCurrentlyWorkingPage] =
+    useState<ChunkType | null>(null);
 
   useEffect(() => {
     dispatch({ type: "RESET_ALL" }); // ✅ reset all state on path change
-    setCurrentpage("coverPage");
+    setCurrentFocusPage("coverPage");
   }, [location.pathname]);
 
-  const handlePromptFocus = (chunkType: string) => {
-    setCurrentpage(chunkType);
+  const handlePromptFocus = (chunkType: ChunkType) => {
+    setCurrentFocusPage(chunkType);
   };
 
   return (
@@ -335,8 +342,10 @@ export const AIDataProvider = ({ children }: { children: ReactNode }) => {
         state,
         dispatch,
         chunkConstraints,
-        currentPage,
+        currentFocusPage,
         handlePromptFocus,
+        currentlyWorkingPage,
+        setCurrentlyWorkingPage,
       }}
     >
       {children}

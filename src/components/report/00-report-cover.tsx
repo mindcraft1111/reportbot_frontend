@@ -1,13 +1,24 @@
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
   r_0_1: string; // 보고서 제목 (대제목)
   r_0_2: string; // 부제목 또는 설명
   r_0_3: string; // 로고 이미지 URL
   r_0_4: string; // 작성일자 (예: "2025-06-13")
+  isCurrentWorkingPage?: boolean; // AI 작업 중 여부
 };
 
-function CoverPage_00({ r_0_1, r_0_2, r_0_3, r_0_4 }: Props) {
+function CoverPage_00({
+  r_0_1,
+  r_0_2,
+  r_0_3,
+  r_0_4,
+  isCurrentWorkingPage,
+}: Props) {
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <div
         style={{
           display: "flex",

@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const parsed: UserAndToken = JSON.parse(stored);
       setUser(parsed);
       setIsLoggedIn(true);
-      navigator("/");
+      navigator("/prompt-test/1?category_name_ko=헤드폰");
     }
   }, []);
 

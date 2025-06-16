@@ -50,7 +50,7 @@ const StreamingPromptContainer = ({
   const abortControllerRef = useRef<AbortController | null>(null);
   const authContext = useAuthContext();
 
-  const { dispatch, handlePromptFocus } = useAIData();
+  const { dispatch, handlePromptFocus, setCurrentlyWorkingPage } = useAIData();
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -89,6 +89,8 @@ const StreamingPromptContainer = ({
     const username = userEmail?.split("@")[0];
 
     try {
+      setCurrentlyWorkingPage(chunkType);
+
       const response = await fetch(
         `http://localhost:8000/promptTest/${username}/`,
         {
@@ -152,7 +154,6 @@ const StreamingPromptContainer = ({
 
       setIsStreaming(false);
 
-      // 🧼 Clean ```json or ``` wrapper
       let cleaned = finalResponse.trim();
       if (cleaned.startsWith("```json")) {
         cleaned = cleaned
@@ -163,7 +164,6 @@ const StreamingPromptContainer = ({
         cleaned = cleaned.replace(/^```/, "").replace(/```$/, "").trim();
       }
 
-      // ✨ Convert JS-style keys to strict JSON (wrap keys in quotes)
       cleaned = cleaned.replace(/([{,]\s*)([a-zA-Z0-9_]+)(\s*:)/g, '$1"$2"$3');
 
       try {
@@ -186,6 +186,8 @@ const StreamingPromptContainer = ({
       console.error("Fetch error:", err);
       toast.error("Something went wrong while streaming response.");
       setIsStreaming(false);
+    } finally {
+      setCurrentlyWorkingPage(null);
     }
   };
 

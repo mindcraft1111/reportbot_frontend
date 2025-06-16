@@ -1,19 +1,22 @@
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
-  r_7_5_1: string; // 이미지 URL (row1)
-  r_7_5_2: string; // 제목 (row1)
-  r_7_5_3: string; // 설명 (row1)
-  r_7_5_4: string; // 이미지 URL (row2)
-  r_7_5_6: string; // 제목 (row2)
-  r_7_5_7: string; // 설명 (row2)
-  r_7_5_8: string; // 이미지 URL (row3)
-  r_7_5_9: string; // 제목 (row3)
-  r_7_5_10: string; // 설명 (row3)
-  r_7_5_11: string; // 이미지 URL (row4)
-  r_7_5_12: string; // 제목 (row4)
-  r_7_5_13: string; // 설명 (row4)
-  r_7_5_14: string; // 이미지 URL (row5)
-  r_7_5_15: string; // 제목 (row5)
-  r_7_5_16: string; // 설명 (row5)
+  r_7_5_1: string;
+  r_7_5_2: string;
+  r_7_5_3: string;
+  r_7_5_4: string;
+  r_7_5_6: string;
+  r_7_5_7: string;
+  r_7_5_8: string;
+  r_7_5_9: string;
+  r_7_5_10: string;
+  r_7_5_11: string;
+  r_7_5_12: string;
+  r_7_5_13: string;
+  r_7_5_14: string;
+  r_7_5_15: string;
+  r_7_5_16: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function ImprovementPage_07({
@@ -32,9 +35,12 @@ function ImprovementPage_07({
   r_7_5_14,
   r_7_5_15,
   r_7_5_16,
+  isCurrentWorkingPage = false,
 }: Props) {
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h1>주요 개선 영역 도출</h1>
       <p>
         감정 분석 결과와 경쟁사 비교를 통해 자사 제품의 주요 개선 영역을

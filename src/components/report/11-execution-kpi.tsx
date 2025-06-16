@@ -1,3 +1,5 @@
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
   r_11_1: {
     title: string;
@@ -5,13 +7,19 @@ type Props = {
   }[];
   r_11_2: string;
   r_11_3: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
-
-
-function ExecutionKPIPage_11({ r_11_1, r_11_2, r_11_3 }: Props) {
+function ExecutionKPIPage_11({
+  r_11_1,
+  r_11_2,
+  r_11_3,
+  isCurrentWorkingPage = false,
+}: Props) {
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h2>성과 측정을 위한 핵심 성과 지표(KPI)</h2>
 
       <div className="kpi-grid">

@@ -47,7 +47,8 @@ export default function PromptTestPage2() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const categoryNameKo = searchParams.get("category_name_ko");
-  const { state, chunkConstraints, currentPage } = useAIData();
+  const { state, chunkConstraints, currentFocusPage, currentlyWorkingPage } =
+    useAIData();
   const sectionRefs = useRef<Record<ChunkType, HTMLDivElement | null>>({
     coverPage: null,
     contentsPage: null,
@@ -66,13 +67,13 @@ export default function PromptTestPage2() {
   });
 
   useEffect(() => {
-    if (currentPage) {
-      const target = sectionRefs.current[currentPage as ChunkType];
+    if (currentFocusPage) {
+      const target = sectionRefs.current[currentFocusPage as ChunkType];
       if (target) {
         target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
-  }, [currentPage]);
+  }, [currentFocusPage]);
 
   useEffect(() => {
     const pdf = document.getElementById("pdf-content");
@@ -90,12 +91,12 @@ export default function PromptTestPage2() {
         {category_id &&
           categoryNameKo &&
           (Object.entries(chunkConstraints) as [ChunkType, any][]).map(
-            ([pageKey, constraint], i) => (
+            ([chunkType, constraint], i) => (
               <StreamingPromptContainer
                 key={i}
                 category_name_ko={categoryNameKo}
                 category_id={category_id}
-                chunkType={pageKey}
+                chunkType={chunkType}
                 chunkConstraint={constraint}
               />
             )
@@ -106,14 +107,17 @@ export default function PromptTestPage2() {
         id="pdf-content"
         className="space-y-4 p-12 bg-gray-100 h-screen overflow-auto"
       >
-        {chunkPageComponents.map(([pageKey, PageComponent], index) => (
-          <React.Fragment key={pageKey}>
+        {chunkPageComponents.map(([chunkType, PageComponent], index) => (
+          <React.Fragment key={chunkType}>
             <A4Layout
               ref={(el) => {
-                sectionRefs.current[pageKey] = el;
+                sectionRefs.current[chunkType] = el;
               }}
             >
-              <PageComponent {...state[pageKey]} />
+              <PageComponent
+                {...state[chunkType]}
+                isCurrentWorkingPage={currentlyWorkingPage === chunkType}
+              />
             </A4Layout>
             {index < chunkPageComponents.length - 1 && <PageSeparator />}
           </React.Fragment>

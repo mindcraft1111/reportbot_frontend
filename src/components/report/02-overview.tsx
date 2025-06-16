@@ -1,11 +1,20 @@
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
-  r_2_1: string; // 리포트 개요 설명 (예: 분석의 배경 및 목적)
+  r_2_1: string; // 리포트 개요 설명
   r_2_2: string; // 분석 대상 및 방법론에 대한 설명
+  isCurrentWorkingPage?: boolean; // AI 작업 중 여부
 };
 
-function OverviewPage_02({ r_2_1, r_2_2 }: Props) {
+function OverviewPage_02({
+  r_2_1,
+  r_2_2,
+  isCurrentWorkingPage = false,
+}: Props) {
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h1>개요</h1>
       <p>{r_2_1}</p>
 

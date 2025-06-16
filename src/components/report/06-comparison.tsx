@@ -9,6 +9,7 @@ import {
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import type { ChartData, ChartOptions } from "chart.js";
+import SpinnerOverlay from "../spinner-overlay";
 
 ChartJS.register(
   BarElement,
@@ -20,20 +21,21 @@ ChartJS.register(
 );
 
 type Props = {
-  r_6_1_1: string[]; // Labels for chart categories
-  r_6_1_2: number[]; // Data for '자사'
-  r_6_1_3: number[]; // Data for competitor
-  r_6_2: string; // 강점 영역
-  r_6_3: string; // 개선 필요 영역
-  r_6_4: string; // 기회 영역
-  r_6_5: string; // 경쟁사 명 (A사)
-  r_6_6: string; // 자사 NPS
-  r_6_7: string; // 경쟁사 NPS
-  r_6_8: string; // 자사 재구매 의향
-  r_6_9: string; // 경쟁사 재구매 의향
-  r_6_10: string; // 자사 브랜드 충성도
-  r_6_11: string; // 경쟁사 브랜드 충성도
-  r_6_12: string; // 분석 요약 텍스트
+  r_6_1_1: string[];
+  r_6_1_2: number[];
+  r_6_1_3: number[];
+  r_6_2: string;
+  r_6_3: string;
+  r_6_4: string;
+  r_6_5: string;
+  r_6_6: string;
+  r_6_7: string;
+  r_6_8: string;
+  r_6_9: string;
+  r_6_10: string;
+  r_6_11: string;
+  r_6_12: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function ComparisonPage_06({
@@ -51,6 +53,7 @@ function ComparisonPage_06({
   r_6_10,
   r_6_11,
   r_6_12,
+  isCurrentWorkingPage = false,
 }: Props) {
   const barData: ChartData<"bar", number[], string> = {
     labels: r_6_1_1,
@@ -99,7 +102,9 @@ function ComparisonPage_06({
   };
 
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h1>자사와 경쟁사 비교 분석</h1>
       <p>
         자사와 경쟁사 제품의 감정 분석 결과를 직접 비교하여 시장 내 경쟁력을

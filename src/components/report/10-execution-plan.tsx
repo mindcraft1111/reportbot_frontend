@@ -1,3 +1,5 @@
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
   r_10_1: {
     solution: string;
@@ -5,11 +7,14 @@ type Props = {
     coopDept: string;
     role: string;
   }[];
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
-function ExecutionPlanPage_10({ r_10_1 }: Props) {
+function ExecutionPlanPage_10({ r_10_1, isCurrentWorkingPage = false }: Props) {
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h1>실행 계획 및 KPI</h1>
       <p>
         앞서 제안된 솔루션을 효과적으로 구현하기 위한 단계별 실행 계획과 성과

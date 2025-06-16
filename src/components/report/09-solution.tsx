@@ -1,3 +1,5 @@
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
   r_9_3_1: { solution: string }[];
   r_9_3_2: { solution: string }[];
@@ -12,8 +14,8 @@ type Props = {
   r_9_5_8: string;
   r_9_5_9: { solution: string }[];
   r_9_6: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
-
 
 function SolutionPage_09({
   r_9_3_1,
@@ -29,9 +31,12 @@ function SolutionPage_09({
   r_9_5_8,
   r_9_5_9,
   r_9_6,
+  isCurrentWorkingPage = false,
 }: Props) {
   return (
-    <section className="page-container small-layout">
+    <section className="relative page-container small-layout">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h1>솔루션 제안</h1>
       <p>
         앞서 도출된 개선 영역을 바탕으로, 자사 제품의 경쟁력 강화와 고객 만족도
