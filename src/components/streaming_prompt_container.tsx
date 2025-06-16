@@ -17,7 +17,7 @@ const formSchema = z.object({
 
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
-export type PageType =
+export type ChunkType =
   | "coverPage"
   | "contentsPage"
   | "overviewPage"
@@ -36,21 +36,21 @@ export type PageType =
 interface StreamingPromptContainerProps {
   category_id: string;
   category_name_ko: string;
-  page: PageType;
-  constraint: any;
+  chunkType: ChunkType;
+  chunkConstraint: any;
 }
 
 const StreamingPromptContainer = ({
   category_id,
-  page,
-  constraint,
+  chunkType,
+  chunkConstraint,
 }: StreamingPromptContainerProps) => {
   const [response, setResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const authContext = useAuthContext();
 
-  const { dispatch } = useAIData();
+  const { dispatch, handlePromptFocus } = useAIData();
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -76,8 +76,8 @@ const StreamingPromptContainer = ({
       ...values,
       product1,
       product2,
-      chunk_constraint: constraint,
-      chunk_type: page,
+      chunk_constraint: chunkConstraint,
+      chunk_type: chunkType,
     };
 
     const controller = new AbortController();
@@ -170,8 +170,8 @@ const StreamingPromptContainer = ({
         const parsedData = JSON.parse(cleaned);
 
         dispatch({
-          type: "SET_PAGE_DATA",
-          page,
+          type: "SET_CHUNK_DATA",
+          chunk: chunkType,
           payload: parsedData,
         });
       } catch (jsonError) {
@@ -189,16 +189,19 @@ const StreamingPromptContainer = ({
     }
   };
 
+  const handlePromptClick = () => handlePromptFocus(chunkType);
+
   return (
     <main className="p-6">
-      <h1 className="text-2xl mb-4">chunk_type: {page.toLowerCase()}</h1>
+      <h1 className="text-2xl mb-4">chunk_type: {chunkType.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
-        <DataGoal constraint={constraint} />
+        <DataGoal constraint={chunkConstraint} />
         <PromptForm
           form={form}
           onSubmit={handleSubmit}
           isStreaming={isStreaming}
+          onClick={handlePromptClick}
         />
       </section>
     </main>

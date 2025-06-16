@@ -13,11 +13,17 @@ import type { UseFormReturn } from "react-hook-form";
 
 type PromptFormProps = {
   form: UseFormReturn<Gemini_Prompt>;
-  onSubmit: (values: Gemini_Prompt) => void | Promise<void>; // ✅ CORRECT type
+  onSubmit: (values: Gemini_Prompt) => void | Promise<void>; 
   isStreaming: boolean;
+  onClick: () => void;
 };
 
-const PromptForm = ({ form, onSubmit, isStreaming }: PromptFormProps) => (
+const PromptForm = ({
+  form,
+  onSubmit,
+  isStreaming,
+  onClick,
+}: PromptFormProps) => (
   <Form {...form}>
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
       <FormField
@@ -37,6 +43,7 @@ const PromptForm = ({ form, onSubmit, isStreaming }: PromptFormProps) => (
                     form.handleSubmit(onSubmit)();
                   }
                 }}
+                onFocus={onClick}
               />
             </FormControl>
             <FormMessage />

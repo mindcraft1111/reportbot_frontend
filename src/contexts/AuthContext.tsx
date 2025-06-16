@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import * as apiClient from "../api/client";
 import { type AuthResponse } from "../api/client";
 import { type UserAndToken } from "../api/client";
+import { useNavigate } from "react-router";
 
 interface AuthContextType {
   user: UserAndToken | null;
@@ -31,6 +32,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserAndToken | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigator = useNavigate();
 
   useEffect(() => {
     const stored = localStorage.getItem("userAndToken");
@@ -38,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const parsed: UserAndToken = JSON.parse(stored);
       setUser(parsed);
       setIsLoggedIn(true);
+      navigator("/");
     }
   }, []);
 
