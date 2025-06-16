@@ -12,11 +12,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import logo from "/assets/logo.png";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
-import * as apiClient from "../api/client";
 import { buttonBase, gradientBlueButton } from "@/styles/classnames";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const loginSchema = z.object({
   email: z.string().email("올바른 이메일 형식이 아닙니다."),
@@ -28,6 +28,8 @@ const loginSchema = z.object({
 export type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  const { login } = useAuthContext();
+  const navigator = useNavigate();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -37,17 +39,13 @@ export default function LoginPage() {
   });
 
   async function onSubmit(values: LoginSchema) {
-    const result = await apiClient.login(values);
-
-    if (!result.success) {
-      const errorMessage =
-        result.error?.message ?? String(result.error) ?? "로그인 실패";
-      toast.error(errorMessage);
-    } else {
-      toast.success("로그인 성공!");
-      // Optionally redirect, e.g.:
-      // navigate("/dashboard");
+    const result = await login(values);
+    if (!result) return toast.error("🙄 로그인 에러");
+    if (!result.success && result.error) {
+      toast.error("🙄 입력하신 정보가 일치하지 않습니다.");
+      return;
     }
+    navigator("/");
   }
 
   return (

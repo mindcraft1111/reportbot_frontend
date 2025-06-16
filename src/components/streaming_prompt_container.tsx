@@ -5,30 +5,52 @@ import AIResponsePanel from "./ai_response_panel";
 import PromptForm from "./prompt_form";
 import { toast } from "sonner";
 import { z } from "zod";
+import { useAIData } from "../contexts/AiResponseContext";
+import { DataGoal } from "./data-goal";
+import { useAuthContext } from "@/contexts/AuthContext";
 
-// Zod schema for form validation
 const formSchema = z.object({
   user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
   product1: z.string(),
   product2: z.string(),
 });
 
-// Type for form values
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
-// Props type for the component
+export type PageType =
+  | "coverPage"
+  | "contentsPage"
+  | "overviewPage"
+  | "swotPage"
+  | "selfProductPage"
+  | "competitorPage"
+  | "comparisonPage"
+  | "improvementPage"
+  | "expectationGapPage"
+  | "solutionPage"
+  | "executionPlanPage"
+  | "executionKPIPage"
+  | "conclusionPage"
+  | "executiveSummaryPage";
+
 interface StreamingPromptContainerProps {
   category_id: string;
   category_name_ko: string;
+  page: PageType;
+  constraint: any;
 }
 
 const StreamingPromptContainer = ({
   category_id,
-  category_name_ko,
+  page,
+  constraint,
 }: StreamingPromptContainerProps) => {
   const [response, setResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
+  const authContext = useAuthContext();
+
+  const { dispatch } = useAIData();
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -54,20 +76,30 @@ const StreamingPromptContainer = ({
       ...values,
       product1,
       product2,
+      chunk_constraint: constraint,
+      chunk_type: page,
     };
 
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
+    let finalResponse = "";
+
+    const userEmail = authContext.user?.user.email;
+    const username = userEmail?.split("@")[0];
+
     try {
-      const response = await fetch("http://localhost:8000/api/ai/streaming/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-        signal: controller.signal,
-      });
+      const response = await fetch(
+        `http://localhost:8000/promptTest/${username}/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+          signal: controller.signal,
+        }
+      );
 
       if (!response.ok || !response.body) {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -76,14 +108,12 @@ const StreamingPromptContainer = ({
       const reader = response.body.getReader();
       const decoder = new TextDecoder("utf-8");
       let buffer = "";
-      let chunkCount = 0;
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
         const chunk = decoder.decode(value, { stream: true });
-        chunkCount++;
         buffer += chunk;
 
         const lines = buffer.split("\n\n");
@@ -100,7 +130,6 @@ const StreamingPromptContainer = ({
               const parsed = JSON.parse(jsonStr);
 
               if (parsed.done) continue;
-
               if (parsed.error) {
                 console.error("Server error:", parsed.error);
                 toast.error(parsed.error);
@@ -108,7 +137,11 @@ const StreamingPromptContainer = ({
               }
 
               if (parsed.text) {
-                setResponse((prev) => prev + parsed.text);
+                setResponse((prev) => {
+                  const next = prev + parsed.text;
+                  finalResponse = next;
+                  return next;
+                });
               }
             } catch (parseError) {
               console.warn("Failed to parse JSON:", jsonStr, parseError);
@@ -116,24 +149,55 @@ const StreamingPromptContainer = ({
           }
         }
       }
+
+      setIsStreaming(false);
+
+      // 🧼 Clean ```json or ``` wrapper
+      let cleaned = finalResponse.trim();
+      if (cleaned.startsWith("```json")) {
+        cleaned = cleaned
+          .replace(/^```json/, "")
+          .replace(/```$/, "")
+          .trim();
+      } else if (cleaned.startsWith("```")) {
+        cleaned = cleaned.replace(/^```/, "").replace(/```$/, "").trim();
+      }
+
+      // ✨ Convert JS-style keys to strict JSON (wrap keys in quotes)
+      cleaned = cleaned.replace(/([{,]\s*)([a-zA-Z0-9_]+)(\s*:)/g, '$1"$2"$3');
+
+      try {
+        const parsedData = JSON.parse(cleaned);
+
+        dispatch({
+          type: "SET_PAGE_DATA",
+          page,
+          payload: parsedData,
+        });
+      } catch (jsonError) {
+        console.error(
+          "Parsing cleaned AI response failed:",
+          jsonError,
+          cleaned
+        );
+        toast.warning("응답 파싱에 실패했습니다.");
+      }
     } catch (err) {
       console.error("Fetch error:", err);
       toast.error("Something went wrong while streaming response.");
-    } finally {
       setIsStreaming(false);
     }
   };
 
   return (
     <main className="p-6">
-      <h1 className="text-2xl font-bold mb-4">
-        Prompt for: {category_name_ko}
-      </h1>
+      <h1 className="text-2xl mb-4">{page.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
+        <DataGoal constraint={constraint} />
         <PromptForm
           form={form}
-          onSubmit={handleSubmit} // ✅ This is a (values) => Promise<void>
+          onSubmit={handleSubmit}
           isStreaming={isStreaming}
         />
       </section>

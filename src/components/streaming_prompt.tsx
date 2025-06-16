@@ -3,7 +3,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -207,7 +206,6 @@ export default function StreamingPrompt({
                 name="user_prompt"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Enter Prompt</FormLabel>
                     <FormControl>
                       <Textarea
                         placeholder="Type your prompt here..."

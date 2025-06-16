@@ -16,28 +16,34 @@ import Register from "./pages/register-page";
 import PromptTestPage from "./pages/test-page";
 import PromptTestPage2 from "./pages/prompt-test-page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import AIDataProvider from "./contexts/AiResponseContext";
+import { AuthProvider } from "./contexts/AuthContext";
 
 const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<CommLayout />}>
-            <Route index element={<LandingPage />} />{" "}
-            <Route path="/test" element={<PromptTestPage />} />
-            <Route path="report" element={<ReportPage />} />
-            <Route
-              path="/prompt-test/:category_id"
-              element={<PromptTestPage2 />}
-            />
-          </Route>
-          <Route path="/auth/login" element={<LoginPage />} />
-          <Route path="/auth/register" element={<Register />} />
-        </Routes>
-        <Toaster />
-      </BrowserRouter>
-    </QueryClientProvider>
+    <AuthProvider>
+      <QueryClientProvider client={queryClient}>
+        <AIDataProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route element={<CommLayout />}>
+                <Route index element={<LandingPage />} />{" "}
+                <Route path="/test" element={<PromptTestPage />} />
+                <Route path="report" element={<ReportPage />} />
+                <Route
+                  path="/prompt-test/:category_id"
+                  element={<PromptTestPage2 />}
+                />
+              </Route>
+              <Route path="/auth/login" element={<LoginPage />} />
+              <Route path="/auth/register" element={<Register />} />
+            </Routes>
+            <Toaster position="bottom-right" richColors />
+          </BrowserRouter>
+        </AIDataProvider>
+      </QueryClientProvider>
+    </AuthProvider>
   </StrictMode>
 );
