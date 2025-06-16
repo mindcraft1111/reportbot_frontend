@@ -50,7 +50,12 @@ const StreamingPromptContainer = ({
   const abortControllerRef = useRef<AbortController | null>(null);
   const authContext = useAuthContext();
 
-  const { dispatch, handlePromptFocus, setCurrentlyWorkingPage } = useAIData();
+  const {
+    dispatch,
+    handlePromptFocus,
+    setCurrentlyWorkingPage,
+    currentFocusPage,
+  } = useAIData();
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -194,7 +199,13 @@ const StreamingPromptContainer = ({
   const handlePromptClick = () => handlePromptFocus(chunkType);
 
   return (
-    <main className="p-6">
+    <main
+      className={`p-6 rounded-md transition-all duration-300 ${
+        chunkType === currentFocusPage
+          ? "bg-gray-50 ring-1 ring-blue-300 shadow-sm"
+          : ""
+      }`}
+    >
       <h1 className="text-2xl mb-4">chunk_type: {chunkType.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
