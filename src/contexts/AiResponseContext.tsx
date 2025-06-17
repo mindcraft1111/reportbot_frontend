@@ -315,17 +315,26 @@ const AIDataContext = createContext<{
   currentFocusPage: ChunkType | null;
   handlePromptFocus: (chunkType: ChunkType) => void;
   currentlyWorkingPage: ChunkType | null;
-  setCurrentlyWorkingPage: React.Dispatch<
-    React.SetStateAction<ChunkType | null>
-  >;
+  handleSetCurrentlyWorkingPage: (chunkType: ChunkType | null) => void;
+  setCanSetWorkingPage: React.Dispatch<React.SetStateAction<boolean>>;
+  canSetWorkingPage: boolean;
 } | null>(null);
 
 export const AIDataProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const location = useLocation(); // ✅ access router location
-  const [currentFocusPage, setCurrentFocusPage] = useState<ChunkType | null>("coverPage");
+  const [currentFocusPage, setCurrentFocusPage] = useState<ChunkType | null>(
+    "coverPage"
+  );
   const [currentlyWorkingPage, setCurrentlyWorkingPage] =
     useState<ChunkType | null>(null);
+  const [canSetWorkingPage, setCanSetWorkingPage] = useState(true);
+
+  const handleSetCurrentlyWorkingPage = (chunkType: ChunkType | null) => {
+    if (!canSetWorkingPage) return;
+
+    setCurrentlyWorkingPage(chunkType);
+  };
 
   useEffect(() => {
     dispatch({ type: "RESET_ALL" }); // ✅ reset all state on path change
@@ -345,7 +354,9 @@ export const AIDataProvider = ({ children }: { children: ReactNode }) => {
         currentFocusPage,
         handlePromptFocus,
         currentlyWorkingPage,
-        setCurrentlyWorkingPage,
+        handleSetCurrentlyWorkingPage,
+        setCanSetWorkingPage,
+        canSetWorkingPage,
       }}
     >
       {children}

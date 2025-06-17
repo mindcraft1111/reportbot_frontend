@@ -53,7 +53,7 @@ const StreamingPromptContainer = ({
   const {
     dispatch,
     handlePromptFocus,
-    setCurrentlyWorkingPage,
+    handleSetCurrentlyWorkingPage,
     currentFocusPage,
   } = useAIData();
 
@@ -94,7 +94,7 @@ const StreamingPromptContainer = ({
     const username = userEmail?.split("@")[0];
 
     try {
-      setCurrentlyWorkingPage(chunkType);
+      handleSetCurrentlyWorkingPage(chunkType);
 
       const response = await fetch(
         `http://localhost:8000/promptTest/${username}/`,
@@ -192,7 +192,7 @@ const StreamingPromptContainer = ({
       toast.error("Something went wrong while streaming response.");
       setIsStreaming(false);
     } finally {
-      setCurrentlyWorkingPage(null);
+      handleSetCurrentlyWorkingPage(null);
     }
   };
 

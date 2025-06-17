@@ -9,9 +9,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { Loader2 } from "lucide-react";
+import { Switch } from "@/components/ui/switch";
+import { useAIData } from "@/contexts/AiResponseContext";
 
 export default function HeaderAvatar() {
   const auth = useAuthContext();
+  const { setCanSetWorkingPage, canSetWorkingPage } = useAIData();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -32,6 +35,16 @@ export default function HeaderAvatar() {
           }}
         >
           Logout
+        </DropdownMenuItem>
+        <DropdownMenuItem>
+          <Switch
+            checked={canSetWorkingPage}
+            onClick={(e) => {
+              e.stopPropagation();
+              setCanSetWorkingPage((prev) => !prev);
+            }}
+          />
+          AI 작업중 화면 표시
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
