@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, type ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  type ReactNode,
+} from "react";
 import { toast } from "sonner";
 
 type GeneralContext = {
@@ -18,6 +24,24 @@ export default function GeneralContextProvider({
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);
   };
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 640px)");
+
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      if (e.matches) {
+        setIsSidebarOpen(false);
+      }
+    };
+
+    // Add listener
+    mediaQuery.addEventListener("change", handleMediaChange);
+
+    // Clean up
+    return () => {
+      mediaQuery.removeEventListener("change", handleMediaChange);
+    };
+  }, []);
 
   return (
     <GeneralContext.Provider value={{ toggleSidebar, isSidebarOpen }}>
