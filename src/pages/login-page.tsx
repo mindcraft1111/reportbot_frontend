@@ -40,9 +40,9 @@ export default function LoginPage() {
 
   async function onSubmit(values: LoginSchema) {
     const result = await login(values);
-    if (!result) return toast.error("🙄 로그인 에러");
+    if (!result) return toast.error("로그인 에러");
     if (!result.success && result.error) {
-      toast.error("🙄 입력하신 정보가 일치하지 않습니다.");
+      toast.error("입력하신 정보가 일치하지 않습니다.");
       return;
     }
     navigator("/");

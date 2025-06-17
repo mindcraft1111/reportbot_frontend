@@ -1,10 +1,15 @@
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
-  r_1_1: string[]; // 목차 항목 리스트 (각 항목은 문자열로 구성됨)
+  r_1_1: string[]; // 목차 항목 리스트
+  isCurrentWorkingPage?: boolean; // AI 작업 중 여부
 };
 
-function ContentsPage_01({ r_1_1 }: Props) {
+function ContentsPage_01({ r_1_1, isCurrentWorkingPage = false }: Props) {
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <div style={{ textAlign: "center", marginTop: "50px" }}>
         <h1 style={{ fontSize: "28pt", marginTop: "150px" }}>CONTENTS</h1>
       </div>

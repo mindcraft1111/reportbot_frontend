@@ -2,44 +2,33 @@ import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import type { ChartOptions } from "chart.js";
+import SpinnerOverlay from "../spinner-overlay";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 type Props = {
-  r_4_1_1: number; // 긍정적 감정 비율 (4~5점 비율)
-  r_4_1_2: number; // 부정적 감정 비율 (1~2점 비율)
-
-  // 주요 긍정적 피드백 1
-  r_4_2: string; // 긍정 피드백 1 아이콘 (예: 😊)
-  r_4_3: string; // 긍정 피드백 1 제목 (예: "배송 속도")
-  r_4_4: string; // 긍정 피드백 1 설명 (예: "빠른 배송에 만족")
-
-  // 주요 긍정적 피드백 2
-  r_4_5: string; // 긍정 피드백 2 아이콘
-  r_4_6: string; // 긍정 피드백 2 제목
-  r_4_7: string; // 긍정 피드백 2 설명
-
-  // 주요 긍정적 피드백 3
-  r_4_8: string; // 긍정 피드백 3 아이콘
-  r_4_9: string; // 긍정 피드백 3 제목
-  r_4_10: string; // 긍정 피드백 3 설명
-
-  // 주요 부정적 피드백 1
-  r_4_11: string; // 부정 피드백 1 아이콘 (예: 😟)
-  r_4_12: string; // 부정 피드백 1 제목 (예: "품질 이슈")
-  r_4_13: string; // 부정 피드백 1 설명
-
-  // 주요 부정적 피드백 2
-  r_4_14: string; // 부정 피드백 2 아이콘
-  r_4_15: string; // 부정 피드백 2 제목
-  r_4_16: string; // 부정 피드백 2 설명
-
-  // 주요 부정적 피드백 3
-  r_4_17: string; // 부정 피드백 3 아이콘
-  r_4_18: string; // 부정 피드백 3 제목
-  r_4_19: string; // 부정 피드백 3 설명
-
-  r_4_20: string; // 분석 결과 요약 및 해석 텍스트
+  r_4_1_1: number;
+  r_4_1_2: number;
+  r_4_2: string;
+  r_4_3: string;
+  r_4_4: string;
+  r_4_5: string;
+  r_4_6: string;
+  r_4_7: string;
+  r_4_8: string;
+  r_4_9: string;
+  r_4_10: string;
+  r_4_11: string;
+  r_4_12: string;
+  r_4_13: string;
+  r_4_14: string;
+  r_4_15: string;
+  r_4_16: string;
+  r_4_17: string;
+  r_4_18: string;
+  r_4_19: string;
+  r_4_20: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function SelfProductPage_04({
@@ -64,6 +53,7 @@ function SelfProductPage_04({
   r_4_18,
   r_4_19,
   r_4_20,
+  isCurrentWorkingPage = false,
 }: Props) {
   const chartData = {
     labels: ["긍정적 (4~5점)", "부정적 (1~2점)"],
@@ -90,7 +80,9 @@ function SelfProductPage_04({
   };
 
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h1>자사 제품 리뷰 감정 분석 결과</h1>
       <p>
         자사 제품에 대한 고객 리뷰를 심층 분석한 결과, 전반적인 감정 지수와 주요

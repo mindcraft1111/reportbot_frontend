@@ -9,6 +9,7 @@ import {
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import type { ChartData, ChartOptions } from "chart.js";
+import SpinnerOverlay from "../spinner-overlay";
 
 ChartJS.register(
   BarElement,
@@ -27,6 +28,7 @@ type Props = {
   r_5_4: string;
   r_5_5: string;
   r_5_6: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function CompetitorPage_05({
@@ -37,6 +39,7 @@ function CompetitorPage_05({
   r_5_4,
   r_5_5,
   r_5_6,
+  isCurrentWorkingPage = false,
 }: Props) {
   const barData: ChartData<"bar", number[], string> = {
     labels: ["자사", r_5_2],
@@ -85,7 +88,9 @@ function CompetitorPage_05({
   };
 
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h1>경쟁사 제품 리뷰 감정 분석 결과</h1>
       <p>
         주요 경쟁사 브랜드({r_5_2})의 제품에 대한 고객 리뷰를 동일한 방법론으로

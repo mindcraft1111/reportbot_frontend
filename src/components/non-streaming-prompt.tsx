@@ -22,7 +22,11 @@ const formSchema = z.object({
 
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
-export default function NonStreamingPrompt({ product_id }: { product_id: string }) {
+export default function NonStreamingPrompt({
+  product_id,
+}: {
+  product_id: string;
+}) {
   const [geminiResponse, setGeminiResponse] = useState<string | null>(null);
 
   const form = useForm<Gemini_Prompt>({
@@ -43,7 +47,7 @@ export default function NonStreamingPrompt({ product_id }: { product_id: string 
       setGeminiResponse(result.data.response);
     },
     onError: () => {
-      toast.error("Something went wrong while fetching the response.");
+      toast.error("에러가 발생하였습니다.");
     },
   });
 

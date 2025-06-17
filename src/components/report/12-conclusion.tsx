@@ -9,6 +9,7 @@ import {
 } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import type { ChartOptions } from "chart.js";
+import SpinnerOverlay from "../spinner-overlay";
 
 ChartJS.register(
   BarElement,
@@ -26,6 +27,7 @@ type Props = {
   r_12_2_1: string; // 현재 상황 인식
   r_12_2_2: string; // 전략적 방향성
   r_12_2_3: string; // 미래 전망 및 제언
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function ConclusionPage_12({
@@ -35,6 +37,7 @@ function ConclusionPage_12({
   r_12_2_1,
   r_12_2_2,
   r_12_2_3,
+  isCurrentWorkingPage = false,
 }: Props) {
   const barData = {
     labels: ["전체 감정 점수", "NPS", "재구매 의향"],
@@ -82,7 +85,9 @@ function ConclusionPage_12({
   };
 
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h1>결론 및 전략적 제언</h1>
       <p>
         본 리포트에서는 자사와 경쟁사 제품의 고객 리뷰를 감정 분석하여 시장 내

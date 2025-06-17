@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import * as apiClient from "../api/client";
 import { type AuthResponse } from "../api/client";
 import { type UserAndToken } from "../api/client";
+import { useNavigate } from "react-router";
 
 interface AuthContextType {
   user: UserAndToken | null;
@@ -31,6 +32,7 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserAndToken | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigator = useNavigate();
 
   useEffect(() => {
     const stored = localStorage.getItem("userAndToken");
@@ -38,6 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const parsed: UserAndToken = JSON.parse(stored);
       setUser(parsed);
       setIsLoggedIn(true);
+      navigator("/prompt-test/1?category_name_ko=헤드폰");
     }
   }, []);
 
@@ -60,14 +63,14 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return response;
       }
     } catch (error) {
-      toast.error("Login failed");
+      toast.error("로그인 실패");
       console.error("Login failed", error);
     }
   };
 
   const logout = async () => {
     if (!user) {
-      console.log("🙄 이미 로그아웃 상태입니다.");
+      console.log("이미 로그아웃 상태입니다.");
       return;
     }
 
@@ -77,12 +80,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     );
 
     if (!response.success) {
-      toast.error("🙄 로그아웃 실패.");
+      toast.error("서버 에러 : 로그아웃 실패");
+    } else {
+      setUser(null);
+      setIsLoggedIn(false);
+      localStorage.removeItem("userAndToken");
     }
-
-    setUser(null);
-    setIsLoggedIn(false);
-    localStorage.removeItem("userAndToken");
   };
 
   return (

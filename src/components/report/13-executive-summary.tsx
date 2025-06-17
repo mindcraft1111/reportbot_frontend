@@ -1,3 +1,5 @@
+import SpinnerOverlay from "../spinner-overlay";
+
 type Props = {
   r_13_1_1_1: string;
   r_13_1_1_2: string;
@@ -7,6 +9,7 @@ type Props = {
   r_13_1_3_2: string;
   r_13_1_4_1: string;
   r_13_1_4_2: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function ExecutiveSummaryPage_13({
@@ -18,9 +21,12 @@ function ExecutiveSummaryPage_13({
   r_13_1_3_2,
   r_13_1_4_1,
   r_13_1_4_2,
+  isCurrentWorkingPage = false,
 }: Props) {
   return (
-    <section className="page-container">
+    <section className="relative page-container">
+      {isCurrentWorkingPage && <SpinnerOverlay />}
+
       <h2>경영진을 위한 핵심 제언</h2>
       <div className="recommendation-grid">
         <div className="rec-card">
