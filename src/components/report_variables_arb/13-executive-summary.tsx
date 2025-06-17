@@ -1,26 +1,26 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  recommendation_title_1: string;
-  recommendation_detail_1: string;
-  recommendation_title_2: string;
-  recommendation_detail_2: string;
-  recommendation_title_3: string;
-  recommendation_detail_3: string;
-  recommendation_title_4: string;
-  recommendation_detail_4: string;
+  r_13_1_1_1: string;
+  r_13_1_1_2: string;
+  r_13_1_2_1: string;
+  r_13_1_2_2: string;
+  r_13_1_3_1: string;
+  r_13_1_3_2: string;
+  r_13_1_4_1: string;
+  r_13_1_4_2: string;
   isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function ExecutiveSummaryPage_13({
-  recommendation_title_1,
-  recommendation_detail_1,
-  recommendation_title_2,
-  recommendation_detail_2,
-  recommendation_title_3,
-  recommendation_detail_3,
-  recommendation_title_4,
-  recommendation_detail_4,
+  r_13_1_1_1,
+  r_13_1_1_2,
+  r_13_1_2_1,
+  r_13_1_2_2,
+  r_13_1_3_1,
+  r_13_1_3_2,
+  r_13_1_4_1,
+  r_13_1_4_2,
   isCurrentWorkingPage = false,
 }: Props) {
   return (
@@ -31,23 +31,23 @@ function ExecutiveSummaryPage_13({
       <div className="recommendation-grid">
         <div className="rec-card">
           <div className="rec-number">1</div>
-          <h4>{recommendation_title_1}</h4>
-          <p>{recommendation_detail_1}</p>
+          <h4>{r_13_1_1_1}</h4>
+          <p>{r_13_1_1_2}</p>
         </div>
         <div className="rec-card">
           <div className="rec-number">2</div>
-          <h4>{recommendation_title_2}</h4>
-          <p>{recommendation_detail_2}</p>
+          <h4>{r_13_1_2_1}</h4>
+          <p>{r_13_1_2_2}</p>
         </div>
         <div className="rec-card">
           <div className="rec-number">3</div>
-          <h4>{recommendation_title_3}</h4>
-          <p>{recommendation_detail_3}</p>
+          <h4>{r_13_1_3_1}</h4>
+          <p>{r_13_1_3_2}</p>
         </div>
         <div className="rec-card">
           <div className="rec-number">4</div>
-          <h4>{recommendation_title_4}</h4>
-          <p>{recommendation_detail_4}</p>
+          <h4>{r_13_1_4_1}</h4>
+          <p>{r_13_1_4_2}</p>
         </div>
       </div>
 

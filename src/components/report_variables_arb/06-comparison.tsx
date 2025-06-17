@@ -21,51 +21,51 @@ ChartJS.register(
 );
 
 type Props = {
-  evaluation_categories: string[];
-  self_scores_by_category: number[];
-  competitor_scores_by_category: number[];
-  gap_strength_area: string;
-  gap_improvement_area: string;
-  gap_opportunity_area: string;
-  masked_competitor_name: string;
-  self_nps: string;
-  competitor_nps: string;
-  self_repurchase_intent: string;
-  competitor_repurchase_intent: string;
-  self_brand_loyalty: string;
-  competitor_brand_loyalty: string;
-  comparison_summary: string;
-  isCurrentWorkingPage?: boolean;
+  r_6_1_1: string[];
+  r_6_1_2: number[];
+  r_6_1_3: number[];
+  r_6_2: string;
+  r_6_3: string;
+  r_6_4: string;
+  r_6_5: string;
+  r_6_6: string;
+  r_6_7: string;
+  r_6_8: string;
+  r_6_9: string;
+  r_6_10: string;
+  r_6_11: string;
+  r_6_12: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function ComparisonPage_06({
-  evaluation_categories,
-  self_scores_by_category,
-  competitor_scores_by_category,
-  gap_strength_area,
-  gap_improvement_area,
-  gap_opportunity_area,
-  masked_competitor_name,
-  self_nps,
-  competitor_nps,
-  self_repurchase_intent,
-  competitor_repurchase_intent,
-  self_brand_loyalty,
-  competitor_brand_loyalty,
-  comparison_summary,
+  r_6_1_1,
+  r_6_1_2,
+  r_6_1_3,
+  r_6_2,
+  r_6_3,
+  r_6_4,
+  r_6_5,
+  r_6_6,
+  r_6_7,
+  r_6_8,
+  r_6_9,
+  r_6_10,
+  r_6_11,
+  r_6_12,
   isCurrentWorkingPage = false,
 }: Props) {
   const barData: ChartData<"bar", number[], string> = {
-    labels: evaluation_categories,
+    labels: r_6_1_1,
     datasets: [
       {
         label: "자사",
-        data: self_scores_by_category,
+        data: r_6_1_2,
         backgroundColor: "#d94e0f",
       },
       {
-        label: masked_competitor_name,
-        data: competitor_scores_by_category,
+        label: r_6_5,
+        data: r_6_1_3,
         backgroundColor: "#039be5",
       },
     ],
@@ -121,15 +121,15 @@ function ComparisonPage_06({
       <div className="gap-box-group">
         <div className="gap-box">
           <h3>강점 영역</h3>
-          <p>{gap_strength_area}</p>
+          <p>{r_6_2}</p>
         </div>
         <div className="gap-box">
           <h3>개선 필요 영역</h3>
-          <p>{gap_improvement_area}</p>
+          <p>{r_6_3}</p>
         </div>
         <div className="gap-box">
           <h3>기회 영역</h3>
-          <p>{gap_opportunity_area}</p>
+          <p>{r_6_4}</p>
         </div>
       </div>
 
@@ -139,29 +139,29 @@ function ComparisonPage_06({
           <tr>
             <th>지표</th>
             <th>자사</th>
-            <th>{masked_competitor_name}</th>
+            <th>{r_6_5}</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td>NPS(순추천지수)</td>
-            <td>{self_nps}</td>
-            <td>{competitor_nps}</td>
+            <td>{r_6_6}</td>
+            <td>{r_6_7}</td>
           </tr>
           <tr>
             <td>재구매 의향(%)</td>
-            <td>{self_repurchase_intent}</td>
-            <td>{competitor_repurchase_intent}</td>
+            <td>{r_6_8}</td>
+            <td>{r_6_9}</td>
           </tr>
           <tr>
             <td>브랜드 충성도(5점 만점)</td>
-            <td>{self_brand_loyalty}</td>
-            <td>{competitor_brand_loyalty}</td>
+            <td>{r_6_10}</td>
+            <td>{r_6_11}</td>
           </tr>
         </tbody>
       </table>
 
-      <p className="gap-summary">{comparison_summary}</p>
+      <p className="gap-summary">{r_6_12}</p>
 
       <div className="page-footer">
         <span className="page-number">- 6 -</span>

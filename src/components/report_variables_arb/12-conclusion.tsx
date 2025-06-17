@@ -21,22 +21,22 @@ ChartJS.register(
 );
 
 type Props = {
-  current_scores: number[]; // 자사 현재 데이터
-  competitor_scores: number[]; // 경쟁사 평균 데이터
-  target_scores: number[]; // 목표치 데이터
-  current_insight: string; // 현재 상황 인식
-  strategic_direction: string; // 전략적 방향성
-  future_outlook: string; // 미래 전망 및 제언
-  isCurrentWorkingPage?: boolean;
+  r_12_1_1: number[]; // 자사 현재 데이터
+  r_12_1_2: number[]; // 경쟁사 평균 데이터
+  r_12_1_3: number[]; // 목표치 데이터
+  r_12_2_1: string; // 현재 상황 인식
+  r_12_2_2: string; // 전략적 방향성
+  r_12_2_3: string; // 미래 전망 및 제언
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function ConclusionPage_12({
-  current_scores,
-  competitor_scores,
-  target_scores,
-  current_insight,
-  strategic_direction,
-  future_outlook,
+  r_12_1_1,
+  r_12_1_2,
+  r_12_1_3,
+  r_12_2_1,
+  r_12_2_2,
+  r_12_2_3,
   isCurrentWorkingPage = false,
 }: Props) {
   const barData = {
@@ -44,17 +44,17 @@ function ConclusionPage_12({
     datasets: [
       {
         label: "자사 현재",
-        data: current_scores,
+        data: r_12_1_1,
         backgroundColor: "rgba(54, 162, 235, 0.7)",
       },
       {
         label: "경쟁사 평균",
-        data: competitor_scores,
+        data: r_12_1_2,
         backgroundColor: "rgba(255, 159, 64, 0.7)",
       },
       {
         label: "목표치",
-        data: target_scores,
+        data: r_12_1_3,
         backgroundColor: "rgba(75, 192, 192, 0.7)",
       },
     ],
@@ -103,15 +103,15 @@ function ConclusionPage_12({
       <div className="recommendation-columns">
         <div className="rec-box">
           <h3>현재 상황 인식</h3>
-          <p>{current_insight}</p>
+          <p>{r_12_2_1}</p>
         </div>
         <div className="rec-box">
           <h3>전략적 방향성</h3>
-          <p>{strategic_direction}</p>
+          <p>{r_12_2_2}</p>
         </div>
         <div className="rec-box">
           <h3>미래 전망 및 제언</h3>
-          <p>{future_outlook}</p>
+          <p>{r_12_2_3}</p>
         </div>
       </div>
 

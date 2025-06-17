@@ -14,7 +14,7 @@ import ImprovementPage_07 from "@/components/report/07-improve";
 import ExpectationGapPage_08 from "@/components/report/08-expectation";
 import SolutionPage_09 from "@/components/report/09-solution";
 import ExecutionPlanPage_10 from "@/components/report/10-execution-plan";
-import ExecutionKPIPage_11 from "@/components/report/11-execution-kpi";
+import ExecutionKPIPage_11 from "@/components/report/11-execuition-kpi";
 import ConclusionPage_12 from "@/components/report/12-conclusion";
 import ExecutiveSummaryPage_13 from "@/components/report/13-executive-summary";
 import { useAIData } from "../contexts/AiResponseContext";
