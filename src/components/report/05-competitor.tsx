@@ -21,37 +21,37 @@ ChartJS.register(
 );
 
 type Props = {
-  r_5_2: string;
-  r_5_2_1: number[]; // 긍정적 데이터 배열
-  r_5_2_2: number[]; // 부정적 데이터 배열
-  r_5_3: string;
-  r_5_4: string;
-  r_5_5: string;
-  r_5_6: string;
-  isCurrentWorkingPage?: boolean; // 추가된 prop
+  competitor_name: string;
+  sentiment_positive_scores: number[];
+  sentiment_negative_scores: number[];
+  competitor_strength_1: string;
+  competitor_strength_2: string;
+  competitor_strength_3: string;
+  competitor_summary: string;
+  isCurrentWorkingPage?: boolean;
 };
 
 function CompetitorPage_05({
-  r_5_2,
-  r_5_2_1,
-  r_5_2_2,
-  r_5_3,
-  r_5_4,
-  r_5_5,
-  r_5_6,
+  competitor_name,
+  sentiment_positive_scores,
+  sentiment_negative_scores,
+  competitor_strength_1,
+  competitor_strength_2,
+  competitor_strength_3,
+  competitor_summary,
   isCurrentWorkingPage = false,
 }: Props) {
   const barData: ChartData<"bar", number[], string> = {
-    labels: ["자사", r_5_2],
+    labels: ["자사", competitor_name],
     datasets: [
       {
         label: "긍정적(4~5점)",
-        data: r_5_2_1,
+        data: sentiment_positive_scores,
         backgroundColor: "#d94e0f",
       },
       {
         label: "부정적(1~2점)",
-        data: r_5_2_2,
+        data: sentiment_negative_scores,
         backgroundColor: "#039be5",
       },
     ],
@@ -93,9 +93,10 @@ function CompetitorPage_05({
 
       <h1>경쟁사 제품 리뷰 감정 분석 결과</h1>
       <p>
-        주요 경쟁사 브랜드({r_5_2})의 제품에 대한 고객 리뷰를 동일한 방법론으로
-        분석하여 경쟁 환경을 파악했습니다. 이를 통해 경쟁사 제품의 강점과 약점을
-        객관적으로 평가하고, 자사 제품과의 상대적 위치를 확인할 수 있습니다.
+        주요 경쟁사 브랜드({competitor_name})의 제품에 대한 고객 리뷰를 동일한
+        방법론으로 분석하여 경쟁 환경을 파악했습니다. 이를 통해 경쟁사 제품의
+        강점과 약점을 객관적으로 평가하고, 자사 제품과의 상대적 위치를 확인할 수
+        있습니다.
       </p>
 
       <h2>자사와 경쟁사 감정 점수 분포 비교</h2>
@@ -105,15 +106,15 @@ function CompetitorPage_05({
 
       <h2>경쟁사 주요 강점</h2>
       <div className="competitor-box">
-        <div className="competitor-name">{r_5_2}</div>
+        <div className="competitor-name">{competitor_name}</div>
         <ul className="competitor-strengths">
-          <li>{r_5_3}</li>
-          <li>{r_5_4}</li>
-          <li>{r_5_5}</li>
+          <li>{competitor_strength_1}</li>
+          <li>{competitor_strength_2}</li>
+          <li>{competitor_strength_3}</li>
         </ul>
       </div>
 
-      <p className="competitor-commentary">{r_5_6}</p>
+      <p className="competitor-commentary">{competitor_summary}</p>
 
       <div className="page-footer">
         <span className="page-number">- 5 -</span>

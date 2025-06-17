@@ -1,45 +1,40 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  priority_1_icon: string;
-  priority_1_title: string;
-  priority_1_description: string;
-
-  priority_2_icon: string;
-  priority_2_title: string;
-  priority_2_description: string;
-
-  priority_3_icon: string;
-  priority_3_title: string;
-  priority_3_description: string;
-
-  priority_4_icon: string;
-  priority_4_title: string;
-  priority_4_description: string;
-
-  priority_5_icon: string;
-  priority_5_title: string;
-  priority_5_description: string;
-
-  isCurrentWorkingPage?: boolean;
+  r_7_5_1: string;
+  r_7_5_2: string;
+  r_7_5_3: string;
+  r_7_5_4: string;
+  r_7_5_6: string;
+  r_7_5_7: string;
+  r_7_5_8: string;
+  r_7_5_9: string;
+  r_7_5_10: string;
+  r_7_5_11: string;
+  r_7_5_12: string;
+  r_7_5_13: string;
+  r_7_5_14: string;
+  r_7_5_15: string;
+  r_7_5_16: string;
+  isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
 function ImprovementPage_07({
-  priority_1_icon,
-  priority_1_title,
-  priority_1_description,
-  priority_2_icon,
-  priority_2_title,
-  priority_2_description,
-  priority_3_icon,
-  priority_3_title,
-  priority_3_description,
-  priority_4_icon,
-  priority_4_title,
-  priority_4_description,
-  priority_5_icon,
-  priority_5_title,
-  priority_5_description,
+  r_7_5_1,
+  r_7_5_2,
+  r_7_5_3,
+  r_7_5_4,
+  r_7_5_6,
+  r_7_5_7,
+  r_7_5_8,
+  r_7_5_9,
+  r_7_5_10,
+  r_7_5_11,
+  r_7_5_12,
+  r_7_5_13,
+  r_7_5_14,
+  r_7_5_15,
+  r_7_5_16,
   isCurrentWorkingPage = false,
 }: Props) {
   return (
@@ -63,51 +58,51 @@ function ImprovementPage_07({
       <div className="real-pyramid">
         <div className="pyramid-row row1">
           <div className="pyramid-content">
-            <img src={priority_1_icon} alt="" />
+            <img src={r_7_5_1} alt="" />
             <div>
-              <strong>{priority_1_title}</strong>
+              <strong>{r_7_5_2}</strong>
               <br />
-              {priority_1_description}
+              {r_7_5_3}
             </div>
           </div>
         </div>
         <div className="pyramid-row row2">
           <div className="pyramid-content">
-            <img src={priority_2_icon} alt="" />
+            <img src={r_7_5_4} alt="" />
             <div>
-              <strong>{priority_2_title}</strong>
+              <strong>{r_7_5_6}</strong>
               <br />
-              {priority_2_description}
+              {r_7_5_7}
             </div>
           </div>
         </div>
         <div className="pyramid-row row3">
           <div className="pyramid-content">
-            <img src={priority_3_icon} alt="" />
+            <img src={r_7_5_8} alt="" />
             <div>
-              <strong>{priority_3_title}</strong>
+              <strong>{r_7_5_9}</strong>
               <br />
-              {priority_3_description}
+              {r_7_5_10}
             </div>
           </div>
         </div>
         <div className="pyramid-row row4">
           <div className="pyramid-content">
-            <img src={priority_4_icon} alt="" />
+            <img src={r_7_5_11} alt="" />
             <div>
-              <strong>{priority_4_title}</strong>
+              <strong>{r_7_5_12}</strong>
               <br />
-              {priority_4_description}
+              {r_7_5_13}
             </div>
           </div>
         </div>
         <div className="pyramid-row row5">
           <div className="pyramid-content">
-            <img src={priority_5_icon} alt="" />
+            <img src={r_7_5_14} alt="" />
             <div>
-              <strong>{priority_5_title}</strong>
+              <strong>{r_7_5_15}</strong>
               <br />
-              {priority_5_description}
+              {r_7_5_16}
             </div>
           </div>
         </div>

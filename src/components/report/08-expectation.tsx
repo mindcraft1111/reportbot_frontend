@@ -1,19 +1,19 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  r_8_2: {
+  expectation_gap_items: {
     label: string;
     expected: number;
     actual: number;
     gap: number;
   }[];
-  r_8_3: string;
-  isCurrentWorkingPage?: boolean; // 추가된 prop
+  expectation_gap_summary: string;
+  isCurrentWorkingPage?: boolean;
 };
 
 function ExpectationGapPage_08({
-  r_8_2,
-  r_8_3,
+  expectation_gap_items,
+  expectation_gap_summary,
   isCurrentWorkingPage = false,
 }: Props) {
   return (
@@ -32,7 +32,7 @@ function ExpectationGapPage_08({
           </tr>
         </thead>
         <tbody>
-          {r_8_2.map((item, idx) => (
+          {expectation_gap_items.map((item, idx) => (
             <tr key={idx}>
               <td>{item.label}</td>
               <td>{item.expected}</td>
@@ -43,7 +43,7 @@ function ExpectationGapPage_08({
         </tbody>
       </table>
 
-      <p>{r_8_3}</p>
+      <p>{expectation_gap_summary}</p>
 
       <div className="page-footer">
         <span className="page-number">- 8 -</span>

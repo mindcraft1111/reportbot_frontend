@@ -1,18 +1,18 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  report_title: string; // 보고서 제목 (대제목)
-  report_objective: string; // 부제목 또는 설명
-  brand_logo_url: string; // 로고 이미지 URL
-  creation_date: string; // 작성일자 (예: "2025-06-13")
+  r_0_1: string; // 보고서 제목 (대제목)
+  r_0_2: string; // 부제목 또는 설명
+  r_0_3: string; // 로고 이미지 URL
+  r_0_4: string; // 작성일자 (예: "2025-06-13")
   isCurrentWorkingPage?: boolean; // AI 작업 중 여부
 };
 
 function CoverPage_00({
-  report_title,
-  report_objective,
-  brand_logo_url,
-  creation_date,
+  r_0_1,
+  r_0_2,
+  r_0_3,
+  r_0_4,
   isCurrentWorkingPage,
 }: Props) {
   return (
@@ -29,12 +29,12 @@ function CoverPage_00({
           textAlign: "center",
         }}
       >
-        <h1 style={{ fontSize: "33pt", color: "#000" }}>{report_title}</h1>
+        <h1 style={{ fontSize: "33pt", color: "#000" }}>{r_0_1}</h1>
         <h1 style={{ fontSize: "24pt", color: "#000", marginBottom: "20px" }}>
-          {report_objective}
+          {r_0_2}
         </h1>
         <img
-          src={brand_logo_url}
+          src={r_0_3}
           alt="로고 이미지"
           style={{ maxWidth: "160px", height: "auto", marginTop: "10px" }}
         />
@@ -49,7 +49,7 @@ function CoverPage_00({
           color: "#aaa",
         }}
       >
-        작성일자 : {creation_date}
+        작성일자 : {r_0_4}
       </p>
     </section>
   );
