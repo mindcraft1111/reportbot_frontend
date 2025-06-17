@@ -88,8 +88,6 @@ const StreamingPromptContainer = ({
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    let finalResponse = "";
-
     const userEmail = authContext.user?.user.email;
     const username = userEmail?.split("@")[0];
 
@@ -100,68 +98,29 @@ const StreamingPromptContainer = ({
         `http://localhost:8000/promptTest/${username}/`,
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
           signal: controller.signal,
         }
       );
 
-      if (!response.ok || !response.body) {
+      if (!response.ok) {
         toast.error(`HTTP 에러 발생 : ${response.status}`);
         return;
       }
 
-      const reader = response.body.getReader();
-      const decoder = new TextDecoder("utf-8");
-      let buffer = "";
+      const json = await response.json(); // Expecting { text: "..." }
+      const rawText = json.text || "";
+      setResponse(rawText); // Show raw text in the UI
 
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
+      // Clean and extract actual JSON
+      let cleaned = rawText.trim();
 
-        const chunk = decoder.decode(value, { stream: true });
-        buffer += chunk;
-
-        const lines = buffer.split("\n\n");
-        buffer = lines.pop() || "";
-
-        for (const line of lines) {
-          const trimmedLine = line.trim();
-          if (!trimmedLine) continue;
-
-          if (trimmedLine.startsWith("data: ")) {
-            const jsonStr = trimmedLine.substring(6);
-
-            try {
-              const parsed = JSON.parse(jsonStr);
-
-              if (parsed.done) continue;
-              if (parsed.error) {
-                console.error("Server error:", parsed.error);
-                toast.error(parsed.error);
-                continue;
-              }
-
-              if (parsed.text) {
-                setResponse((prev) => {
-                  const next = prev + parsed.text;
-                  finalResponse = next;
-                  return next;
-                });
-              }
-            } catch (parseError) {
-              console.warn("Failed to parse JSON:", jsonStr, parseError);
-            }
-          }
-        }
+      if (cleaned.startsWith("json")) {
+        cleaned = cleaned.replace(/^json/, "").trim();
       }
 
-      setIsStreaming(false);
-
-      let cleaned = finalResponse.trim();
-      if (cleaned.startsWith("``  ")) {
+      if (cleaned.startsWith("```json")) {
         cleaned = cleaned
           .replace(/^```json/, "")
           .replace(/```$/, "")
@@ -172,27 +131,18 @@ const StreamingPromptContainer = ({
 
       cleaned = cleaned.replace(/([{,]\s*)([a-zA-Z0-9_]+)(\s*:)/g, '$1"$2"$3');
 
-      try {
-        const parsedData = JSON.parse(cleaned);
+      const parsedData = JSON.parse(cleaned); // now it's a real object
 
-        dispatch({
-          type: "SET_CHUNK_DATA",
-          chunk: chunkType,
-          payload: parsedData,
-        });
-      } catch (jsonError) {
-        console.error(
-          "Parsing cleaned AI response failed:",
-          jsonError,
-          cleaned
-        );
-        toast.error("응답 파싱에 실패했습니다.");
-      }
+      dispatch({
+        type: "SET_CHUNK_DATA",
+        chunk: chunkType,
+        payload: parsedData,
+      });
     } catch (err) {
-      console.error("Fetch error:", err);
-      toast.error("리스폰스 스티리밍 중에 에러가 발생했습니다.");
-      setIsStreaming(false);
+      console.error("Fetch or parsing error:", err);
+      toast.error("응답 파싱 중 문제가 발생했습니다.");
     } finally {
+      setIsStreaming(false);
       handleSetCurrentlyWorkingPage(null);
     }
   };
