@@ -30,7 +30,7 @@ export default function PromptSidebar({
   category_id: string;
 }) {
   return (
-    <aside className="w-48 h-screen overflow-y-auto bg-gray-100 border-r p-4">
+    <aside className="w-48 hidden sm:block h-screen overflow-y-auto bg-gray-100 border-r p-4">
       <h2 className="text-xl mb-4 text-blue-700">Products</h2>
       <ul className="space-y-2">
         {categoryList.map((category) => {

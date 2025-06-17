@@ -10,7 +10,7 @@ import { DataGoal } from "./data-goal";
 import { useAuthContext } from "@/contexts/AuthContext";
 
 const formSchema = z.object({
-  user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
+  user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
   product1: z.string(),
   product2: z.string(),
 });
@@ -109,7 +109,8 @@ const StreamingPromptContainer = ({
       );
 
       if (!response.ok || !response.body) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        toast.error(`HTTP 에러 발생 : ${response.status}`);
+        return;
       }
 
       const reader = response.body.getReader();
@@ -160,7 +161,7 @@ const StreamingPromptContainer = ({
       setIsStreaming(false);
 
       let cleaned = finalResponse.trim();
-      if (cleaned.startsWith("```json")) {
+      if (cleaned.startsWith("``  ")) {
         cleaned = cleaned
           .replace(/^```json/, "")
           .replace(/```$/, "")
@@ -185,11 +186,11 @@ const StreamingPromptContainer = ({
           jsonError,
           cleaned
         );
-        toast.warning("응답 파싱에 실패했습니다.");
+        toast.error("응답 파싱에 실패했습니다.");
       }
     } catch (err) {
       console.error("Fetch error:", err);
-      toast.error("Something went wrong while streaming response.");
+      toast.error("리스폰스 스티리밍 중에 에러가 발생했습니다.");
       setIsStreaming(false);
     } finally {
       handleSetCurrentlyWorkingPage(null);
