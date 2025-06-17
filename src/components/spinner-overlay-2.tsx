@@ -1,5 +1,3 @@
-import { Sparkles } from "lucide-react"; // Optional: Use any icon library
-
 export default function SpinnerOverlay2() {
   return (
     <div
@@ -12,9 +10,6 @@ export default function SpinnerOverlay2() {
           <div className="absolute inset-0 rounded-full border-4 border-t-transparent border-b-transparent border-l-blue-400 border-r-purple-400 animate-spin" />
           <div className="absolute inset-2 bg-white rounded-full" />
         </div>
-
-        {/* Optional animated icon */}
-        <Sparkles className="text-blue-500 animate-pulse" size={24} />
 
         {/* Animated text */}
         <p className="text-base font-semibold text-gray-800">
