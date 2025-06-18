@@ -73,7 +73,7 @@ export function DataGoal({
             <SelectContent>
               {pagesArray.map((page, index) => (
                 <SelectItem key={page} value={page}>
-                  {(index < 9 ? `0${index}` : `${index}`) +
+                  {(index < 10 ? `0${index}` : `${index}`) +
                     " " +
                     page.replace(/Page$/, "")}
                 </SelectItem>
