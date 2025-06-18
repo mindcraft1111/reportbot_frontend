@@ -14,6 +14,336 @@ import logo2 from "/assets/logo2.png";
 // Default data for initialization
 // -----------------------------
 
+const partsTargets = {
+  coverPage: {
+    part1: {
+      r_0_1: "report_title",
+    },
+    part2: {
+      r_0_2: "report_objective",
+    },
+  },
+  contentsPage: {
+    no_part: {},
+  },
+  overviewPage: {
+    part1: {
+      r_2_1: "analysis_subject",
+    },
+    part2: {
+      r_2_2: "analysis_methodology",
+    },
+  },
+  swotPage: {
+    part1: {
+      r_3_1: "strength_title",
+      r_3_2: "strength_description",
+    },
+    part2: {
+      r_3_3: "weakness_title",
+      r_3_4: "weakness_description",
+    },
+    part3: {
+      r_3_5: "opportunity_title",
+      r_3_6: "opportunity_description",
+    },
+    part4: {
+      r_3_7: "threat_title",
+      r_3_8: "threat_description",
+    },
+  },
+  selfProductPage: {
+    part1: {
+      r_4_1_1: "positive_ratio",
+      r_4_1_2: "negative_ratio",
+    },
+    part2: {
+      r_4_2: "positive_icon_1",
+      r_4_3: "positive_title_1",
+      r_4_4: "positive_summary_1",
+      r_4_5: "positive_icon_2",
+      r_4_6: "positive_title_2",
+      r_4_7: "positive_summary_2",
+      r_4_8: "positive_icon_3",
+      r_4_9: "positive_title_3",
+      r_4_10: "positive_summary_3",
+    },
+    part3: {
+      r_4_11: "negative_icon_1",
+      r_4_12: "negative_title_1",
+      r_4_13: "negative_summary_1",
+      r_4_14: "negative_icon_2",
+      r_4_15: "negative_title_2",
+      r_4_16: "negative_summary_2",
+      r_4_17: "negative_icon_3",
+      r_4_18: "negative_title_3",
+      r_4_19: "negative_summary_3",
+    },
+    part4: {
+      r_4_20: "overall_summary",
+    },
+  },
+  competitorPage: {
+    part1: {
+      r_5_2_1: "sentiment_positive_scores",
+      r_5_2_2: "sentiment_negative_scores",
+    },
+    part2: {
+      r_5_2: "competitor_name",
+      r_5_3: "competitor_strength_1",
+      r_5_4: "competitor_strength_2",
+      r_5_5: "competitor_strength_3",
+    },
+    part3: {
+      r_5_6: "competitor_summary",
+    },
+  },
+  comparisonPage: {
+    part1: {
+      r_6_1_1: "list_of_evaluation_categories",
+      r_6_1_2: "list_of_our_product_scores_by_category",
+      r_6_1_3: "list_of_competitor_product_scores_by_category",
+    },
+    part2: {
+      r_6_2: "gap_strength_area",
+    },
+    part3: {
+      r_6_3: "gap_improvement_area",
+    },
+    part4: {
+      r_6_4: "gap_opportunity_area",
+    },
+    part5: {
+      r_6_5: "masked_competitor_name",
+    },
+    part6: {
+      r_6_6: "self_nps",
+      r_6_7: "competitor_nps",
+    },
+    part7: {
+      r_6_8: "self_product_repurchase_intent",
+      r_6_9: "competitor_product_repurchase_intent",
+    },
+    part8: {
+      r_6_10: "self_brand_loyalty",
+      r_6_11: "competitor_brand_loyalty",
+    },
+    part9: {
+      r_6_12: "comparison_summary",
+    },
+  },
+  improvementPage: {
+    part1: {
+      r_7_5_1: "priority_1_icon",
+      r_7_5_2: "priority_1_title",
+      r_7_5_3: "priority_1_description",
+      r_7_5_4: "priority_2_icon",
+      r_7_5_6: "priority_2_title",
+      r_7_5_7: "priority_2_description",
+      r_7_5_8: "priority_3_icon",
+      r_7_5_9: "priority_3_title",
+      r_7_5_10: "priority_3_description",
+      r_7_5_11: "priority_4_icon",
+      r_7_5_12: "priority_4_title",
+      r_7_5_13: "priority_4_description",
+      r_7_5_14: "priority_5_icon",
+      r_7_5_15: "priority_5_title",
+      r_7_5_16: "priority_5_description",
+    },
+  },
+  expectationGapPage: {
+    part1: {
+      r_8_2: [
+        {
+          label: "title1",
+          expected: "expected_value1",
+          actual: "actual_value1",
+          gap: "gap_value1",
+        },
+        {
+          label: "title2",
+          expected: "expected_value2",
+          actual: "actual_value2",
+          gap: "gap_value2",
+        },
+        {
+          label: "title3",
+          expected: "expected_value3",
+          actual: "actual_value3",
+          gap: "gap_value3",
+        },
+        {
+          label: "title4",
+          expected: "expected_value4",
+          actual: "actual_value4",
+          gap: "gap_value4",
+        },
+        {
+          label: "title5",
+          expected: "expected_value5",
+          actual: "actual_value5",
+          gap: "gap_value5",
+        },
+      ],
+    },
+    part2: {
+      r_8_3: "expectation_gap_summary",
+    },
+  },
+  solutionPage: {
+    part1: {
+      r_9_3_1: [
+        { solution: "short_term_solution_1" },
+        { solution: "short_term_solution_2" },
+        { solution: "short_term_solution_3" },
+        { solution: "short_term_solution_4" },
+      ],
+    },
+    part2: {
+      r_9_3_2: [
+        { solution: "mid_term_solution_1" },
+        { solution: "mid_term_solution_2" },
+        { solution: "mid_term_solution_3" },
+      ],
+    },
+    part3: {
+      r_9_3_3: [
+        { solution: "long_term_solution_1" },
+        { solution: "long_term_solution_2" },
+        { solution: "long_term_solution_3" },
+      ],
+    },
+    part4: {
+      r_9_5_1: "detail_solution_1_title",
+      r_9_5_2: "detail_solution_1_subtitle",
+      r_9_5_3: [
+        {
+          solution: "detail_1_solution_1",
+        },
+        { solution: "detail_1_solution_2" },
+        {
+          solution: "detail_1_solution_3",
+        },
+      ],
+    },
+    part5: {
+      r_9_5_4: "detail_solution_2_title",
+      r_9_5_5: "detail_solution_2_subtitle",
+      r_9_5_6: [
+        { solution: "detail_2_solution_1" },
+        { solution: "detail_2_solution_2" },
+        { solution: "detail_2_solution_3" },
+      ],
+    },
+    part6: {
+      r_9_5_7: "detail_solution_3_title",
+      r_9_5_8: "detail_solution_3_subtitle",
+      r_9_5_9: [
+        { solution: "detail_3_solution_1" },
+        { solution: "detail_3_solution_2" },
+        { solution: "detail_3_solution_3" },
+      ],
+    },
+    part7: {
+      r_9_6: "solution_summary",
+    },
+  },
+  executionPlanPage: {
+    part1: {
+      r_10_1: [
+        {
+          solution: "solution",
+          ownerDept: "ownerDept",
+          coopDept: "coopDept",
+          role: "role",
+        },
+        {
+          solution: "solution",
+          ownerDept: "ownerDept",
+          coopDept: "coopDept",
+          role: "role",
+        },
+        {
+          solution: "solution",
+          ownerDept: "ownerDept",
+          coopDept: "coopDept",
+          role: "role",
+        },
+        {
+          solution: "solution",
+          ownerDept: "ownerDept",
+          coopDept: "coopDept",
+          role: "role",
+        },
+      ],
+    },
+  },
+  executionKPIPage: {
+    part1: {
+      r_11_1: [
+        {
+          title: "kpi_metrics_1_title",
+          items: [
+            "kpi_metrics_item_1",
+            "kpi_metrics_item_2",
+            "kpi_metrics_item_3",
+          ],
+        },
+        {
+          title: "kpi_metrics_2_title",
+          items: ["kpi_metrics_item_4", "kpi_metrics_item_5"],
+        },
+        {
+          title: "kpi_metrics_3_title",
+          items: ["kpi_metrics_item_6", "kpi_metrics_item_7"],
+        },
+      ],
+    },
+    part2: {
+      r_11_2: "execution_plan_summary",
+    },
+    part3: {
+      r_11_3: "budget_allocation_summary",
+    },
+  },
+  conclusionPage: {
+    part1: {
+      r_12_1_1: [
+        "self_current_sentiment_score",
+        "self_current_NPS_score",
+        "self_current_repurchase_score",
+      ],
+      r_12_1_2: [
+        "competitor_current_sentiment_score",
+        "competitor_current_NPS_score",
+        "competitor_current_repurchase_score",
+      ],
+      r_12_1_3: [
+        "target_sentiment_score",
+        "target_NPS_score",
+        "target_repurchase_score",
+      ],
+    },
+    part2: {
+      r_12_2_1: "current_insight",
+      r_12_2_2: "strategic_direction",
+      r_12_2_3: "future_outlook",
+    },
+  },
+  executiveSummaryPage: {
+    part1: {
+      r_13_1_1_1: "recommendation_title_1",
+      r_13_1_1_2: "recommendation_detail_1",
+      r_13_1_2_1: "recommendation_title_2",
+      r_13_1_2_2: "recommendation_detail_2",
+      r_13_1_3_1: "recommendation_title_3",
+      r_13_1_3_2: "recommendation_detail_3",
+      r_13_1_4_1: "recommendation_title_4",
+      r_13_1_4_2: "recommendation_detail_4",
+    },
+  },
+};
+
 const chunkConstraints = {
   coverPage: {
     r_0_1: "제품 리뷰 기반 감정 분석 보고서",
@@ -276,6 +606,7 @@ const initialState = structuredClone(chunkConstraints);
 // -----------------------------
 type GlobalState = typeof initialState;
 type ChunkConstraints = typeof chunkConstraints;
+type partsTargets = typeof partsTargets;
 
 // -----------------------------
 // Action type
@@ -315,23 +646,24 @@ const AIDataContext = createContext<{
   state: GlobalState;
   dispatch: React.Dispatch<Action>;
   chunkConstraints: ChunkConstraints;
-  currentFocusPage: ChunkType | null;
+  currentFocusPage: ChunkType;
   handlePromptFocus: (chunkType: ChunkType) => void;
   currentlyWorkingPage: ChunkType | null;
   handleSetCurrentlyWorkingPage: (chunkType: ChunkType | null) => void;
   setCanSetWorkingPage: React.Dispatch<React.SetStateAction<boolean>>;
   canSetWorkingPage: boolean;
+  targets: partsTargets;
 } | null>(null);
 
 export const AIDataProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const location = useLocation(); // ✅ access router location
-  const [currentFocusPage, setCurrentFocusPage] = useState<ChunkType | null>(
-    "coverPage"
-  );
+  const [currentFocusPage, setCurrentFocusPage] =
+    useState<ChunkType>("coverPage");
   const [currentlyWorkingPage, setCurrentlyWorkingPage] =
     useState<ChunkType | null>(null);
   const [canSetWorkingPage, setCanSetWorkingPage] = useState(true);
+  const [targets, setTargets] = useState(partsTargets);
 
   const handleSetCurrentlyWorkingPage = (chunkType: ChunkType | null) => {
     if (!canSetWorkingPage) return;
@@ -360,6 +692,7 @@ export const AIDataProvider = ({ children }: { children: ReactNode }) => {
         handleSetCurrentlyWorkingPage,
         setCanSetWorkingPage,
         canSetWorkingPage,
+        targets,
       }}
     >
       {children}

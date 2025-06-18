@@ -50,12 +50,8 @@ const StreamingPromptContainer = ({
   const abortControllerRef = useRef<AbortController | null>(null);
   const authContext = useAuthContext();
 
-  const {
-    dispatch,
-    handlePromptFocus,
-    handleSetCurrentlyWorkingPage,
-    currentFocusPage,
-  } = useAIData();
+  const { dispatch, handleSetCurrentlyWorkingPage, currentFocusPage, state } =
+    useAIData();
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -94,15 +90,12 @@ const StreamingPromptContainer = ({
     try {
       handleSetCurrentlyWorkingPage(chunkType);
 
-      const response = await fetch(
-        `http://localhost:8000/promptTest/${username}/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          signal: controller.signal,
-        }
-      );
+      const response = await fetch(`http://localhost:8000/prompt/test/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
 
       if (!response.ok) {
         toast.error(`HTTP 에러 발생 : ${response.status}`);
@@ -110,33 +103,21 @@ const StreamingPromptContainer = ({
       }
 
       const json = await response.json(); // Expecting { text: "..." }
-      const rawText = json.text || "";
+      console.log("😀 json:", json);
+      const rawText = json.data.text || "";
       setResponse(rawText); // Show raw text in the UI
 
-      // Clean and extract actual JSON
-      let cleaned = rawText.trim();
+      const updatedPage = {
+        ...state[currentFocusPage],
+        ...json.data,
+      };
 
-      if (cleaned.startsWith("json")) {
-        cleaned = cleaned.replace(/^json/, "").trim();
-      }
-
-      if (cleaned.startsWith("```json")) {
-        cleaned = cleaned
-          .replace(/^```json/, "")
-          .replace(/```$/, "")
-          .trim();
-      } else if (cleaned.startsWith("```")) {
-        cleaned = cleaned.replace(/^```/, "").replace(/```$/, "").trim();
-      }
-
-      cleaned = cleaned.replace(/([{,]\s*)([a-zA-Z0-9_]+)(\s*:)/g, '$1"$2"$3');
-
-      const parsedData = JSON.parse(cleaned); // now it's a real object
+      console.log("😀 updatedPage:", updatedPage);
 
       dispatch({
         type: "SET_CHUNK_DATA",
-        chunk: chunkType,
-        payload: parsedData,
+        chunk: currentFocusPage,
+        payload: updatedPage,
       });
     } catch (err) {
       console.error("Fetch or parsing error:", err);
@@ -146,8 +127,6 @@ const StreamingPromptContainer = ({
       handleSetCurrentlyWorkingPage(null);
     }
   };
-
-  const handlePromptClick = () => handlePromptFocus(chunkType);
 
   return (
     <main
@@ -160,12 +139,11 @@ const StreamingPromptContainer = ({
       <h1 className="text-2xl mb-4">chunk_type: {chunkType.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
-        <DataGoal constraint={chunkConstraint} />
+        <DataGoal />
         <PromptForm
           form={form}
           onSubmit={handleSubmit}
           isStreaming={isStreaming}
-          onClick={handlePromptClick}
         />
       </section>
     </main>
