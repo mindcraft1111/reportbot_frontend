@@ -16,10 +16,10 @@ import logo2 from "/assets/logo2.png";
 
 const partsTargets = {
   coverPage: {
-    part1: {
+    C001: {
       r_0_1: "report_title",
     },
-    part2: {
+    C002: {
       r_0_2: "report_objective",
     },
   },
@@ -27,37 +27,37 @@ const partsTargets = {
     no_part: {},
   },
   overviewPage: {
-    part1: {
+    C021: {
       r_2_1: "analysis_subject",
     },
-    part2: {
+    C022: {
       r_2_2: "analysis_methodology",
     },
   },
   swotPage: {
-    part1: {
+    C031: {
       r_3_1: "strength_title",
       r_3_2: "strength_description",
     },
-    part2: {
+    C032: {
       r_3_3: "weakness_title",
       r_3_4: "weakness_description",
     },
-    part3: {
+    C033: {
       r_3_5: "opportunity_title",
       r_3_6: "opportunity_description",
     },
-    part4: {
+    C034: {
       r_3_7: "threat_title",
       r_3_8: "threat_description",
     },
   },
   selfProductPage: {
-    part1: {
+    C041: {
       r_4_1_1: "positive_ratio",
       r_4_1_2: "negative_ratio",
     },
-    part2: {
+    C042: {
       r_4_2: "positive_icon_1",
       r_4_3: "positive_title_1",
       r_4_4: "positive_summary_1",
@@ -68,7 +68,7 @@ const partsTargets = {
       r_4_9: "positive_title_3",
       r_4_10: "positive_summary_3",
     },
-    part3: {
+    C043: {
       r_4_11: "negative_icon_1",
       r_4_12: "negative_title_1",
       r_4_13: "negative_summary_1",
@@ -79,61 +79,61 @@ const partsTargets = {
       r_4_18: "negative_title_3",
       r_4_19: "negative_summary_3",
     },
-    part4: {
+    C044: {
       r_4_20: "overall_summary",
     },
   },
   competitorPage: {
-    part1: {
+    C051: {
       r_5_2_1: "sentiment_positive_scores",
       r_5_2_2: "sentiment_negative_scores",
     },
-    part2: {
+    C052: {
       r_5_2: "competitor_name",
       r_5_3: "competitor_strength_1",
       r_5_4: "competitor_strength_2",
       r_5_5: "competitor_strength_3",
     },
-    part3: {
+    C053: {
       r_5_6: "competitor_summary",
     },
   },
   comparisonPage: {
-    part1: {
+    C061: {
       r_6_1_1: "list_of_evaluation_categories",
       r_6_1_2: "list_of_our_product_scores_by_category",
       r_6_1_3: "list_of_competitor_product_scores_by_category",
     },
-    part2: {
+    C062: {
       r_6_2: "gap_strength_area",
     },
-    part3: {
+    C063: {
       r_6_3: "gap_improvement_area",
     },
-    part4: {
+    C064: {
       r_6_4: "gap_opportunity_area",
     },
-    part5: {
+    C065: {
       r_6_5: "masked_competitor_name",
     },
-    part6: {
+    C066: {
       r_6_6: "self_nps",
       r_6_7: "competitor_nps",
     },
-    part7: {
+    C067: {
       r_6_8: "self_product_repurchase_intent",
       r_6_9: "competitor_product_repurchase_intent",
     },
-    part8: {
+    C068: {
       r_6_10: "self_brand_loyalty",
       r_6_11: "competitor_brand_loyalty",
     },
-    part9: {
+    C069: {
       r_6_12: "comparison_summary",
     },
   },
   improvementPage: {
-    part1: {
+    C071: {
       r_7_5_1: "priority_1_icon",
       r_7_5_2: "priority_1_title",
       r_7_5_3: "priority_1_description",
@@ -152,7 +152,7 @@ const partsTargets = {
     },
   },
   expectationGapPage: {
-    part1: {
+    C081: {
       r_8_2: [
         {
           label: "title1",
@@ -186,12 +186,12 @@ const partsTargets = {
         },
       ],
     },
-    part2: {
+    C082: {
       r_8_3: "expectation_gap_summary",
     },
   },
   solutionPage: {
-    part1: {
+    C091: {
       r_9_3_1: [
         { solution: "short_term_solution_1" },
         { solution: "short_term_solution_2" },
@@ -199,21 +199,21 @@ const partsTargets = {
         { solution: "short_term_solution_4" },
       ],
     },
-    part2: {
+    C092: {
       r_9_3_2: [
         { solution: "mid_term_solution_1" },
         { solution: "mid_term_solution_2" },
         { solution: "mid_term_solution_3" },
       ],
     },
-    part3: {
+    C093: {
       r_9_3_3: [
         { solution: "long_term_solution_1" },
         { solution: "long_term_solution_2" },
         { solution: "long_term_solution_3" },
       ],
     },
-    part4: {
+    C094: {
       r_9_5_1: "detail_solution_1_title",
       r_9_5_2: "detail_solution_1_subtitle",
       r_9_5_3: [
@@ -226,7 +226,7 @@ const partsTargets = {
         },
       ],
     },
-    part5: {
+    C095: {
       r_9_5_4: "detail_solution_2_title",
       r_9_5_5: "detail_solution_2_subtitle",
       r_9_5_6: [
@@ -235,7 +235,7 @@ const partsTargets = {
         { solution: "detail_2_solution_3" },
       ],
     },
-    part6: {
+    C096: {
       r_9_5_7: "detail_solution_3_title",
       r_9_5_8: "detail_solution_3_subtitle",
       r_9_5_9: [
@@ -244,12 +244,12 @@ const partsTargets = {
         { solution: "detail_3_solution_3" },
       ],
     },
-    part7: {
+    C097: {
       r_9_6: "solution_summary",
     },
   },
   executionPlanPage: {
-    part1: {
+    C101: {
       r_10_1: [
         {
           solution: "solution",
@@ -279,7 +279,7 @@ const partsTargets = {
     },
   },
   executionKPIPage: {
-    part1: {
+    C111: {
       r_11_1: [
         {
           title: "kpi_metrics_1_title",
@@ -299,15 +299,15 @@ const partsTargets = {
         },
       ],
     },
-    part2: {
+    C112: {
       r_11_2: "execution_plan_summary",
     },
-    part3: {
+    C113: {
       r_11_3: "budget_allocation_summary",
     },
   },
   conclusionPage: {
-    part1: {
+    C121: {
       r_12_1_1: [
         "self_current_sentiment_score",
         "self_current_NPS_score",
@@ -324,14 +324,14 @@ const partsTargets = {
         "target_repurchase_score",
       ],
     },
-    part2: {
+    C122: {
       r_12_2_1: "current_insight",
       r_12_2_2: "strategic_direction",
       r_12_2_3: "future_outlook",
     },
   },
   executiveSummaryPage: {
-    part1: {
+    C131: {
       r_13_1_1_1: "recommendation_title_1",
       r_13_1_1_2: "recommendation_detail_1",
       r_13_1_2_1: "recommendation_title_2",
@@ -606,7 +606,7 @@ const initialState = structuredClone(chunkConstraints);
 // -----------------------------
 type GlobalState = typeof initialState;
 type ChunkConstraints = typeof chunkConstraints;
-type partsTargets = typeof partsTargets;
+type PartsTargets = typeof partsTargets;
 
 // -----------------------------
 // Action type
@@ -652,7 +652,7 @@ const AIDataContext = createContext<{
   handleSetCurrentlyWorkingPage: (chunkType: ChunkType | null) => void;
   setCanSetWorkingPage: React.Dispatch<React.SetStateAction<boolean>>;
   canSetWorkingPage: boolean;
-  targets: partsTargets;
+  partsTargets: PartsTargets;
 } | null>(null);
 
 export const AIDataProvider = ({ children }: { children: ReactNode }) => {
@@ -663,7 +663,6 @@ export const AIDataProvider = ({ children }: { children: ReactNode }) => {
   const [currentlyWorkingPage, setCurrentlyWorkingPage] =
     useState<ChunkType | null>(null);
   const [canSetWorkingPage, setCanSetWorkingPage] = useState(true);
-  const [targets, setTargets] = useState(partsTargets);
 
   const handleSetCurrentlyWorkingPage = (chunkType: ChunkType | null) => {
     if (!canSetWorkingPage) return;
@@ -692,7 +691,7 @@ export const AIDataProvider = ({ children }: { children: ReactNode }) => {
         handleSetCurrentlyWorkingPage,
         setCanSetWorkingPage,
         canSetWorkingPage,
-        targets,
+        partsTargets,
       }}
     >
       {children}

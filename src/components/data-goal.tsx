@@ -14,18 +14,32 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useAIData } from "@/contexts/AiResponseContext";
 import type { ChunkType } from "./streaming_prompt_container";
 
-export function DataGoal() {
+type Props = {
+  selectedPart: any;
+  setSelectedPart: any;
+  state: any;
+  handlePromptFocus: any;
+  currentFocusPage: any;
+  partsTargets: any;
+};
+
+export function DataGoal({
+  selectedPart,
+  setSelectedPart,
+  state,
+  handlePromptFocus,
+  currentFocusPage,
+  partsTargets,
+}: Props) {
   const [copied, setCopied] = useState(false);
-  const { state, handlePromptFocus, currentFocusPage, targets } = useAIData();
-  const [selectedPart, setSelectedPart] = useState("part1");
 
   const pagesArray = Object.keys(state);
-  const pageParts = targets[currentFocusPage];
+  const partConstraint = partsTargets[currentFocusPage][selectedPart];
+
+  const pageParts = partsTargets[currentFocusPage];
   const partsArray = Object.keys(pageParts);
-  const partConstraint = targets[currentFocusPage][selectedPart];
 
   const handleCopy = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -44,10 +58,12 @@ export function DataGoal() {
             📈 데이터 목표 보기
           </AccordionTrigger>
           <Select
-            onValueChange={(value) => {
+            onValueChange={(value: ChunkType) => {
               console.log(value);
               handlePromptFocus(value as ChunkType);
-              setSelectedPart("part1");
+              const pageParts = partsTargets[value];
+              const firstKey = Object.keys(pageParts)[0];
+              setSelectedPart(firstKey);
             }}
             defaultValue="coverPage"
           >
@@ -57,7 +73,7 @@ export function DataGoal() {
             <SelectContent>
               {pagesArray.map((page, index) => (
                 <SelectItem key={page} value={page}>
-                  {(index < 9 ? `0${index}` : `${index + 1}`) +
+                  {(index < 9 ? `0${index}` : `${index}`) +
                     " " +
                     page.replace(/Page$/, "")}
                 </SelectItem>

@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useAIData } from "../contexts/AiResponseContext";
 import { DataGoal } from "./data-goal";
-import { useAuthContext } from "@/contexts/AuthContext";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
@@ -43,15 +42,21 @@ interface StreamingPromptContainerProps {
 const StreamingPromptContainer = ({
   category_id,
   chunkType,
-  chunkConstraint,
 }: StreamingPromptContainerProps) => {
   const [response, setResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
-  const authContext = useAuthContext();
+  const [selectedPart, setSelectedPart] = useState("C001");
+  const {
+    dispatch,
+    handleSetCurrentlyWorkingPage,
+    currentFocusPage,
+    state,
+    handlePromptFocus,
+    partsTargets,
+  } = useAIData();
 
-  const { dispatch, handleSetCurrentlyWorkingPage, currentFocusPage, state } =
-    useAIData();
+  const currentPartTarget = partsTargets[currentFocusPage][selectedPart];
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -77,15 +82,15 @@ const StreamingPromptContainer = ({
       ...values,
       product1,
       product2,
-      chunk_constraint: chunkConstraint,
+      chunk_constraint: currentPartTarget,
       chunk_type: chunkType,
     };
 
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    const userEmail = authContext.user?.user.email;
-    const username = userEmail?.split("@")[0];
+    // const userEmail = authContext.user?.user.email;
+    // const username = userEmail?.split("@")[0];
 
     try {
       handleSetCurrentlyWorkingPage(chunkType);
@@ -139,7 +144,14 @@ const StreamingPromptContainer = ({
       <h1 className="text-2xl mb-4">chunk_type: {chunkType.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
-        <DataGoal />
+        <DataGoal
+          selectedPart={selectedPart}
+          setSelectedPart={setSelectedPart}
+          handlePromptFocus={handlePromptFocus}
+          currentFocusPage={currentFocusPage}
+          partsTargets={partsTargets}
+          state={state}
+        />
         <PromptForm
           form={form}
           onSubmit={handleSubmit}
