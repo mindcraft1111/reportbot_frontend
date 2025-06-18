@@ -44,11 +44,12 @@ export default function PromptTestPage2() {
   const { category_id } = useParams<{
     category_id: string;
   }>();
+
+  if (!category_id) return null;
+  useRequireLogin();
+
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const categoryNameKo = searchParams.get("category_name_ko");
-  const { state, chunkConstraints, currentFocusPage, currentlyWorkingPage } =
-    useAIData();
+  const { state, currentFocusPage, currentlyWorkingPage } = useAIData();
   const sectionRefs = useRef<Record<ChunkType, HTMLDivElement | null>>({
     coverPage: null,
     contentsPage: null,
@@ -82,30 +83,15 @@ export default function PromptTestPage2() {
     }
   }, [location.pathname]);
 
-  useRequireLogin();
-
   return (
     <div className="flex" style={{ height: "calc(100vh - 70px)" }}>
       {category_id && <PromptSidebar category_id={category_id} />}
-      <div className="flex-1 overflow-y-auto p-4 space-y-6">
-        {category_id &&
-          categoryNameKo &&
-          (Object.entries(chunkConstraints) as [ChunkType, any][]).map(
-            ([chunkType, constraint], i) => (
-              <StreamingPromptContainer
-                key={i}
-                category_name_ko={categoryNameKo}
-                category_id={category_id}
-                chunkType={chunkType}
-                chunkConstraint={constraint}
-              />
-            )
-          )}
-      </div>
+
+      <StreamingPromptContainer category_id={category_id} />
 
       <div
         id="pdf-content"
-        className="space-y-4 p-12 bg-gray-100 overflow-auto"
+        className="space-y-4 p-12 bg-gray-100 overflow-auto flex-1"
         style={{ height: "calc(100vh - 70px)" }}
       >
         {chunkPageComponents.map(([chunkType, PageComponent], index) => (

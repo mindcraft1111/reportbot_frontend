@@ -10,7 +10,7 @@ const AIResponsePanel = ({ response, isStreaming }: Props) => {
   const animatedText = useAnimatedText(response);
 
   return (
-    <div className="border rounded-lg bg-muted p-4 h-96 overflow-auto whitespace-pre-wrap font-mono text-sm">
+    <div className="border rounded-lg p-4 h-64 overflow-auto whitespace-pre-wrap font-mono text-sm">
       <h2 className="font-semibold mb-2">AI Response:</h2>
       {isStreaming && !animatedText ? (
         "Waiting for AI response..."

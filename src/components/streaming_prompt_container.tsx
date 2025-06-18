@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useAIData } from "../contexts/AiResponseContext";
 import { DataGoal } from "./data-goal";
-import { useAuthContext } from "@/contexts/AuthContext";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
@@ -33,29 +32,30 @@ export type ChunkType =
   | "conclusionPage"
   | "executiveSummaryPage";
 
-interface StreamingPromptContainerProps {
-  category_id: string;
-  category_name_ko: string;
-  chunkType: ChunkType;
-  chunkConstraint: any;
-}
+const CATEGORY: Record<string, string> = {
+  "1": "ELEC_ACCESSORY",
+  "2": "PET",
+  "3": "SKIN",
+  "4": "LIFESTYLE",
+  "5": "CAR_ACCESSORY",
+};
 
-const StreamingPromptContainer = ({
-  category_id,
-  chunkType,
-  chunkConstraint,
-}: StreamingPromptContainerProps) => {
+const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   const [response, setResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
-  const authContext = useAuthContext();
-
+  const [selectedPart, setSelectedPart] = useState("C001");
   const {
     dispatch,
-    handlePromptFocus,
     handleSetCurrentlyWorkingPage,
     currentFocusPage,
+    state,
+    handlePromptFocus,
+    partsTargets,
   } = useAIData();
+
+  const currentPartTarget = partsTargets[currentFocusPage][selectedPart];
+  const currentCategory = CATEGORY[category_id];
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -65,6 +65,7 @@ const StreamingPromptContainer = ({
   useEffect(() => {
     form.reset();
     setResponse("");
+    setSelectedPart("C001");
     abortControllerRef.current?.abort();
     abortControllerRef.current = null;
   }, [category_id]);
@@ -81,62 +82,53 @@ const StreamingPromptContainer = ({
       ...values,
       product1,
       product2,
-      chunk_constraint: chunkConstraint,
-      chunk_type: chunkType,
+      chunk_constraint: currentPartTarget,
+      chunk_type: selectedPart,
+      category: currentCategory,
     };
 
     const controller = new AbortController();
     abortControllerRef.current = controller;
 
-    const userEmail = authContext.user?.user.email;
-    const username = userEmail?.split("@")[0];
+    // const userEmail = authContext.user?.user.email;
+    // const username = userEmail?.split("@")[0];
 
     try {
-      handleSetCurrentlyWorkingPage(chunkType);
+      handleSetCurrentlyWorkingPage(currentFocusPage);
 
-      const response = await fetch(
-        `http://localhost:8000/promptTest/${username}/`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          signal: controller.signal,
-        }
-      );
+      const response = await fetch(`http://localhost:8000/prompt/test/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+        signal: controller.signal,
+      });
 
       if (!response.ok) {
         toast.error(`HTTP 에러 발생 : ${response.status}`);
         return;
       }
 
-      const json = await response.json(); // Expecting { text: "..." }
-      const rawText = json.text || "";
-      setResponse(rawText); // Show raw text in the UI
+      const json = await response.json();
 
-      // Clean and extract actual JSON
-      let cleaned = rawText.trim();
+      let rawText =
+        typeof json.data === "string"
+          ? json.data
+          : JSON.stringify(json.data, null, 2);
 
-      if (cleaned.startsWith("json")) {
-        cleaned = cleaned.replace(/^json/, "").trim();
+      if (typeof rawText === "string" && rawText.includes("```json")) {
+        toast.error("응답에 ```json``` 문법이 포함되어 있습니다");
       }
+      setResponse(rawText);
 
-      if (cleaned.startsWith("```json")) {
-        cleaned = cleaned
-          .replace(/^```json/, "")
-          .replace(/```$/, "")
-          .trim();
-      } else if (cleaned.startsWith("```")) {
-        cleaned = cleaned.replace(/^```/, "").replace(/```$/, "").trim();
-      }
-
-      cleaned = cleaned.replace(/([{,]\s*)([a-zA-Z0-9_]+)(\s*:)/g, '$1"$2"$3');
-
-      const parsedData = JSON.parse(cleaned); // now it's a real object
+      const updatedPage = {
+        ...state[currentFocusPage],
+        ...json.data,
+      };
 
       dispatch({
         type: "SET_CHUNK_DATA",
-        chunk: chunkType,
-        payload: parsedData,
+        chunk: currentFocusPage,
+        payload: updatedPage,
       });
     } catch (err) {
       console.error("Fetch or parsing error:", err);
@@ -147,25 +139,25 @@ const StreamingPromptContainer = ({
     }
   };
 
-  const handlePromptClick = () => handlePromptFocus(chunkType);
-
   return (
     <main
-      className={`p-6 rounded-md transition-all duration-300 ${
-        chunkType === currentFocusPage
-          ? "bg-gray-50 ring-1 ring-blue-300 shadow-sm"
-          : ""
-      }`}
+      className={`p-12   rounded-md overflow-scroll w-[550px]
+       `}
     >
-      <h1 className="text-2xl mb-4">chunk_type: {chunkType.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
-        <DataGoal constraint={chunkConstraint} />
+        <DataGoal
+          selectedPart={selectedPart}
+          setSelectedPart={setSelectedPart}
+          handlePromptFocus={handlePromptFocus}
+          currentFocusPage={currentFocusPage}
+          partsTargets={partsTargets}
+          state={state}
+        />
         <PromptForm
           form={form}
           onSubmit={handleSubmit}
           isStreaming={isStreaming}
-          onClick={handlePromptClick}
         />
       </section>
     </main>
