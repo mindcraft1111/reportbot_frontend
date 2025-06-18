@@ -32,17 +32,15 @@ export type ChunkType =
   | "conclusionPage"
   | "executiveSummaryPage";
 
-interface StreamingPromptContainerProps {
-  category_id: string;
-  category_name_ko: string;
-  chunkType: ChunkType;
-  chunkConstraint: any;
-}
+const CATEGORY: Record<string, string> = {
+  "1": "ELEC_ACCESSORY",
+  "2": "PET",
+  "3": "SKIN",
+  "4": "LIFESTYLE",
+  "5": "CAR_ACCESSORY",
+};
 
-const StreamingPromptContainer = ({
-  category_id,
-  chunkType,
-}: StreamingPromptContainerProps) => {
+const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   const [response, setResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
@@ -57,6 +55,7 @@ const StreamingPromptContainer = ({
   } = useAIData();
 
   const currentPartTarget = partsTargets[currentFocusPage][selectedPart];
+  const currentCategory = CATEGORY[category_id];
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -66,6 +65,7 @@ const StreamingPromptContainer = ({
   useEffect(() => {
     form.reset();
     setResponse("");
+    setSelectedPart("C001");
     abortControllerRef.current?.abort();
     abortControllerRef.current = null;
   }, [category_id]);
@@ -83,7 +83,8 @@ const StreamingPromptContainer = ({
       product1,
       product2,
       chunk_constraint: currentPartTarget,
-      chunk_type: chunkType,
+      chunk_type: selectedPart,
+      category: currentCategory,
     };
 
     const controller = new AbortController();
@@ -93,7 +94,7 @@ const StreamingPromptContainer = ({
     // const username = userEmail?.split("@")[0];
 
     try {
-      handleSetCurrentlyWorkingPage(chunkType);
+      handleSetCurrentlyWorkingPage(currentFocusPage);
 
       const response = await fetch(`http://localhost:8000/prompt/test/`, {
         method: "POST",
@@ -107,17 +108,22 @@ const StreamingPromptContainer = ({
         return;
       }
 
-      const json = await response.json(); // Expecting { text: "..." }
-      console.log("😀 json:", json);
-      const rawText = json.data.text || "";
-      setResponse(rawText); // Show raw text in the UI
+      const json = await response.json();
+
+      let rawText =
+        typeof json.data === "string"
+          ? json.data
+          : JSON.stringify(json.data, null, 2);
+
+      if (typeof rawText === "string" && rawText.includes("```json")) {
+        toast.error("응답에 ```json``` 문법이 포함되어 있습니다");
+      }
+      setResponse(rawText);
 
       const updatedPage = {
         ...state[currentFocusPage],
         ...json.data,
       };
-
-      console.log("😀 updatedPage:", updatedPage);
 
       dispatch({
         type: "SET_CHUNK_DATA",
@@ -135,13 +141,9 @@ const StreamingPromptContainer = ({
 
   return (
     <main
-      className={`p-6 rounded-md transition-all duration-300 ${
-        chunkType === currentFocusPage
-          ? "bg-gray-50 ring-1 ring-blue-300 shadow-sm"
-          : ""
-      }`}
+      className={`p-12   rounded-md overflow-scroll w-[550px]
+       `}
     >
-      <h1 className="text-2xl mb-4">chunk_type: {chunkType.toLowerCase()}</h1>
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
         <DataGoal

@@ -53,13 +53,12 @@ export function DataGoal({
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value="goal">
-        <div className="flex items-center justify-between pr-4">
-          <AccordionTrigger className="flex-1 ">
-            📈 데이터 목표 보기
-          </AccordionTrigger>
+        <div className="flex items-center justify-between pr-4 gap-2 flex-wrap lg:flex-nowrap">
+          <AccordionTrigger className="flex-1 ">📈</AccordionTrigger>
+
           <Select
+            value={currentFocusPage}
             onValueChange={(value: ChunkType) => {
-              console.log(value);
               handlePromptFocus(value as ChunkType);
               const pageParts = partsTargets[value];
               const firstKey = Object.keys(pageParts)[0];
@@ -67,7 +66,7 @@ export function DataGoal({
             }}
             defaultValue="coverPage"
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[180px] flex-1">
               <SelectValue placeholder="page" />
             </SelectTrigger>
             <SelectContent>
@@ -80,6 +79,7 @@ export function DataGoal({
               ))}
             </SelectContent>
           </Select>
+
           <Select
             onValueChange={(value) => {
               setSelectedPart(value);
@@ -87,7 +87,7 @@ export function DataGoal({
             defaultValue={selectedPart}
             value={selectedPart}
           >
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-[100px] flex-1">
               <SelectValue placeholder="part" />
             </SelectTrigger>
             <SelectContent>
