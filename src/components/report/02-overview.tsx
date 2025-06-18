@@ -1,14 +1,14 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  analysis_subject: string; // 리포트 개요 설명
-  analysis_methodology: string; // 분석 대상 및 방법론에 대한 설명
+  r_2_1: string; // 리포트 개요 설명
+  r_2_2: string; // 분석 대상 및 방법론에 대한 설명
   isCurrentWorkingPage?: boolean; // AI 작업 중 여부
 };
 
 function OverviewPage_02({
-  analysis_subject,
-  analysis_methodology,
+  r_2_1,
+  r_2_2,
   isCurrentWorkingPage = false,
 }: Props) {
   return (
@@ -16,10 +16,10 @@ function OverviewPage_02({
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
       <h1>개요</h1>
-      <p>{analysis_subject}</p>
+      <p>{r_2_1}</p>
 
       <h1>분석 대상 및 방법론</h1>
-      <p>{analysis_methodology}</p>
+      <p>{r_2_2}</p>
 
       <div
         className="circle-diagram"

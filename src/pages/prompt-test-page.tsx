@@ -3,7 +3,7 @@ import PromptSidebar from "@/components/prompt-sidebar";
 import StreamingPromptContainer from "@/components/streaming_prompt_container";
 import A4Layout from "@/components/layouts/A4-layout";
 import PageSeparator from "@/components/page-separator";
-import ReportCoverPage from "@/components/report/00-report-cover";
+import CoverPage_00 from "@/components/report/00-report-cover";
 import ContentsPage_01 from "@/components/report/01-contents";
 import OverviewPage_02 from "@/components/report/02-overview";
 import SwotPage_03 from "@/components/report/03-swot";
@@ -14,7 +14,7 @@ import ImprovementPage_07 from "@/components/report/07-improve";
 import ExpectationGapPage_08 from "@/components/report/08-expectation";
 import SolutionPage_09 from "@/components/report/09-solution";
 import ExecutionPlanPage_10 from "@/components/report/10-execution-plan";
-import ExecutionKPIPage_11 from "@/components/report/11-execuition-kpi";
+import ExecutionKPIPage_11 from "@/components/report/11-execution-kpi";
 import ConclusionPage_12 from "@/components/report/12-conclusion";
 import ExecutiveSummaryPage_13 from "@/components/report/13-executive-summary";
 import { useAIData } from "../contexts/AiResponseContext";
@@ -24,7 +24,7 @@ import { useEffect, useRef } from "react";
 import React from "react";
 
 const chunkPageComponents: [ChunkType, React.ComponentType<any>][] = [
-  ["coverPage", ReportCoverPage],
+  ["coverPage", CoverPage_00],
   ["contentsPage", ContentsPage_01],
   ["overviewPage", OverviewPage_02],
   ["swotPage", SwotPage_03],
@@ -85,7 +85,7 @@ export default function PromptTestPage2() {
   useRequireLogin();
 
   return (
-    <div className="flex h-screen">
+    <div className="flex" style={{ height: "calc(100vh - 70px)" }}>
       {category_id && <PromptSidebar category_id={category_id} />}
       <div className="flex-1 overflow-y-auto p-4 space-y-6">
         {category_id &&
@@ -105,7 +105,8 @@ export default function PromptTestPage2() {
 
       <div
         id="pdf-content"
-        className="space-y-4 p-12 bg-gray-100 h-screen overflow-auto"
+        className="space-y-4 p-12 bg-gray-100 overflow-auto"
+        style={{ height: "calc(100vh - 70px)" }}
       >
         {chunkPageComponents.map(([chunkType, PageComponent], index) => (
           <React.Fragment key={chunkType}>

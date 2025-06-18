@@ -1,36 +1,40 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  r_9_3_1: { solution: string }[];
-  r_9_3_2: { solution: string }[];
-  r_9_3_3: { solution: string }[];
-  r_9_5_1: string;
-  r_9_5_2: string;
-  r_9_5_3: { solution: string }[];
-  r_9_5_4: string;
-  r_9_5_5: string;
-  r_9_5_6: { solution: string }[];
-  r_9_5_7: string;
-  r_9_5_8: string;
-  r_9_5_9: { solution: string }[];
-  r_9_6: string;
-  isCurrentWorkingPage?: boolean; // 추가된 prop
+  short_term_solutions: { solution: string }[];
+  mid_term_solutions: { solution: string }[];
+  long_term_solutions: { solution: string }[];
+
+  detail_1_title: string;
+  detail_1_subtitle: string;
+  detail_1_solutions: { solution: string }[];
+
+  detail_2_title: string;
+  detail_2_subtitle: string;
+  detail_2_solutions: { solution: string }[];
+
+  detail_3_title: string;
+  detail_3_subtitle: string;
+  detail_3_solutions: { solution: string }[];
+
+  solution_summary: string;
+  isCurrentWorkingPage?: boolean;
 };
 
 function SolutionPage_09({
-  r_9_3_1,
-  r_9_3_2,
-  r_9_3_3,
-  r_9_5_1,
-  r_9_5_2,
-  r_9_5_3,
-  r_9_5_4,
-  r_9_5_5,
-  r_9_5_6,
-  r_9_5_7,
-  r_9_5_8,
-  r_9_5_9,
-  r_9_6,
+  short_term_solutions,
+  mid_term_solutions,
+  long_term_solutions,
+  detail_1_title,
+  detail_1_subtitle,
+  detail_1_solutions,
+  detail_2_title,
+  detail_2_subtitle,
+  detail_2_solutions,
+  detail_3_title,
+  detail_3_subtitle,
+  detail_3_solutions,
+  solution_summary,
   isCurrentWorkingPage = false,
 }: Props) {
   return (
@@ -55,7 +59,7 @@ function SolutionPage_09({
             <div className="line-number">1</div>
           </div>
           <ul className="solution-content">
-            {r_9_3_1.map((item, idx) => (
+            {short_term_solutions.map((item, idx) => (
               <li key={idx}>{item.solution}</li>
             ))}
           </ul>
@@ -71,7 +75,7 @@ function SolutionPage_09({
             <div className="line-number">2</div>
           </div>
           <ul className="solution-content">
-            {r_9_3_2.map((item, idx) => (
+            {mid_term_solutions.map((item, idx) => (
               <li key={idx}>{item.solution}</li>
             ))}
           </ul>
@@ -87,7 +91,7 @@ function SolutionPage_09({
             <div className="line-number">3</div>
           </div>
           <ul className="solution-content">
-            {r_9_3_3.map((item, idx) => (
+            {long_term_solutions.map((item, idx) => (
               <li key={idx}>{item.solution}</li>
             ))}
           </ul>
@@ -97,37 +101,37 @@ function SolutionPage_09({
       <h2>핵심 솔루션 상세</h2>
       <div className="solution-grid compact">
         <div className="solution-card">
-          <h3>{r_9_5_1}</h3>
-          <p className="subtitle">{r_9_5_2}:</p>
+          <h3>{detail_1_title}</h3>
+          <p className="subtitle">{detail_1_subtitle}:</p>
           <ul>
-            {r_9_5_3.map((item, idx) => (
+            {detail_1_solutions.map((item, idx) => (
               <li key={idx}>{item.solution}</li>
             ))}
           </ul>
         </div>
 
         <div className="solution-card">
-          <h3>{r_9_5_4}</h3>
-          <p className="subtitle">{r_9_5_5}:</p>
+          <h3>{detail_2_title}</h3>
+          <p className="subtitle">{detail_2_subtitle}:</p>
           <ul>
-            {r_9_5_6.map((item, idx) => (
+            {detail_2_solutions.map((item, idx) => (
               <li key={idx}>{item.solution}</li>
             ))}
           </ul>
         </div>
 
         <div className="solution-card">
-          <h3>{r_9_5_7}</h3>
-          <p className="subtitle">{r_9_5_8}:</p>
+          <h3>{detail_3_title}</h3>
+          <p className="subtitle">{detail_3_subtitle}:</p>
           <ul>
-            {r_9_5_9.map((item, idx) => (
+            {detail_3_solutions.map((item, idx) => (
               <li key={idx}>{item.solution}</li>
             ))}
           </ul>
         </div>
       </div>
 
-      <p className="solution-description">{r_9_6}</p>
+      <p className="solution-description">{solution_summary}</p>
 
       <div className="page-footer">
         <span className="page-number">- 9 -</span>

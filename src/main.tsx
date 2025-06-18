@@ -20,6 +20,7 @@ import AIDataProvider from "./contexts/AiResponseContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import GeneralContextProvider from "./contexts/GeneralContext";
 import TailwindIndicator from "./components/utils/tailwind-indicator";
+import DashboardPage from "./pages/dashboard-page";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +35,7 @@ createRoot(document.getElementById("root")!).render(
                 <Route element={<CommLayout />}>
                   <Route index element={<LandingPage />} />{" "}
                   <Route path="/test" element={<PromptTestPage />} />
-                  <Route path="report" element={<ReportPage />} />
+                  <Route path="/dashboard" element={<DashboardPage />} />
                   <Route
                     path="/prompt-test/:category_id"
                     element={<PromptTestPage2 />}

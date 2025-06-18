@@ -33,9 +33,10 @@ export default function PromptSidebar({
   const { isSidebarOpen } = useGeneralContext();
   return (
     <aside
-      className={`w-48 ${
+      className={`min-w-64 ${
         isSidebarOpen ? "visible fixed" : "hidden"
-      } sm:block h-screen overflow-y-auto bg-gray-100 border-r p-4`}
+      } sm:block  overflow-y-auto bg-gray-100 border-r p-4`}
+      style={{ height: "calc(100vh - 70px)" }}
     >
       <h2 className="text-xl mb-4 text-blue-700">Products</h2>
       <ul className="space-y-2">

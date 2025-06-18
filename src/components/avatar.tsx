@@ -19,7 +19,7 @@ export default function HeaderAvatar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarImage src="https://github.com/shadcn.png" />
+          <AvatarImage src="https://avatar.iran.liara.run/public/boy" />
           <AvatarFallback>
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
           </AvatarFallback>

@@ -1,65 +1,72 @@
+import SpinnerOverlay from "../spinner-overlay";
 import { Pie } from "react-chartjs-2";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import type { ChartOptions } from "chart.js";
-import SpinnerOverlay from "../spinner-overlay";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 
 type Props = {
-  r_4_1_1: number;
-  r_4_1_2: number;
-  r_4_2: string;
-  r_4_3: string;
-  r_4_4: string;
-  r_4_5: string;
-  r_4_6: string;
-  r_4_7: string;
-  r_4_8: string;
-  r_4_9: string;
-  r_4_10: string;
-  r_4_11: string;
-  r_4_12: string;
-  r_4_13: string;
-  r_4_14: string;
-  r_4_15: string;
-  r_4_16: string;
-  r_4_17: string;
-  r_4_18: string;
-  r_4_19: string;
-  r_4_20: string;
-  isCurrentWorkingPage?: boolean; // 추가된 prop
+  positive_ratio: number;
+  negative_ratio: number;
+
+  positive_icon_1: string;
+  positive_title_1: string;
+  positive_summary_1: string;
+
+  positive_icon_2: string;
+  positive_title_2: string;
+  positive_summary_2: string;
+
+  positive_icon_3: string;
+  positive_title_3: string;
+  positive_summary_3: string;
+
+  negative_icon_1: string;
+  negative_title_1: string;
+  negative_summary_1: string;
+
+  negative_icon_2: string;
+  negative_title_2: string;
+  negative_summary_2: string;
+
+  negative_icon_3: string;
+  negative_title_3: string;
+  negative_summary_3: string;
+
+  overall_summary: string;
+  isCurrentWorkingPage?: boolean;
 };
 
 function SelfProductPage_04({
-  r_4_1_1,
-  r_4_1_2,
-  r_4_2,
-  r_4_3,
-  r_4_4,
-  r_4_5,
-  r_4_6,
-  r_4_7,
-  r_4_8,
-  r_4_9,
-  r_4_10,
-  r_4_11,
-  r_4_12,
-  r_4_13,
-  r_4_14,
-  r_4_15,
-  r_4_16,
-  r_4_17,
-  r_4_18,
-  r_4_19,
-  r_4_20,
+  positive_ratio,
+  negative_ratio,
+  positive_icon_1,
+  positive_title_1,
+  positive_summary_1,
+  positive_icon_2,
+  positive_title_2,
+  positive_summary_2,
+  positive_icon_3,
+  positive_title_3,
+  positive_summary_3,
+  negative_icon_1,
+  negative_title_1,
+  negative_summary_1,
+  negative_icon_2,
+  negative_title_2,
+  negative_summary_2,
+  negative_icon_3,
+  negative_title_3,
+  negative_summary_3,
+  overall_summary,
   isCurrentWorkingPage = false,
 }: Props) {
   const chartData = {
     labels: ["긍정적 (4~5점)", "부정적 (1~2점)"],
     datasets: [
       {
-        data: [r_4_1_1, r_4_1_2],
+        data: [positive_ratio, negative_ratio],
         backgroundColor: ["rgba(75, 192, 192, 0.7)", "rgba(255, 99, 132, 0.7)"],
       },
     ],
@@ -104,27 +111,27 @@ function SelfProductPage_04({
       <h2 style={{ fontSize: "12pt" }}>주요 긍정적 피드백</h2>
       <div className="compact-feedback-grid">
         <div className="cf-item">
-          <span className="cf-icon">{r_4_2}</span>
+          <span className="cf-icon">{positive_icon_1}</span>
           <div>
-            <strong>{r_4_3}</strong>
+            <strong>{positive_title_1}</strong>
             <br />
-            <span className="cf-desc">{r_4_4}</span>
+            <span className="cf-desc">{positive_summary_1}</span>
           </div>
         </div>
         <div className="cf-item">
-          <span className="cf-icon">{r_4_5}</span>
+          <span className="cf-icon">{positive_icon_2}</span>
           <div>
-            <strong>{r_4_6}</strong>
+            <strong>{positive_title_2}</strong>
             <br />
-            <span className="cf-desc">{r_4_7}</span>
+            <span className="cf-desc">{positive_summary_2}</span>
           </div>
         </div>
         <div className="cf-item">
-          <span className="cf-icon">{r_4_8}</span>
+          <span className="cf-icon">{positive_icon_3}</span>
           <div>
-            <strong>{r_4_9}</strong>
+            <strong>{positive_title_3}</strong>
             <br />
-            <span className="cf-desc">{r_4_10}</span>
+            <span className="cf-desc">{positive_summary_3}</span>
           </div>
         </div>
       </div>
@@ -134,32 +141,32 @@ function SelfProductPage_04({
       </h2>
       <div className="compact-feedback-grid">
         <div className="cf-item">
-          <span className="cf-icon">{r_4_11}</span>
+          <span className="cf-icon">{negative_icon_1}</span>
           <div>
-            <strong>{r_4_12}</strong>
+            <strong>{negative_title_1}</strong>
             <br />
-            <span className="cf-desc">{r_4_13}</span>
+            <span className="cf-desc">{negative_summary_1}</span>
           </div>
         </div>
         <div className="cf-item">
-          <span className="cf-icon">{r_4_14}</span>
+          <span className="cf-icon">{negative_icon_2}</span>
           <div>
-            <strong>{r_4_15}</strong>
+            <strong>{negative_title_2}</strong>
             <br />
-            <span className="cf-desc">{r_4_16}</span>
+            <span className="cf-desc">{negative_summary_2}</span>
           </div>
         </div>
         <div className="cf-item">
-          <span className="cf-icon">{r_4_17}</span>
+          <span className="cf-icon">{negative_icon_3}</span>
           <div>
-            <strong>{r_4_18}</strong>
+            <strong>{negative_title_3}</strong>
             <br />
-            <span className="cf-desc">{r_4_19}</span>
+            <span className="cf-desc">{negative_summary_3}</span>
           </div>
         </div>
       </div>
 
-      <p>{r_4_20}</p>
+      <p>{overall_summary}</p>
 
       <div className="page-footer">
         <span className="page-number">- 4 -</span>

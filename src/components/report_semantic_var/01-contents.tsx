@@ -1,11 +1,14 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  r_1_1: string[]; // 목차 항목 리스트
+  table_of_contents: string[]; // 목차 항목 리스트
   isCurrentWorkingPage?: boolean; // AI 작업 중 여부
 };
 
-function ContentsPage_01({ r_1_1, isCurrentWorkingPage = false }: Props) {
+function ContentsPage_01({
+  table_of_contents,
+  isCurrentWorkingPage = false,
+}: Props) {
   return (
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
@@ -24,7 +27,7 @@ function ContentsPage_01({ r_1_1, isCurrentWorkingPage = false }: Props) {
         }}
       >
         <ol style={{ fontSize: "14pt", lineHeight: 2, textAlign: "left" }}>
-          {r_1_1.map((item, index) => (
+          {table_of_contents.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
         </ol>

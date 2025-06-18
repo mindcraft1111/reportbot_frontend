@@ -1,7 +1,7 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  r_10_1: {
+  department_execution_roles: {
     solution: string;
     ownerDept: string;
     coopDept: string;
@@ -10,7 +10,10 @@ type Props = {
   isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
-function ExecutionPlanPage_10({ r_10_1, isCurrentWorkingPage = false }: Props) {
+function ExecutionPlanPage_10({
+  department_execution_roles,
+  isCurrentWorkingPage = false,
+}: Props) {
   return (
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
@@ -101,7 +104,7 @@ function ExecutionPlanPage_10({ r_10_1, isCurrentWorkingPage = false }: Props) {
           </tr>
         </thead>
         <tbody>
-          {r_10_1.map((item, index) => (
+          {department_execution_roles.map((item, index) => (
             <tr key={index}>
               <td>{item.solution}</td>
               <td>{item.ownerDept}</td>

@@ -1,4 +1,4 @@
-import logo from "/assets/logo.png";
+import logo2 from "/assets/logo2.png";
 import { useContext } from "react";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "@/contexts/AuthContext";
@@ -29,7 +29,7 @@ export default function Commheader() {
 
         {/* Logo */}
         <Link to="/">
-          <img src={logo} alt="logo" className="h-10 w-25" />
+          <img src={logo2} alt="logo" className="h-10 w-25" />
         </Link>
 
         {/* Desktop Menu */}
@@ -44,7 +44,7 @@ export default function Commheader() {
           </li>
           <li>
             <Link
-              to="/report"
+              to="/dashboard"
               className="hover:text-blue-400 text-blue-700 font-medium text-[15px]"
             >
               리포트

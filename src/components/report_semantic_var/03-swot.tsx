@@ -1,26 +1,26 @@
 import SpinnerOverlay from "../spinner-overlay";
 
 type Props = {
-  r_3_1: string; // 강점 제목
-  r_3_2: string; // 강점 설명
-  r_3_3: string; // 약점 제목
-  r_3_4: string; // 약점 설명
-  r_3_5: string; // 기회 제목
-  r_3_6: string; // 기회 설명
-  r_3_7: string; // 위협 제목
-  r_3_8: string; // 위협 설명
+  strength_title: string; // 강점 제목
+  strength_description: string; // 강점 설명
+  weakness_title: string; // 약점 제목
+  weakness_description: string; // 약점 설명
+  opportunity_title: string; // 기회 제목
+  opportunity_description: string; // 기회 설명
+  threat_title: string; // 위협 제목
+  threat_description: string; // 위협 설명
   isCurrentWorkingPage?: boolean; // AI 작업 중 여부
 };
 
 function SwotPage_03({
-  r_3_1,
-  r_3_2,
-  r_3_3,
-  r_3_4,
-  r_3_5,
-  r_3_6,
-  r_3_7,
-  r_3_8,
+  strength_title,
+  strength_description,
+  weakness_title,
+  weakness_description,
+  opportunity_title,
+  opportunity_description,
+  threat_title,
+  threat_description,
   isCurrentWorkingPage = false,
 }: Props) {
   return (
@@ -46,9 +46,9 @@ function SwotPage_03({
             <li>조직의 특별한 점은?</li>
           </ul>
           <div className="swot-example">
-            <strong>{r_3_1}:</strong>
+            <strong>{strength_title}:</strong>
             <br />
-            {r_3_2}
+            {strength_description}
           </div>
         </div>
 
@@ -62,9 +62,9 @@ function SwotPage_03({
             <li>성과를 개선할 수 있는 리소스는?</li>
           </ul>
           <div className="swot-example">
-            <strong>{r_3_3}:</strong>
+            <strong>{weakness_title}:</strong>
             <br />
-            {r_3_4}
+            {weakness_description}
           </div>
         </div>
 
@@ -78,9 +78,9 @@ function SwotPage_03({
             <li>올해 우리의 목표는?</li>
           </ul>
           <div className="swot-example">
-            <strong>{r_3_5}:</strong>
+            <strong>{opportunity_title}:</strong>
             <br />
-            {r_3_6}
+            {opportunity_description}
           </div>
         </div>
 
@@ -94,9 +94,9 @@ function SwotPage_03({
             <li>떠오르는 새로운 시장 트렌드는?</li>
           </ul>
           <div className="swot-example">
-            <strong>{r_3_7}:</strong>
+            <strong>{threat_title}:</strong>
             <br />
-            {r_3_8}
+            {threat_description}
           </div>
         </div>
       </div>
