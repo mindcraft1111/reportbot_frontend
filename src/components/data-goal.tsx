@@ -7,9 +7,20 @@ import {
 import { Button } from "@/components/ui/button";
 import { Check, ClipboardCopy } from "lucide-react";
 import { useState } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useAIData } from "@/contexts/AiResponseContext";
+import type { ChunkType } from "./streaming_prompt_container";
 
 export function DataGoal({ constraint }: { constraint: any }) {
   const [copied, setCopied] = useState(false);
+  const { state, handlePromptFocus } = useAIData();
+  const pagesArray = Object.keys(state);
 
   const handleCopy = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -27,6 +38,25 @@ export function DataGoal({ constraint }: { constraint: any }) {
           <AccordionTrigger className="flex-1 ">
             📈 데이터 목표 보기
           </AccordionTrigger>
+          <Select
+            onValueChange={(value) => {
+              console.log(value);
+              handlePromptFocus(value as ChunkType);
+            }}
+          >
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="page" />
+            </SelectTrigger>
+            <SelectContent>
+              {pagesArray.map((page, index) => (
+                <SelectItem key={page} value={page}>
+                  {(index < 9 ? `0${index + 1}` : `${index + 1}`) +
+                    " " +
+                    page.replace(/Page$/, "")}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
           <Button
             variant="outline"
             size="sm"
