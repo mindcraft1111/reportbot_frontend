@@ -7,6 +7,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useAIData } from "../contexts/AiResponseContext";
 import { DataGoal } from "./data-goal";
+import axiosInstance from "@/axios";
+import { useAuthContext } from "@/contexts/AuthContext";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
@@ -53,6 +55,8 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
     handlePromptFocus,
     partsTargets,
   } = useAIData();
+  const auth = useAuthContext();
+  const [isPromptSubmitting, setIsPromptSubmitting] = useState(false);
 
   const currentPartTarget = partsTargets[currentFocusPage][selectedPart];
   const currentCategory = CATEGORY[category_id];
@@ -157,6 +161,34 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
     }
   };
 
+  // passed : 나중에 받아서 처리
+  // reviewer_comment : 나중에 받아서 처리
+  const handleSavePrompt = async () => {
+    const payload = {
+      reviewer: auth.user?.user.email,
+      category: currentCategory,
+      question: form.getValues("user_prompt"),
+      answer: response,
+      passed: true,
+      reviewer_comment: "프롬프트가 잘 작동합니다.",
+      tested_at: new Date().toISOString(),
+    };
+
+    console.log(`😀 handleSavePrompt_payload: ${payload}`);
+    setIsPromptSubmitting(true);
+    try {
+      await axiosInstance.post("http://localhost:8000/api/prompts-tests/", {
+        ...payload,
+      });
+      toast.success("프롬프트 저장 완료");
+    } catch (error) {
+      toast.error("프롬프트 저장 실패");
+      console.log(error);
+    } finally {
+      setIsPromptSubmitting(false);
+    }
+  };
+
   return (
     <main className="p-12 rounded-md overflow-scroll w-[550px]">
       <section>
@@ -173,6 +205,8 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
           form={form}
           onGeminiRequest={handleRequestGemini}
           isStreaming={isStreaming}
+          onPromptSubmit={handleSavePrompt}
+          isPromptSubmitting={isPromptSubmitting}
         />
       </section>
     </main>
