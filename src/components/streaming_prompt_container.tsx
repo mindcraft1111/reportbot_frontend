@@ -87,13 +87,10 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
       product_category: currentCategory,
     };
 
-    console.log(payload)
+    console.log(payload);
 
     const controller = new AbortController();
     abortControllerRef.current = controller;
-
-    // const userEmail = authContext.user?.user.email;
-    // const username = userEmail?.split("@")[0];
 
     try {
       handleSetCurrentlyWorkingPage(currentFocusPage);
@@ -111,21 +108,41 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
       }
 
       const json = await response.json();
+      console.log("😀 AI response:", json);
 
-      let rawText =
-        typeof json.data === "string"
-          ? json.data
-          : JSON.stringify(json.data, null, 2);
+      let parsedData: any = json.data;
+      let rawText: string;
+
+      // Attempt to unwrap if json.data is a stringified object
+      if (typeof json.data === "string") {
+        try {
+          const firstParse = JSON.parse(json.data);
+          if (typeof firstParse === "object") {
+            parsedData = firstParse;
+            rawText = JSON.stringify(parsedData, null, 2);
+          } else {
+            rawText = json.data;
+          }
+        } catch (e) {
+          console.warn("⚠️ Failed to parse json.data as JSON string:", e);
+          rawText = json.data;
+        }
+      } else {
+        rawText = JSON.stringify(parsedData, null, 2);
+      }
 
       if (typeof rawText === "string" && rawText.includes("```json")) {
         toast.error("응답에 ```json``` 문법이 포함되어 있습니다");
       }
+
       setResponse(rawText);
 
       const updatedPage = {
         ...state[currentFocusPage],
-        ...json.data,
+        ...parsedData,
       };
+
+      console.log("✅ updatedPage:", updatedPage);
 
       dispatch({
         type: "SET_CHUNK_DATA",
@@ -142,10 +159,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   };
 
   return (
-    <main
-      className={`p-12   rounded-md overflow-scroll w-[550px]
-       `}
-    >
+    <main className="p-12 rounded-md overflow-scroll w-[550px]">
       <section>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
         <DataGoal
