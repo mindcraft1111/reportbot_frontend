@@ -82,10 +82,12 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
       ...values,
       product1,
       product2,
-      chunk_constraint: currentPartTarget,
-      chunk_type: selectedPart,
-      category: currentCategory,
+      target_output_format: currentPartTarget,
+      prompt_code: selectedPart,
+      product_category: currentCategory,
     };
+
+    console.log(payload)
 
     const controller = new AbortController();
     abortControllerRef.current = controller;
