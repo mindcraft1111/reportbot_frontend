@@ -12,9 +12,12 @@ function CoverPage_00({
   r_0_1,
   r_0_2,
   r_0_3,
-  r_0_4,
   isCurrentWorkingPage,
 }: Props) {
+
+  const today = new Date().toISOString().split('T')[0];
+  const displayDate = today;
+  
   return (
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
@@ -49,7 +52,7 @@ function CoverPage_00({
           color: "#aaa",
         }}
       >
-        작성일자 : {r_0_4}
+        작성일자 : {displayDate}
       </p>
     </section>
   );
