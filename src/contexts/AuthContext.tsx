@@ -74,12 +74,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       return;
     }
 
-    const response = await apiClient.logout(
-      user.tokens.accessToken,
-      user.tokens.refreshToken
-    );
+    const response = await apiClient.logout(user.tokens.accessToken);
 
     if (!response.success) {
+      if (response.message) {
+        toast.error(response.message);
+        return
+      }
       toast.error("서버 에러 : 로그아웃 실패");
     } else {
       setUser(null);

@@ -1,12 +1,16 @@
 {
   "coverPage": {
-    "report_title": {
-      "max_length": "25",
-      "format": "보고서 제목 ex) 제품 리뷰 기반 감정 분석 보고서"
+    "C001": {
+      "report_title": {
+        "max_length": "25",
+        "format": "보고서 제목 ex) 제품 리뷰 기반 감정 분석 보고서"
+      }
     },
-    "report_objective": {
-      "max_length": "20",
-      "format": "보고서 목표 ex) 자사 vs 경쟁사 비교 분석"
+    "C002": {
+      "report_objective": {
+        "max_length": "20",
+        "format": "보고서 목표 ex) 자사 vs 경쟁사 비교 분석"
+      }
     },
     "brand_logo_url": {
       "max_length": "500",
@@ -34,153 +38,175 @@
     }
   },
   "swotPage": {
-    "strength_title": {
-      "max_length": "15",
-      "format": "강점 제목 ex) 고객 중심 인터페이스"
+    "C031": {
+      "strength_title": {
+        "max_length": "15",
+        "format": "강점 제목 ex) 고객 중심 인터페이스"
+      },
+      "strength_description": {
+        "max_length": "56",
+        "format": "강점 설명 ex) 직관적인 UI/UX로 인해 사용자 만족도가 높습니다."
+      }
     },
-    "strength_description": {
-      "max_length": "56",
-      "format": "강점 설명 ex) 직관적인 UI/UX로 인해 사용자 만족도가 높습니다."
+    "C032": {
+      "weakness_title": {
+        "max_length": "15",
+        "format": "약점 제목 ex) 배터리 성능"
+      },
+      "weakness_description": {
+        "max_length": "47",
+        "format": "약점 설명 ex) 사용자들이 충전 빈도에 대한 불만을 표시하고 있습니다."
+      }
     },
-    "weakness_title": {
-      "max_length": "15",
-      "format": "약점 제목 ex) 배터리 성능"
+    "C033": {
+      "opportunity_title": {
+        "max_length": "15",
+        "format": "기회 제목 ex) 시장 확대 기회"
+      },
+      "opportunity_description": {
+        "max_length": "63",
+        "format": "기회 설명 ex) 신규 사용자층 확보를 위한 글로벌 마케팅 전략이 가능함"
+      }
     },
-    "weakness_description": {
-      "max_length": "47",
-      "format": "약점 설명 ex) 사용자들이 충전 빈도에 대한 불만을 표시하고 있습니다."
-    },
-    "opportunity_title": {
-      "max_length": "15",
-      "format": "기회 제목 ex) 시장 확대 기회"
-    },
-    "opportunity_description": {
-      "max_length": "63",
-      "format": "기회 설명 ex) 신규 사용자층 확보를 위한 글로벌 마케팅 전략이 가능함"
-    },
-    "threat_title": {
-      "max_length": "15",
-      "format": "위협 제목 ex) 경쟁 심화"
-    },
-    "threat_description": {
-      "max_length": "56",
-      "format": "위협 설명 ex) 동일 시장에 유사 제품이 빠르게 출시되고 있어 경쟁이 치열해지고 있습니다."
+    "C034": {
+      "threat_title": {
+        "max_length": "15",
+        "format": "위협 제목 ex) 경쟁 심화"
+      },
+      "threat_description": {
+        "max_length": "56",
+        "format": "위협 설명 ex) 동일 시장에 유사 제품이 빠르게 출시되고 있어 경쟁이 치열해지고 있습니다."
+      }
     }
   },
   "selfProductPage": {
-    "positive_ratio": {
-      "max_length": "3",
-      "format": "자사 제품 리뷰 분석 긍정 비율(%) ex) 65"
+    "C041": {
+      "positive_ratio": {
+        "max_length": "3",
+        "format": "자사 제품 리뷰 분석 긍정 비율(%) ex) 65"
+      },
+      "negative_ratio": {
+        "max_length": "3",
+        "format": "자사 제품 리뷰 분석 부정 비율(%) ex) 15"
+      }
     },
-    "negative_ratio": {
-      "max_length": "3",
-      "format": "자사 제품 리뷰 분석 부정 비율(%) ex) 15"
+    "C042": {
+      "positive_icon_1": {
+        "max_length": "3",
+        "format": "긍정 피드백 아이콘 1 ex) ⭐"
+      },
+      "positive_title_1": {
+        "max_length": "10",
+        "format": "긍정 피드백 제목 1 ex) 사용자 인터페이스"
+      },
+      "positive_summary_1": {
+        "max_length": "20",
+        "format": "긍정 피드백 요약 1 ex) 디자인이 이쁘고 사용이 편리해요."
+      },
+      "positive_icon_2": {
+        "max_length": "3",
+        "format": "긍정 피드백 아이콘 2 ex) 🔗"
+      },
+      "positive_title_2": {
+        "max_length": "10",
+        "format": "긍정 피드백 제목 2 ex) 연결성"
+      },
+      "positive_summary_2": {
+        "max_length": "20",
+        "format": "긍정 피드백 요약 2 ex) 호환성이 뛰어나고 안정적이에요."
+      },
+      "positive_icon_3": {
+        "max_length": "3",
+        "format": "긍정 피드백 아이콘 3 ex) ⚡"
+      },
+      "positive_title_3": {
+        "max_length": "10",
+        "format": "긍정 피드백 제목 3 ex) 반응 속도"
+      },
+      "positive_summary_3": {
+        "max_length": "20",
+        "format": "긍정 피드백 요약 3 ex) 즉각적인 반응으로 사용감이 좋음."
+      }
     },
-    "positive_icon_1": {
-      "max_length": "3",
-      "format": "긍정 피드백 아이콘 1 ex) ⭐"
+    "C043": {
+      "negative_icon_1": {
+        "max_length": "3",
+        "format": "부정 피드백 아이콘 1 ex) 🔋"
+      },
+      "negative_title_1": {
+        "max_length": "10",
+        "format": "부정 피드백 제목 1 ex) 배터리 수명"
+      },
+      "negative_summary_1": {
+        "max_length": "20",
+        "format": "부정 피드백 요약 1 ex) 자주 충전해야 해서 불편해요."
+      },
+      "negative_icon_2": {
+        "max_length": "3",
+        "format": "부정 피드백 아이콘 2 ex) 🛠️"
+      },
+      "negative_title_2": {
+        "max_length": "10",
+        "format": "부정 피드백 제목 2 ex) 설치 복잡성"
+      },
+      "negative_summary_2": {
+        "max_length": "20",
+        "format": "부정 피드백 요약 2 ex) 설치 과정이 어렵고 오래 걸려요."
+      },
+      "negative_icon_3": {
+        "max_length": "3",
+        "format": "부정 피드백 아이콘 3 ex) 💰"
+      },
+      "negative_title_3": {
+        "max_length": "10",
+        "format": "부정 피드백 제목 3 ex) 가격 대비 가치"
+      },
+      "negative_summary_3": {
+        "max_length": "20",
+        "format": "부정 피드백 요약 3 ex) 가격에 비해 기능이 아쉬워요."
+      }
     },
-    "positive_title_1": {
-      "max_length": "10",
-      "format": "긍정 피드백 제목 1 ex) 사용자 인터페이스"
-    },
-    "positive_summary_1": {
-      "max_length": "20",
-      "format": "긍정 피드백 요약 1 ex) 디자인이 이쁘고 사용이 편리해요."
-    },
-    "positive_icon_2": {
-      "max_length": "3",
-      "format": "긍정 피드백 아이콘 2 ex) 🔗"
-    },
-    "positive_title_2": {
-      "max_length": "10",
-      "format": "긍정 피드백 제목 2 ex) 연결성"
-    },
-    "positive_summary_2": {
-      "max_length": "20",
-      "format": "긍정 피드백 요약 2 ex) 호환성이 뛰어나고 안정적이에요."
-    },
-    "positive_icon_3": {
-      "max_length": "3",
-      "format": "긍정 피드백 아이콘 3 ex) ⚡"
-    },
-    "positive_title_3": {
-      "max_length": "10",
-      "format": "긍정 피드백 제목 3 ex) 반응 속도"
-    },
-    "positive_summary_3": {
-      "max_length": "20",
-      "format": "긍정 피드백 요약 3 ex) 즉각적인 반응으로 사용감이 좋음."
-    },
-    "negative_icon_1": {
-      "max_length": "3",
-      "format": "부정 피드백 아이콘 1 ex) 🔋"
-    },
-    "negative_title_1": {
-      "max_length": "10",
-      "format": "부정 피드백 제목 1 ex) 배터리 수명"
-    },
-    "negative_summary_1": {
-      "max_length": "20",
-      "format": "부정 피드백 요약 1 ex) 자주 충전해야 해서 불편해요."
-    },
-    "negative_icon_2": {
-      "max_length": "3",
-      "format": "부정 피드백 아이콘 2 ex) 🛠️"
-    },
-    "negative_title_2": {
-      "max_length": "10",
-      "format": "부정 피드백 제목 2 ex) 설치 복잡성"
-    },
-    "negative_summary_2": {
-      "max_length": "20",
-      "format": "부정 피드백 요약 2 ex) 설치 과정이 어렵고 오래 걸려요."
-    },
-    "negative_icon_3": {
-      "max_length": "3",
-      "format": "부정 피드백 아이콘 3 ex) 💰"
-    },
-    "negative_title_3": {
-      "max_length": "10",
-      "format": "부정 피드백 제목 3 ex) 가격 대비 가치"
-    },
-    "negative_summary_3": {
-      "max_length": "20",
-      "format": "부정 피드백 요약 3 ex) 가격에 비해 기능이 아쉬워요."
-    },
-    "overall_summary": {
-      "max_length": "193",
-      "format": "자사 제품 리뷰 감정 분석 결과 요약 ex) 시간 경과에 따른 감정 변화 추이 분석..."
+    "C044": {
+      "overall_summary": {
+        "max_length": "193",
+        "format": "자사 제품 리뷰 감정 분석 결과 요약 ex) 시간 경과에 따른 감정 변화 추이 분석..."
+      }
     }
   },
   "competitorPage": {
-    "competitor_name": {
-      "max_length": "20",
-      "format": "경쟁사명 ex) 젠하이저"
+    "C051": {
+      "sentiment_positive_scores": {
+        "max_length": "10",
+        "format": "자사와 경쟁사 긍정적 감정 점수 배열 [자사, 타사] ex) [65, 72]"
+      },
+      "sentiment_negative_scores": {
+        "max_length": "10",
+        "format": "자사와 경쟁사 부정적 감정 점수 배열 [자사, 타사] ex) [15, 10]"
+      }
     },
-    "sentiment_positive_scores": {
-      "max_length": "10",
-      "format": "자사와 경쟁사 긍정적 감정 점수 배열 [자사, 타사] ex) [65, 72]"
+    "C052": {
+      "competitor_name": {
+        "max_length": "20",
+        "format": "경쟁사명 ex) 젠하이저"
+      },
+      "competitor_strength_1": {
+        "max_length": "16",
+        "format": "경쟁사 강점 1 ex) 고음질 오디오 성능"
+      },
+      "competitor_strength_2": {
+        "max_length": "16",
+        "format": "경쟁사 강점 2 ex) 프리미엄 브랜드 이미지"
+      },
+      "competitor_strength_3": {
+        "max_length": "16",
+        "format": "경쟁사 강점 3 ex) 소음 차단 기술 우수"
+      }
     },
-    "sentiment_negative_scores": {
-      "max_length": "10",
-      "format": "자사와 경쟁사 부정적 감정 점수 배열 [자사, 타사] ex) [15, 10]"
-    },
-    "competitor_strength_1": {
-      "max_length": "16",
-      "format": "경쟁사 강점 1 ex) 고음질 오디오 성능"
-    },
-    "competitor_strength_2": {
-      "max_length": "16",
-      "format": "경쟁사 강점 2 ex) 프리미엄 브랜드 이미지"
-    },
-    "competitor_strength_3": {
-      "max_length": "16",
-      "format": "경쟁사 강점 3 ex) 소음 차단 기술 우수"
-    },
-    "competitor_summary": {
-      "max_length": "166",
-      "format": "경쟁사 분석 요약 (긍정적 평가 및 자사 대비 비교 중심)\n ex) 젠하이저 제품은 음질과 브랜드 이미지에서 강점을 보이며..."
+    "C053": {
+      "competitor_summary": {
+        "max_length": "166",
+        "format": "경쟁사 분석 요약 (긍정적 평가 및 자사 대비 비교 중심)\n ex) 젠하이저 제품은 음질과 브랜드 이미지에서 강점을 보이며..."
+      }
     }
   },
   "comparisonPage": {

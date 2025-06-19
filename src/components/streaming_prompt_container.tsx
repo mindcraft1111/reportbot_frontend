@@ -33,11 +33,11 @@ export type ChunkType =
   | "executiveSummaryPage";
 
 const CATEGORY: Record<string, string> = {
-  "1": "ELEC_ACCESSORY",
+  "1": "ELECACC",
   "2": "PET",
   "3": "SKIN",
-  "4": "LIFESTYLE",
-  "5": "CAR_ACCESSORY",
+  "4": "LIFE",
+  "5": "CAR",
 };
 
 const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
@@ -70,7 +70,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
     abortControllerRef.current = null;
   }, [category_id]);
 
-  const handleSubmit = async (values: Gemini_Prompt) => {
+  const handleRequestGemini = async (values: Gemini_Prompt) => {
     setResponse("");
     setIsStreaming(true);
 
@@ -106,7 +106,6 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
         toast.error(`HTTP 에러 발생 : ${response.status}`);
         return;
       }
-
       const json = await response.json();
       console.log("😀 AI response:", json);
 
@@ -172,7 +171,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
         />
         <PromptForm
           form={form}
-          onSubmit={handleSubmit}
+          onGeminiRequest={handleRequestGemini}
           isStreaming={isStreaming}
         />
       </section>

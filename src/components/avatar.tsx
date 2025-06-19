@@ -11,6 +11,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import { Loader2 } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { useAIData } from "@/contexts/AiResponseContext";
+import avatar_man from "/assets/avatar-man.png";
 
 export default function HeaderAvatar() {
   const auth = useAuthContext();
@@ -19,7 +20,7 @@ export default function HeaderAvatar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Avatar className="cursor-pointer">
-          <AvatarImage src="https://avatar.iran.liara.run/public/boy" />
+          <AvatarImage src={avatar_man} />
           <AvatarFallback>
             <Loader2 className="h-4 w-4 animate-spin text-muted-foreground" />
           </AvatarFallback>

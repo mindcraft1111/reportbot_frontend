@@ -13,13 +13,17 @@ import type { UseFormReturn } from "react-hook-form";
 
 type PromptFormProps = {
   form: UseFormReturn<Gemini_Prompt>;
-  onSubmit: (values: Gemini_Prompt) => void | Promise<void>;
+  onGeminiRequest: (values: Gemini_Prompt) => void | Promise<void>;
   isStreaming: boolean;
 };
 
-const PromptForm = ({ form, onSubmit, isStreaming }: PromptFormProps) => (
+const PromptForm = ({
+  form,
+  onGeminiRequest,
+  isStreaming,
+}: PromptFormProps) => (
   <Form {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+    <form onSubmit={form.handleSubmit(onGeminiRequest)} className="space-y-6">
       <FormField
         control={form.control}
         name="user_prompt"
@@ -34,7 +38,7 @@ const PromptForm = ({ form, onSubmit, isStreaming }: PromptFormProps) => (
                 onKeyDown={(e) => {
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
-                    form.handleSubmit(onSubmit)();
+                    form.handleSubmit(onGeminiRequest)();
                   }
                 }}
               />
