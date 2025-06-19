@@ -87,7 +87,7 @@ function SwotPage_03({
         {/* Threat */}
         <div className="swot-box threat">
           <h2>
-            <b>W</b> 위협
+            <b>T</b> 위협
           </h2>
           <ul>
             <li>업계 변화가 있는가?</li>
