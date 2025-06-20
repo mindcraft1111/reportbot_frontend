@@ -66,8 +66,15 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   } = useAIData();
   const auth = useAuthContext();
   const [isPromptSubmitting, setIsPromptSubmitting] = useState(false);
+  const [stopPromptTest, setStopPromptTest] = useState(false);
   const currentPartTarget = partsTargets[currentFocusPage][selectedPart];
   const currentCategory = CATEGORY[category_id];
+  const [abortKey, setAbortKey] = useState(0);
+
+  const handlePromptTestStop = () => {
+    setAbortKey((prev) => prev + 1); // Triggers useEffect
+    setSelectedPrompt(null);
+  };
   // const [prompts, setPrompts] = useState<null | GroupedPrompt[]>(null);
 
   // useEffect(() => {
@@ -107,7 +114,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
     setResponse("");
     abortControllerRef.current?.abort();
     abortControllerRef.current = null;
-  }, [category_id, selectedPart]);
+  }, [category_id, selectedPart, abortKey]);
 
   useEffect(() => {
     setSelectedPart("C001");
@@ -130,7 +137,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
       product_category: currentCategory,
     };
 
-    console.log(payload);
+    // console.log(payload);
 
     const controller = new AbortController();
     abortControllerRef.current = controller;
@@ -150,7 +157,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
         return;
       }
       const json = await response.json();
-      console.log("😀 AI response:", json);
+      // console.log("😀 AI response:", json);
 
       let parsedData: any = json.data;
       let rawText: string;
@@ -184,16 +191,20 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
         ...parsedData,
       };
 
-      console.log("✅ updatedPage:", updatedPage);
+      // console.log("✅ updatedPage:", updatedPage);
 
       dispatch({
         type: "SET_CHUNK_DATA",
         chunk: currentFocusPage,
         payload: updatedPage,
       });
-    } catch (err) {
-      console.error("Fetch or parsing error:", err);
-      toast.error("응답 파싱 중 문제가 발생했습니다.");
+    } catch (err: unknown) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        toast.warning("요청이 중단되었습니다.");
+      } else {
+        console.error("Fetch or parsing error:", err);
+        toast.error("응답 파싱 중 문제가 발생했습니다.");
+      }
     } finally {
       setIsStreaming(false);
       handleSetCurrentlyWorkingPage(null);
@@ -214,7 +225,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
       chunk_code: selectedPart,
     };
 
-    console.log(`😀 handleSavePrompt_payload: ${payload}`);
+    // console.log(`😀 handleSavePrompt_payload: ${payload}`);
     setIsPromptSubmitting(true);
     try {
       await axiosInstance.post("http://localhost:8000/api/prompts-tests/", {
@@ -238,8 +249,8 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   const handlePromptSelect = (selectedPrompt: string) => {
     form.setValue("user_prompt", selectedPrompt);
     setSelectedPrompt(selectedPrompt);
-    console.log(selectedPrompt);
-    console.log(form.getValues("user_prompt"));
+    // console.log(selectedPrompt);
+    // console.log(form.getValues("user_prompt"));
   };
 
   return (
@@ -269,6 +280,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
             isStreaming={isStreaming}
             onPromptSubmit={handleSavePrompt}
             isPromptSubmitting={isPromptSubmitting}
+            handlePromptTestStop={handlePromptTestStop}
           />
         </div>
       </section>

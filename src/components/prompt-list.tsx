@@ -25,8 +25,8 @@ export function PromptList({
 }) {
   if (!prompts) return null;
   const noPrompt = prompts.length === 0;
-  console.log("😀 selectedPart", selectedPart);
-  console.log("😀 selectedPrompt", selectedPrompt);
+//   console.log("😀 selectedPart", selectedPart);
+//   console.log("😀 selectedPrompt", selectedPrompt);
   return (
     <Select value={selectedPrompt ?? ""} onValueChange={onPromptSelect}>
       <SelectTrigger className="w-full">

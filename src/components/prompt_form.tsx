@@ -17,6 +17,7 @@ type PromptFormProps = {
   isStreaming: boolean;
   onPromptSubmit: () => void;
   isPromptSubmitting: boolean;
+  handlePromptTestStop: () => void;
 };
 
 const PromptForm = ({
@@ -25,6 +26,7 @@ const PromptForm = ({
   isStreaming,
   onPromptSubmit,
   isPromptSubmitting,
+  handlePromptTestStop,
 }: PromptFormProps) => (
   <Form {...form}>
     <form onSubmit={form.handleSubmit(onGeminiRequest)} className="space-y-6">
@@ -51,11 +53,11 @@ const PromptForm = ({
           </FormItem>
         )}
       />
-      <div className="flex justify-between">
+      <div className="flex justify-between flex-wrap gap-2">
         <Button
           type="submit"
           disabled={isStreaming}
-          className="bg-blue-600 hover:bg-blue-600/90 cursor-pointer"
+          className="bg-blue-600 hover:bg-blue-600/90 cursor-pointer flex-1"
         >
           {isStreaming ? (
             <>
@@ -63,20 +65,30 @@ const PromptForm = ({
               <span className="ml-2">AI의 응답을 기다리는 중입니다...</span>
             </>
           ) : (
-            "프롬프트 테스트"
+            "프롬프트 테스트 실행"
           )}
         </Button>
 
         <Button
           type="button"
-          disabled={isStreaming}
-          className="bg-green-600 hover:bg-green-600/90 cursor-pointer"
+          className="bg-red-600 hover:bg-red-600/90 cursor-pointer flex-1"
           onClick={(e) => {
-            console.log("button clicked");
+            e.preventDefault();
+            e.stopPropagation();
+            handlePromptTestStop();
+          }}
+        >
+          테스트 중지
+        </Button>
+
+        <Button
+          type="button"
+          disabled={isStreaming}
+          className="bg-green-600 hover:bg-green-600/90 cursor-pointer flex-1"
+          onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             onPromptSubmit();
-            
           }}
         >
           {isPromptSubmitting ? (
