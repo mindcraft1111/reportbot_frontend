@@ -10,7 +10,7 @@ import { DataGoal } from "./data-goal";
 import axiosInstance from "@/axios";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { PromptList } from "./prompt-list";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as apiClients from "@/api/client";
 import type { Project } from "./prompt-sidebar";
 import {
@@ -62,7 +62,7 @@ const StreamingPromptContainer = ({
 }) => {
   const queryClient = useQueryClient();
 
-  const [response, setResponse] = useState("");
+  const [aiResponse, setAiResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const [selectedPart, setSelectedPart] = useState("C001");
@@ -86,7 +86,6 @@ const StreamingPromptContainer = ({
   const [selectedReportId, setSelectedReportId] = useState(
     String(selectedProject?.report_list[0].id)
   );
-  console.log(selectedReportId);
 
   useEffect(() => {
     const defaultId = selectedProject?.report_list?.[0]?.id;
@@ -115,7 +114,7 @@ const StreamingPromptContainer = ({
 
   useEffect(() => {
     form.reset();
-    setResponse("");
+    setAiResponse("");
     abortControllerRef.current?.abort();
     abortControllerRef.current = null;
   }, [project_id, selectedPart, abortKey]);
@@ -125,7 +124,7 @@ const StreamingPromptContainer = ({
   }, [project_id]);
 
   const handleRequestGemini = async (values: Gemini_Prompt) => {
-    setResponse("");
+    setAiResponse("");
     setIsStreaming(true);
 
     const id = parseInt(project_id);
@@ -198,7 +197,7 @@ const StreamingPromptContainer = ({
         toast.error("응답에 ```json``` 문법이 포함되어 있습니다");
       }
 
-      setResponse(rawText);
+      setAiResponse(rawText);
 
       const updatedPage = {
         ...state[currentFocusPage],
@@ -232,7 +231,7 @@ const StreamingPromptContainer = ({
       reviewer: auth.user?.user.email,
       category: currentCategory,
       question: form.getValues("user_prompt"),
-      answer: response,
+      answer: aiResponse,
       passed: true,
       reviewer_comment: "프롬프트가 잘 작동합니다.",
       tested_at: new Date().toISOString(),
@@ -251,7 +250,7 @@ const StreamingPromptContainer = ({
 
       form.reset();
       setSelectedPrompt(null);
-      setResponse("");
+      setAiResponse("");
     } catch (error) {
       toast.error("프롬프트 저장 실패");
       console.log(error);
@@ -263,8 +262,32 @@ const StreamingPromptContainer = ({
   const handlePromptSelect = (selectedPrompt: string) => {
     form.setValue("user_prompt", selectedPrompt);
     setSelectedPrompt(selectedPrompt);
-    // console.log(selectedPrompt);
-    // console.log(form.getValues("user_prompt"));
+  };
+
+  const { mutate, isPending: isSavingReport } = useMutation({
+    mutationFn: (paylaod: apiClients.ReportSectionPayload) =>
+      apiClients.saveReport(paylaod),
+    onSuccess: () =>
+      toast.success(
+        `리포트 저장 성공: id_${selectedReportId}, ${currentFocusPage}, ${selectedPart}`
+      ),
+    onError: () =>
+      toast.error(
+        `리포트 저장 실패: id_${selectedReportId}, ${currentFocusPage}, ${selectedPart}`
+      ),
+  });
+
+  const handleSaveReport = () => {
+    const payload = {
+      report: selectedReportId,
+      page_title: currentFocusPage,
+      content: {
+        [currentFocusPage]: aiResponse,
+      },
+      c_code: selectedPart,
+      constraint_snapshot: currentPartTarget,
+    };
+    mutate(payload);
   };
 
   return (
@@ -279,11 +302,13 @@ const StreamingPromptContainer = ({
           </SelectTrigger>
           <SelectContent>
             {selectedProject?.report_list.map((report) => (
-              <SelectItem value={String(report.id)}>{report.title}</SelectItem>
+              <SelectItem key={report.id} value={String(report.id)}>
+                {report.title}
+              </SelectItem>
             ))}
           </SelectContent>
         </Select>
-        <AIResponsePanel response={response} isStreaming={isStreaming} />
+        <AIResponsePanel aiResponse={aiResponse} isStreaming={isStreaming} />
         <DataGoal
           selectedPart={selectedPart}
           setSelectedPart={setSelectedPart}
@@ -308,6 +333,8 @@ const StreamingPromptContainer = ({
             onPromptSubmit={handleSavePrompt}
             isPromptSubmitting={isPromptSubmitting}
             handlePromptTestStop={handlePromptTestStop}
+            handleSaveReport={handleSaveReport}
+            isSavingReport={isSavingReport}
           />
         </div>
       </section>

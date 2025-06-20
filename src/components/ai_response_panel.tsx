@@ -2,12 +2,12 @@ import useAnimatedText from "@/hooks/useTextAnimation";
 import MarkdownRenderer from "./MarkdownRenderer";
 
 type Props = {
-  response: string;
+  aiResponse: string;
   isStreaming: boolean;
 };
 
-const AIResponsePanel = ({ response, isStreaming }: Props) => {
-  const animatedText = useAnimatedText(response);
+const AIResponsePanel = ({ aiResponse, isStreaming }: Props) => {
+  const animatedText = useAnimatedText(aiResponse);
 
   return (
     <div className="border rounded-lg p-4 h-64 overflow-auto whitespace-pre-wrap font-mono text-sm">

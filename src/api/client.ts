@@ -146,11 +146,37 @@ export const getPromptsByCode = async ({
 export const getProjectList = async () => {
   try {
     const res = await axiosInstance.get("http://localhost:8000/api/projects/");
-    console.log(res.data);
+
     return res.data.data;
   } catch (error) {
     console.log(error);
     toast.error("프로젝트를 받아오는데 실패했습니다.");
     return [];
+  }
+};
+
+export type ReportSectionPayload = {
+  report: string;
+  page_title: string;
+  content: {
+    [key: string]: string;
+  };
+  c_code: string;
+  constraint_snapshot: string;
+};
+
+export const saveReport = async (payload: ReportSectionPayload) => {
+  try {
+    console.log(payload);
+    const res = await axiosInstance.post(
+      "http://localhost:8000/api/report-sections-result/",
+      {
+        ...payload,
+      }
+    );
+    return res.data.data;
+  } catch (error) {
+    console.log(error);
+    toast.error("리포트 저장에 실패했습니다.");
   }
 };

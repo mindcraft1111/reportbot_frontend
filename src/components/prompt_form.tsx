@@ -18,6 +18,8 @@ type PromptFormProps = {
   onPromptSubmit: () => void;
   isPromptSubmitting: boolean;
   handlePromptTestStop: () => void;
+  handleSaveReport: () => void;
+  isSavingReport: boolean;
 };
 
 const PromptForm = ({
@@ -27,6 +29,8 @@ const PromptForm = ({
   onPromptSubmit,
   isPromptSubmitting,
   handlePromptTestStop,
+  handleSaveReport,
+  isSavingReport,
 }: PromptFormProps) => (
   <Form {...form}>
     <form onSubmit={form.handleSubmit(onGeminiRequest)} className="space-y-6">
@@ -97,6 +101,25 @@ const PromptForm = ({
             </>
           ) : (
             "프롬프트 저장"
+          )}
+        </Button>
+
+        <Button
+          type="button"
+          disabled={isStreaming || isSavingReport}
+          className="bg-yellow-600 hover:bg-yellow-600/90 cursor-pointer flex-1"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSaveReport();
+          }}
+        >
+          {isPromptSubmitting ? (
+            <>
+              <Spinner />
+            </>
+          ) : (
+            "리포트에 응답 저장"
           )}
         </Button>
       </div>
