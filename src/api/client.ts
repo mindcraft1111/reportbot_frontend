@@ -142,3 +142,15 @@ export const getPromptsByCode = async ({
     toast.error("프롬프트 불러오기 실패");
   }
 };
+
+export const getProjectList = async () => {
+  try {
+    const res = await axiosInstance.get("http://localhost:8000/api/projects/");
+    console.log(res.data);
+    return res.data.data;
+  } catch (error) {
+    console.log(error);
+    toast.error("프로젝트를 받아오는데 실패했습니다.");
+    return [];
+  }
+};

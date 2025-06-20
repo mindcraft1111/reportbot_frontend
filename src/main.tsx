@@ -10,7 +10,6 @@ import CommLayout from "./components/layouts/comm-layout";
 
 import { Toaster } from "sonner";
 import LandingPage from "./pages/landing-page";
-import ReportPage from "./pages/report-page";
 import LoginPage from "./pages/login-page";
 import Register from "./pages/register-page";
 import PromptTestPage from "./pages/test-page";
@@ -37,7 +36,7 @@ createRoot(document.getElementById("root")!).render(
                   <Route path="/test" element={<PromptTestPage />} />
                   <Route path="/dashboard" element={<DashboardPage />} />
                   <Route
-                    path="/prompt-test/:category_id"
+                    path="/prompt-test/:project_id"
                     element={<PromptTestPage2 />}
                   />
                 </Route>

@@ -12,6 +12,7 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import { PromptList } from "./prompt-list";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as apiClients from "@/api/client";
+import type { Project } from "./prompt-sidebar";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
@@ -45,7 +46,13 @@ const CATEGORY: Record<string, string> = {
   "5": "CAR",
 };
 
-const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
+const StreamingPromptContainer = ({
+  project_id,
+  projectList,
+}: {
+  project_id: string;
+  projectList: Project[];
+}) => {
   const queryClient = useQueryClient();
 
   const [response, setResponse] = useState("");
@@ -63,10 +70,12 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   } = useAIData();
   const auth = useAuthContext();
   const [isPromptSubmitting, setIsPromptSubmitting] = useState(false);
-  const [stopPromptTest, setStopPromptTest] = useState(false);
   const currentPartTarget = partsTargets[currentFocusPage][selectedPart];
-  const currentCategory = CATEGORY[category_id];
+  const currentCategory = CATEGORY[project_id];
   const [abortKey, setAbortKey] = useState(0);
+  const selectedProject = projectList?.find(
+    (project) => project.project_id == Number(project_id)
+  );
 
   const handlePromptTestStop = () => {
     setAbortKey((prev) => prev + 1); // Triggers useEffect
@@ -93,17 +102,17 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
     setResponse("");
     abortControllerRef.current?.abort();
     abortControllerRef.current = null;
-  }, [category_id, selectedPart, abortKey]);
+  }, [project_id, selectedPart, abortKey]);
 
   useEffect(() => {
     setSelectedPart("C001");
-  }, [category_id]);
+  }, [project_id]);
 
   const handleRequestGemini = async (values: Gemini_Prompt) => {
     setResponse("");
     setIsStreaming(true);
 
-    const id = parseInt(category_id);
+    const id = parseInt(project_id);
     const product1 = ((id - 1) * 2 + 1).toString();
     const product2 = (parseInt(product1) + 1).toString();
 
@@ -245,6 +254,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   return (
     <main className="p-12 rounded-md overflow-scroll w-[550px]">
       <section className="flex flex-col gap-2">
+        <h1>{selectedProject?.report_list[0].title}</h1>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
         <DataGoal
           selectedPart={selectedPart}

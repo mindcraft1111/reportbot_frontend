@@ -36,7 +36,7 @@ export default function Commheader() {
         <ul className="sm:flex gap-4 hidden">
           <li>
             <Link
-              to="/prompt-test/1?category_name_ko=헤드폰"
+              to="/prompt-test/9?project_title=헤드폰 비교"
               className="hover:text-blue-400 text-blue-700 font-medium text-[15px]"
             >
               테스트
@@ -51,30 +51,6 @@ export default function Commheader() {
             </Link>
           </li>
         </ul>
-
-        {/* Mobile Menu (dropdown style)
-        {menuOpen && (
-          <ul className="sm:hidden flex flex-col absolute top-[70px] left-0 w-full bg-white shadow-md z-50 px-4 py-3 space-y-2">
-            <li>
-              <Link
-                to="/prompt-test/1?category_name_ko=헤드폰"
-                className="block text-blue-700 hover:text-blue-400 font-medium"
-                onClick={() => setMenuOpen(false)}
-              >
-                테스트
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="/report"
-                className="block text-blue-700 hover:text-blue-400 font-medium"
-                onClick={() => setMenuOpen(false)}
-              >
-                리포트
-              </Link>
-            </li>
-          </ul>
-        )} */}
 
         {/* Auth Buttons */}
         <div className="flex space-x-4">

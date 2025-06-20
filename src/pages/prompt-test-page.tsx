@@ -22,6 +22,8 @@ import type { ChunkType } from "@/components/streaming_prompt_container";
 import { useRequireLogin } from "@/hooks/useRequireLogin";
 import { useEffect, useRef } from "react";
 import React from "react";
+import { useQuery } from "@tanstack/react-query";
+import * as apiClient from "../api/client";
 
 const chunkPageComponents: [ChunkType, React.ComponentType<any>][] = [
   ["coverPage", CoverPage_00],
@@ -41,12 +43,18 @@ const chunkPageComponents: [ChunkType, React.ComponentType<any>][] = [
 ];
 
 export default function PromptTestPage2() {
-  const { category_id } = useParams<{
-    category_id: string;
+  const { project_id } = useParams<{
+    project_id: string;
   }>();
 
-  if (!category_id) return null;
+  if (!project_id) return null;
   useRequireLogin();
+
+  const { data: projectList, isLoading } = useQuery({
+    queryKey: ["projectList"],
+    queryFn: () => apiClient.getProjectList(),
+    refetchOnWindowFocus: false,
+  });
 
   const location = useLocation();
   const { state, currentFocusPage, currentlyWorkingPage } = useAIData();
@@ -85,9 +93,15 @@ export default function PromptTestPage2() {
 
   return (
     <div className="flex" style={{ height: "calc(100vh - 70px)" }}>
-      {category_id && <PromptSidebar category_id={category_id} />}
+      {project_id && (
+        <PromptSidebar
+          projectList={projectList}
+          project_id={project_id}
+          isLoading={isLoading}
+        />
+      )}
 
-      <StreamingPromptContainer category_id={category_id} />
+      <StreamingPromptContainer projectList={projectList} project_id={project_id} />
 
       <div
         id="pdf-content"
