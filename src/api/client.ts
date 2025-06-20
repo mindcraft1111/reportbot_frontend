@@ -2,9 +2,9 @@ import type { Gemini_Prompt } from "@/components/non-streaming-prompt";
 import type { LoginSchema } from "@/pages/login-page";
 import type { RegisterSchema } from "@/pages/register-page";
 import axiosInstance from "@/axios";
-import type { AxiosError } from "axios";
 import { toast } from "sonner";
 import groupByReviewer from "@/components/utils/groupPromptByReviewer";
+import axios from "axios";
 
 export type UserAndToken = {
   tokens: {
@@ -120,6 +120,7 @@ export const getPromptsByCode = async ({
 }: {
   promptCode: string;
 }) => {
+  if (promptCode == "no_part") return;
   try {
     console.log(promptCode);
     const res = await axiosInstance.get(
@@ -128,7 +129,15 @@ export const getPromptsByCode = async ({
 
     const groupedPrompts = groupByReviewer(res.data.data);
     return groupedPrompts;
-  } catch (error) {
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (
+        error.response?.data?.detail == "No PromptTest matches the given query."
+      ) {
+        toast.warning("수정할 페이지가 아닙니다.");
+        return;
+      }
+    }
     console.log(error);
     toast.error("프롬프트 불러오기 실패");
   }
