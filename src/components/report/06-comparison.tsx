@@ -61,12 +61,12 @@ function ComparisonPage_06({
       {
         label: "자사",
         data: r_6_1_2,
-        backgroundColor: "#d94e0f",
+        backgroundColor: "#E9BfBD",
       },
       {
         label: r_6_5,
         data: r_6_1_3,
-        backgroundColor: "#039be5",
+        backgroundColor: "#CI887A",
       },
     ],
   };
@@ -77,7 +77,7 @@ function ComparisonPage_06({
     scales: {
       x: {
         beginAtZero: true,
-        max: 5,
+        max: 3000,
         ticks: { stepSize: 1 },
       },
     },
@@ -91,7 +91,7 @@ function ComparisonPage_06({
       datalabels: {
         anchor: "end",
         align: "right",
-        formatter: (value) => value.toFixed(1),
+        formatter: (value) => Math.round(value),
         font: {
           weight: "bold",
           size: 10,
