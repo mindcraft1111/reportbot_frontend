@@ -6,21 +6,24 @@ import {
   InboxIcon,
   MessageSquareTextIcon,
   ChevronRight,
+  FolderKanbanIcon,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react"; // for lucide-specific typing
 
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useState } from "react";
+import { Link } from "react-router";
 
 type DashboardItem = {
   name: string;
   icon: LucideIcon;
   children?: ChildMenu[];
+  isLink?: string | null;
 };
 
 type ChildMenu = {
-  name: string;
+  name: string | null;
 };
 
 const dashboardItems = [
@@ -38,9 +41,15 @@ const dashboardItems = [
         name: "프로젝트 3",
       },
     ],
+    isLink: null,
   },
-  { name: "AI와 분석하기", icon: MessageSquareTextIcon },
-  { name: "데이터 관리", icon: InboxIcon },
+  { name: "AI와 분석하기", icon: MessageSquareTextIcon, isLink: null },
+  { name: "데이터 관리", icon: InboxIcon, isLink: null },
+  {
+    name: "프로젝트 생성하기",
+    icon: FolderKanbanIcon,
+    isLink: null,
+  },
 ];
 
 export default function DashboardSidebar() {
@@ -128,18 +137,21 @@ function ParentDashboardItem(item: DashboardItem) {
 
 function ChildDashboardItem(item: DashboardItem) {
   const Icon = item.icon;
+  const itemStyle =
+    "block w-full text-left px-3 py-2 rounded-md transition-colors !text-sm cursor-pointer text-gray-700";
   return (
     <li
       key={item.name}
       className={`flex items-center rounded-md hover:bg-gray-200 px-2`}
     >
       <Icon className="w-4" />
-      <button
-        className={`block w-full text-left px-3 py-2 rounded-md transition-colors !text-sm cursor-pointer text-gray-700"
-        `}
-      >
-        {item.name}
-      </button>
+      {item.isLink ? (
+        <Link className={itemStyle} to={item.isLink}>
+          {item.name}
+        </Link>
+      ) : (
+        <button className={itemStyle}>{item.name}</button>
+      )}
     </li>
   );
 }
