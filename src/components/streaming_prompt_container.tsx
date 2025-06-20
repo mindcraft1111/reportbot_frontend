@@ -13,6 +13,13 @@ import { PromptList } from "./prompt-list";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as apiClients from "@/api/client";
 import type { Project } from "./prompt-sidebar";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
@@ -76,6 +83,15 @@ const StreamingPromptContainer = ({
   const selectedProject = projectList?.find(
     (project) => project.project_id == Number(project_id)
   );
+  const [selectedReportId, setSelectedReportId] = useState(
+    String(selectedProject?.report_list[0].id)
+  );
+  console.log(selectedReportId);
+
+  useEffect(() => {
+    const defaultId = selectedProject?.report_list?.[0]?.id;
+    if (defaultId) setSelectedReportId(String(defaultId));
+  }, [selectedProject]);
 
   const handlePromptTestStop = () => {
     setAbortKey((prev) => prev + 1); // Triggers useEffect
@@ -254,7 +270,19 @@ const StreamingPromptContainer = ({
   return (
     <main className="p-12 rounded-md overflow-scroll w-[550px]">
       <section className="flex flex-col gap-2">
-        <h1>{selectedProject?.report_list[0].title}</h1>
+        <Select
+          value={String(selectedReportId)}
+          onValueChange={(reportId) => setSelectedReportId(reportId)}
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="리포트 선택" />
+          </SelectTrigger>
+          <SelectContent>
+            {selectedProject?.report_list.map((report) => (
+              <SelectItem value={String(report.id)}>{report.title}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <AIResponsePanel response={response} isStreaming={isStreaming} />
         <DataGoal
           selectedPart={selectedPart}
