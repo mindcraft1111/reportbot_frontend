@@ -151,7 +151,17 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
       });
 
       if (!response.ok) {
-        toast.error(`HTTP 에러 발생 : ${response.status}`);
+        const errorJson = await response.json();
+
+        // If hint & details provided from server
+        if (errorJson?.hint || errorJson?.details) {
+          if (errorJson.hint) toast.error(errorJson.hint);
+          if (errorJson.details)
+            console.log("🔍 서버 상세 오류:", errorJson.details);
+        } else {
+          toast.error(`HTTP 에러 발생 : ${response.status}`);
+        }
+
         return;
       }
       const json = await response.json();
@@ -189,7 +199,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
         ...parsedData,
       };
 
-      // console.log("✅ updatedPage:", updatedPage);
+      console.log("✅ updatedPage:", updatedPage);
 
       dispatch({
         type: "SET_CHUNK_DATA",
