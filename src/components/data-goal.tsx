@@ -23,6 +23,7 @@ type Props = {
   handlePromptFocus: any;
   currentFocusPage: any;
   partsTargets: any;
+  setSelectedPrompt: React.Dispatch<React.SetStateAction<string | null>>;
 };
 
 export function DataGoal({
@@ -32,6 +33,7 @@ export function DataGoal({
   handlePromptFocus,
   currentFocusPage,
   partsTargets,
+  setSelectedPrompt,
 }: Props) {
   const [copied, setCopied] = useState(false);
 
@@ -63,6 +65,7 @@ export function DataGoal({
               const pageParts = partsTargets[value];
               const firstKey = Object.keys(pageParts)[0];
               setSelectedPart(firstKey);
+              setSelectedPrompt(null);
             }}
             defaultValue="coverPage"
           >
@@ -83,6 +86,7 @@ export function DataGoal({
           <Select
             onValueChange={(value) => {
               setSelectedPart(value);
+              setSelectedPrompt(null);
             }}
             defaultValue={selectedPart}
             value={selectedPart}

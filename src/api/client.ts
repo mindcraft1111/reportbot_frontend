@@ -2,6 +2,9 @@ import type { Gemini_Prompt } from "@/components/non-streaming-prompt";
 import type { LoginSchema } from "@/pages/login-page";
 import type { RegisterSchema } from "@/pages/register-page";
 import axiosInstance from "@/axios";
+import type { AxiosError } from "axios";
+import { toast } from "sonner";
+import groupByReviewer from "@/components/utils/groupPromptByReviewer";
 
 export type UserAndToken = {
   tokens: {
@@ -109,5 +112,24 @@ export const logout = async (
       success: false,
       message,
     };
+  }
+};
+
+export const getPromptsByCode = async ({
+  promptCode,
+}: {
+  promptCode: string;
+}) => {
+  try {
+    console.log(promptCode);
+    const res = await axiosInstance.get(
+      `http://localhost:8000/api/prompts-tests/${promptCode}`
+    );
+
+    const groupedPrompts = groupByReviewer(res.data.data);
+    return groupedPrompts;
+  } catch (error) {
+    console.log(error);
+    toast.error("프롬프트 불러오기 실패");
   }
 };

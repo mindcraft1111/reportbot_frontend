@@ -9,6 +9,12 @@ import { useAIData } from "../contexts/AiResponseContext";
 import { DataGoal } from "./data-goal";
 import axiosInstance from "@/axios";
 import { useAuthContext } from "@/contexts/AuthContext";
+import { PromptList } from "./prompt-list";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import * as apiClients from "@/api/client";
+import groupByReviewer, {
+  type GroupedPrompt,
+} from "./utils/groupPromptByReviewer";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
@@ -43,10 +49,13 @@ const CATEGORY: Record<string, string> = {
 };
 
 const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
+  const queryClient = useQueryClient();
+
   const [response, setResponse] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
   const abortControllerRef = useRef<AbortController | null>(null);
   const [selectedPart, setSelectedPart] = useState("C001");
+  const [selectedPrompt, setSelectedPrompt] = useState<null | string>(null);
   const {
     dispatch,
     handleSetCurrentlyWorkingPage,
@@ -57,9 +66,36 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   } = useAIData();
   const auth = useAuthContext();
   const [isPromptSubmitting, setIsPromptSubmitting] = useState(false);
-
   const currentPartTarget = partsTargets[currentFocusPage][selectedPart];
   const currentCategory = CATEGORY[category_id];
+  // const [prompts, setPrompts] = useState<null | GroupedPrompt[]>(null);
+
+  // useEffect(() => {
+  //   const getPrompts = async () => {
+  //     const prompts = await apiClients.getPromptsByCode({
+  //       promptCode: selectedPart,
+  //     });
+  //     console.log("😀 ungrouped-prompts =", prompts);
+  //     const groupedPrompts = groupByReviewer(prompts.data);
+  //     console.log("😀 grouped-prompts =", groupedPrompts);
+  //     setPrompts(groupedPrompts);
+  //   };
+
+  //   getPrompts();
+  // }, [selectedPart]);
+
+  const {
+    data: prompts,
+    isLoading: isPromptsLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["prompts", selectedPart],
+    queryFn: () =>
+      apiClients.getPromptsByCode({
+        promptCode: selectedPart,
+      }),
+    enabled: !!selectedPart, // only run when selectedPart is defined
+  });
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
@@ -69,9 +105,12 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
   useEffect(() => {
     form.reset();
     setResponse("");
-    setSelectedPart("C001");
     abortControllerRef.current?.abort();
     abortControllerRef.current = null;
+  }, [category_id, selectedPart]);
+
+  useEffect(() => {
+    setSelectedPart("C001");
   }, [category_id]);
 
   const handleRequestGemini = async (values: Gemini_Prompt) => {
@@ -172,6 +211,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
       passed: true,
       reviewer_comment: "프롬프트가 잘 작동합니다.",
       tested_at: new Date().toISOString(),
+      chunk_code: selectedPart,
     };
 
     console.log(`😀 handleSavePrompt_payload: ${payload}`);
@@ -181,6 +221,12 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
         ...payload,
       });
       toast.success("프롬프트 저장 완료");
+      // 🔁 Refetch the prompt list for current selectedPart
+      queryClient.invalidateQueries({ queryKey: ["prompts", selectedPart] });
+
+      form.reset();
+      setSelectedPrompt(null);
+      setResponse("");
     } catch (error) {
       toast.error("프롬프트 저장 실패");
       console.log(error);
@@ -189,9 +235,16 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
     }
   };
 
+  const handlePromptSelect = (selectedPrompt: string) => {
+    form.setValue("user_prompt", selectedPrompt);
+    setSelectedPrompt(selectedPrompt);
+    console.log(selectedPrompt);
+    console.log(form.getValues("user_prompt"));
+  };
+
   return (
     <main className="p-12 rounded-md overflow-scroll w-[550px]">
-      <section>
+      <section className="flex flex-col gap-2">
         <AIResponsePanel response={response} isStreaming={isStreaming} />
         <DataGoal
           selectedPart={selectedPart}
@@ -200,14 +253,24 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
           currentFocusPage={currentFocusPage}
           partsTargets={partsTargets}
           state={state}
+          setSelectedPrompt={setSelectedPrompt}
         />
-        <PromptForm
-          form={form}
-          onGeminiRequest={handleRequestGemini}
-          isStreaming={isStreaming}
-          onPromptSubmit={handleSavePrompt}
-          isPromptSubmitting={isPromptSubmitting}
-        />
+        <div className="flex flex-col gap-4">
+          <PromptList
+            prompts={prompts}
+            isPromptsLoading={isPromptsLoading}
+            selectedPart={selectedPart}
+            onPromptSelect={handlePromptSelect}
+            selectedPrompt={selectedPrompt}
+          />
+          <PromptForm
+            form={form}
+            onGeminiRequest={handleRequestGemini}
+            isStreaming={isStreaming}
+            onPromptSubmit={handleSavePrompt}
+            isPromptSubmitting={isPromptSubmitting}
+          />
+        </div>
       </section>
     </main>
   );
