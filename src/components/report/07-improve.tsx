@@ -58,7 +58,7 @@ function ImprovementPage_07({
       <div className="real-pyramid">
         <div className="pyramid-row row1">
           <div className="pyramid-content">
-            <img src={r_7_5_1} alt="" />
+            <span>{r_7_5_1}</span>
             <div>
               <strong>{r_7_5_2}</strong>
               <br />
@@ -68,7 +68,7 @@ function ImprovementPage_07({
         </div>
         <div className="pyramid-row row2">
           <div className="pyramid-content">
-            <img src={r_7_5_4} alt="" />
+            <span>{r_7_5_4}</span>
             <div>
               <strong>{r_7_5_6}</strong>
               <br />
@@ -78,7 +78,7 @@ function ImprovementPage_07({
         </div>
         <div className="pyramid-row row3">
           <div className="pyramid-content">
-            <img src={r_7_5_8} alt="" />
+            <span>{r_7_5_8}</span>
             <div>
               <strong>{r_7_5_9}</strong>
               <br />
@@ -88,7 +88,7 @@ function ImprovementPage_07({
         </div>
         <div className="pyramid-row row4">
           <div className="pyramid-content">
-            <img src={r_7_5_11} alt="" />
+            <span>{r_7_5_11}</span>
             <div>
               <strong>{r_7_5_12}</strong>
               <br />
@@ -98,7 +98,7 @@ function ImprovementPage_07({
         </div>
         <div className="pyramid-row row5">
           <div className="pyramid-content">
-            <img src={r_7_5_14} alt="" />
+            <span>{r_7_5_14}</span>
             <div>
               <strong>{r_7_5_15}</strong>
               <br />

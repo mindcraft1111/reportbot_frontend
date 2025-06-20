@@ -72,27 +72,8 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
     setAbortKey((prev) => prev + 1); // Triggers useEffect
     setSelectedPrompt(null);
   };
-  // const [prompts, setPrompts] = useState<null | GroupedPrompt[]>(null);
 
-  // useEffect(() => {
-  //   const getPrompts = async () => {
-  //     const prompts = await apiClients.getPromptsByCode({
-  //       promptCode: selectedPart,
-  //     });
-  //     console.log("😀 ungrouped-prompts =", prompts);
-  //     const groupedPrompts = groupByReviewer(prompts.data);
-  //     console.log("😀 grouped-prompts =", groupedPrompts);
-  //     setPrompts(groupedPrompts);
-  //   };
-
-  //   getPrompts();
-  // }, [selectedPart]);
-
-  const {
-    data: prompts,
-    isLoading: isPromptsLoading,
-    isError,
-  } = useQuery({
+  const { data: prompts, isLoading: isPromptsLoading } = useQuery({
     queryKey: ["prompts", selectedPart],
     queryFn: () =>
       apiClients.getPromptsByCode({
