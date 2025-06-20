@@ -12,9 +12,6 @@ import { useAuthContext } from "@/contexts/AuthContext";
 import { PromptList } from "./prompt-list";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as apiClients from "@/api/client";
-import groupByReviewer, {
-  type GroupedPrompt,
-} from "./utils/groupPromptByReviewer";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
@@ -102,6 +99,7 @@ const StreamingPromptContainer = ({ category_id }: { category_id: string }) => {
         promptCode: selectedPart,
       }),
     enabled: !!selectedPart, // only run when selectedPart is defined
+    refetchOnWindowFocus: false, // 👈 turn off tab refetch
   });
 
   const form = useForm<Gemini_Prompt>({
