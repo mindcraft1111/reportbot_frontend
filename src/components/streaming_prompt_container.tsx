@@ -27,6 +27,23 @@ const formSchema = z.object({
   product2: z.string(),
 });
 
+const getProductsIds = (project_id: number) => {
+  switch (project_id) {
+    case 9:
+      return { product1: 1, product2: 2 };
+    case 10:
+      return { product1: 3, product2: 4 };
+    case 11:
+      return { product1: 5, product2: 6 };
+    case 12:
+      return { product1: 7, product2: 8 };
+    case 13:
+      return { product1: 9, product2: 10 };
+    default:
+      return { product1: 0, product2: 0 };
+  }
+};
+
 export type Gemini_Prompt = z.infer<typeof formSchema>;
 
 export type ChunkType =
@@ -86,6 +103,7 @@ const StreamingPromptContainer = ({
   const [selectedReportId, setSelectedReportId] = useState(
     String(selectedProject?.report_list[0].id)
   );
+  const [retrievedReviews, setRetrievedReviews] = useState([]);
 
   useEffect(() => {
     const defaultId = selectedProject?.report_list?.[0]?.id;
@@ -128,8 +146,8 @@ const StreamingPromptContainer = ({
     setIsStreaming(true);
 
     const id = parseInt(project_id);
-    const product1 = ((id - 1) * 2 + 1).toString();
-    const product2 = (parseInt(product1) + 1).toString();
+
+    const { product1, product2 } = getProductsIds(id);
 
     const payload = {
       ...values,

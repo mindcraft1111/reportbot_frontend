@@ -47,7 +47,6 @@ export default function PromptTestPage2() {
     project_id: string;
   }>();
 
-  if (!project_id) return null;
   useRequireLogin();
 
   const { data: projectList, isLoading } = useQuery({
@@ -91,6 +90,8 @@ export default function PromptTestPage2() {
     }
   }, [location.pathname]);
 
+  if (!project_id) return null;
+
   return (
     <div className="flex" style={{ height: "calc(100vh - 70px)" }}>
       {project_id && (
@@ -101,7 +102,10 @@ export default function PromptTestPage2() {
         />
       )}
 
-      <StreamingPromptContainer projectList={projectList} project_id={project_id} />
+      <StreamingPromptContainer
+        projectList={projectList}
+        project_id={project_id}
+      />
 
       <div
         id="pdf-content"
