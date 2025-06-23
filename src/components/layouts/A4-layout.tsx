@@ -5,10 +5,21 @@ interface A4LayoutProps {
   chunkType: string
 }
 
+const pageCover = (pageType: String) => {
+  if (pageType === "coverPage")
+    return "url('/assets/cover/cover2.png')";
+  else if (pageType === "contentsPage")
+    return "url('/assets/cover/contents1.png')";
+  else if (pageType === "overviewPage")
+    return "url('/assets/cover/contents2.png')";
+  else return "white"; // default
+}
+
 // ✅ enable ref forwarding
 const A4Layout = forwardRef<HTMLDivElement, A4LayoutProps>(
   ({ children, chunkType }, ref) => {
-    const isCover = chunkType === "coverPage";
+    // const isCover = chunkType === "coverPage";
+    console.log("chunkType: ", chunkType);
 
     return (
       <div
@@ -20,9 +31,9 @@ const A4Layout = forwardRef<HTMLDivElement, A4LayoutProps>(
           padding: "20mm",
           margin: "auto",
           //backgroundColor: "white",
-          backgroundColor: isCover ? "transparent" : "white",
-          backgroundImage: isCover
-            ? "url('/assets/cover/cover2.png')" // 실제 경로로 바꿔주세요
+          backgroundColor: pageCover(chunkType) !== "white" ? "transparent" : "white",
+          backgroundImage: pageCover(chunkType) !== "white"
+            ? pageCover(chunkType)
             : undefined,
           backgroundSize: "cover",
           backgroundPosition: "center",

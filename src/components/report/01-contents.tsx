@@ -11,7 +11,7 @@ function ContentsPage_01({ r_1_1, isCurrentWorkingPage = false }: Props) {
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
       <div style={{ textAlign: "center", marginTop: "50px" }}>
-        <h1 style={{ fontSize: "28pt", marginTop: "150px" }}>CONTENTS</h1>
+        <h1 style={{ fontSize: "28pt", marginTop: "150px" }}></h1>
       </div>
 
       <div
@@ -21,9 +21,13 @@ function ContentsPage_01({ r_1_1, isCurrentWorkingPage = false }: Props) {
           alignItems: "center",
           justifyContent: "center",
           height: "calc(100% - 300px)",
+          marginTop: "150px",
+          fontSize: "20px",
+          fontFamily: "KoddiUDOnGothic-Regular",
+          fontWeight: "bold"
         }}
       >
-        <ol style={{ fontSize: "14pt", lineHeight: 2, textAlign: "left" }}>
+        <ol style={{ fontSize: "14pt", lineHeight: 2, textAlign: "left", paddingTop: "50px", borderTop: "5px solid rgb(228, 88, 38)" }}>
           {r_1_1.map((item, index) => (
             <li key={index}>{item}</li>
           ))}

@@ -105,14 +105,14 @@ function ComparisonPage_06({
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h1>자사와 경쟁사 비교 분석</h1>
+      <h1 className="content-h1">자사와 경쟁사 비교 분석</h1>
       <p>
         자사와 경쟁사 제품의 감정 분석 결과를 직접 비교하여 시장 내 경쟁력을
         종합적으로 평가했습니다. 이를 통해 자사 제품의 상대적 강점과 약점을
         명확히 파악하고, 경쟁 우위를 확보하기 위한 전략적 방향성을 도출했습니다.
       </p>
 
-      <h2>카테고리별 감정 점수 비교</h2>
+      <h2 style={{background: "#fdf3ef"}}>카테고리별 감정 점수 비교</h2>
       <div style={{ marginBottom: "24px" }}>
         <Bar data={barData} options={barOptions} width={580} height={280} />
       </div>
