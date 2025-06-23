@@ -3,6 +3,7 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Textarea } from "@/components/ui/textarea";
@@ -10,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { Spinner } from "./spinner";
 import { type Gemini_Prompt } from "./streaming_prompt_container";
 import type { UseFormReturn } from "react-hook-form";
+import { Input } from "./ui/input";
 
 type PromptFormProps = {
   form: UseFormReturn<Gemini_Prompt>;
@@ -36,12 +38,26 @@ const PromptForm = ({
     <form onSubmit={form.handleSubmit(onGeminiRequest)} className="space-y-6">
       <FormField
         control={form.control}
+        name="retriever_keyword"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>벡터DB 리트리버 키워드</FormLabel>
+            <FormControl>
+              <Input placeholder="착용감" {...field} disabled={isStreaming} />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+      <FormField
+        control={form.control}
         name="user_prompt"
         render={({ field }) => (
           <FormItem>
+            <FormLabel>유저 프롬프트</FormLabel>
             <FormControl>
               <Textarea
-                placeholder="Type your prompt here..."
+                placeholder="리뷰 데이터를 바탕으로 우리 회사 제품의 착용감에 대한 SWOT분석을 할 때, 강점(Strength)을 데이터 형식에 맞게 알려줘..."
                 {...field}
                 disabled={isStreaming}
                 className="min-h-[100px]"

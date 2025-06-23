@@ -20,6 +20,7 @@ const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
   product1: z.string(),
   product2: z.string(),
+  retriever_keyword: z.string().optional(),
 });
 
 export type AiResponse = {
@@ -129,7 +130,12 @@ const StreamingPromptContainer = ({
 
   const form = useForm<Gemini_Prompt>({
     resolver: zodResolver(formSchema),
-    defaultValues: { user_prompt: "", product1: "", product2: "" },
+    defaultValues: {
+      user_prompt: "",
+      product1: "",
+      product2: "",
+      retriever_keyword: "",
+    },
   });
 
   useEffect(() => {
@@ -152,6 +158,8 @@ const StreamingPromptContainer = ({
     const id = parseInt(project_id);
 
     const { product1, product2 } = getProductsIds(id);
+
+    console.log("💡 values", values);
 
     const payload = {
       ...values,

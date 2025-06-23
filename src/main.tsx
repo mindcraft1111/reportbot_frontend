@@ -46,7 +46,7 @@ createRoot(document.getElementById("root")!).render(
                 <Route path="/auth/register" element={<Register />} />
               </Routes>
               <Toaster position="top-right" richColors />
-              <TailwindIndicator />
+              {/* <TailwindIndicator /> */}
             </AIDataProvider>
           </QueryClientProvider>
         </AuthProvider>
