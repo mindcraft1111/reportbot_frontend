@@ -1,7 +1,15 @@
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import DashboardSidebar from "@/components/dashboard-sidebar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router";
+
+
 
 import {
   Select,
@@ -12,7 +20,80 @@ import {
 } from "@/components/ui/select";
 import { Plus, Save } from "lucide-react";
 
+const reportCreateSchema = z.object({
+  project: z.string(),
+  template: z.nullable(z.string()),
+  category: z.string(),
+  title: z.string(),
+  summary: z.nullable(z.string())
+});
+
+export type Report_Create = z.infer<typeof reportCreateSchema>;
+
 export default function DashboardPage() {
+  const [reportInfo, setReportInfo] = useState({});
+
+  const navigator = useNavigate();
+
+  const form = useForm<Report_Create>({
+    resolver: zodResolver(reportCreateSchema),
+    defaultValues: { project: "", template: "1", category: "ELECACC", title: "", summary: ""},
+  });
+
+  const handleCreateProject = async(values: Report_Create) => {
+    setReportInfo({});
+
+    const product1 = "3";
+    const product2 = "4";
+    const payload = {
+      ...values,
+      product1,
+      product2,
+      template: "1",
+      catecory: "ELECACC"
+    };
+
+    console.log(payload);
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/reports`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        const errorJson = await response.json();
+
+        // If hint & details provided from server
+        if (errorJson?.hint || errorJson?.details) {
+          if (errorJson.hint) toast.error(errorJson.hint);
+          if (errorJson.details)
+            console.log("🔍 서버 상세 오류:", errorJson.details);
+        } else {
+          toast.error(`HTTP 에러 발생 : ${response.status}`);
+        }
+
+        return;
+      }
+      const json = await response.json();
+
+      let parsedData: any = json.data;
+      setReportInfo(parsedData); 
+    } catch (err: unknown) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        toast.warning("요청이 중단되었습니다.");
+      } else {
+        console.error("error:", err);
+        toast.error("오류가 발생했습니다.");
+      } 
+    } finally {
+
+    }
+
+  };
+
+
   return (
     <main className="flex">
       <DashboardSidebar />
@@ -90,7 +171,7 @@ export default function DashboardPage() {
               <Input></Input>
             </div>
           </div>
-          <Button className="bg-blue-600 w-fit self-end mt-6 hover:bg-blue-600/90 cursor-pointer">
+          <Button onClick={() => navigator("/report")} className="bg-blue-600 w-fit self-end mt-6 hover:bg-blue-600/90 cursor-pointer">
             <Plus />
             프로젝트 생성
           </Button>

@@ -1,4 +1,18 @@
 @font-face {
+  font-family: 'Freesentation-9Black';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Freesentation-9Black';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2404@1.0/Freesentation-9Black.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "Pretendard";
   src: url("/fonts/Pretendard-Regular.woff2") format("woff2"),
     url("/fonts/Pretendard-Regular.woff") format("woff");
@@ -36,6 +50,7 @@ body {
     h1 {
       font-size: 24pt;
       margin-bottom: 16pt;
+      font-family: "Freesentation-9Black";
     }
 
     h2 {

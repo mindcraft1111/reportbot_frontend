@@ -119,6 +119,7 @@ export default function PromptTestPage2() {
               ref={(el) => {
                 sectionRefs.current[chunkType] = el;
               }}
+              chunkType={chunkType}
             >
               <PageComponent
                 {...state[chunkType]}

@@ -1,4 +1,5 @@
 import SpinnerOverlay from "../spinner-overlay";
+import sony from "/assets/brand/sony.png";
 
 type Props = {
   r_0_1: string; // 보고서 제목 (대제목)
@@ -32,12 +33,12 @@ function CoverPage_00({
           textAlign: "center",
         }}
       >
-        <h1 style={{ fontSize: "33pt", color: "#000" }}>{r_0_1}</h1>
+        <h1 style={{ fontSize: "35pt", color: "#000", fontFamily: "Freesentation-9Black" }}>{r_0_1}</h1>
         <h1 style={{ fontSize: "24pt", color: "#000", marginBottom: "20px" }}>
           {r_0_2}
         </h1>
         <img
-          src={r_0_3}
+          src={sony}
           alt="로고 이미지"
           style={{ maxWidth: "160px", height: "auto", marginTop: "10px" }}
         />
