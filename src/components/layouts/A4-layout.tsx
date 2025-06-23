@@ -10,7 +10,7 @@ const A4Layout = forwardRef<HTMLDivElement, A4LayoutProps>(
     return (
       <div
         ref={ref}
-        className="a4-layout"
+        className="a4-layout scale-85"
         style={{
           width: "210mm",
           height: "297mm",

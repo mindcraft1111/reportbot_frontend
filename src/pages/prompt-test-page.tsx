@@ -105,11 +105,12 @@ export default function PromptTestPage2() {
       <StreamingPromptContainer
         projectList={projectList}
         project_id={project_id}
+        key={project_id}
       />
 
       <div
         id="pdf-content"
-        className="space-y-4 p-12 bg-gray-100 overflow-auto flex-1"
+        className="space-y-4 bg-gray-100 overflow-auto flex-1"
         style={{ height: "calc(100vh - 70px)" }}
       >
         {chunkPageComponents.map(([chunkType, PageComponent], index) => (

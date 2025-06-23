@@ -13,19 +13,18 @@ import { PromptList } from "./prompt-list";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as apiClients from "@/api/client";
 import type { Project } from "./prompt-sidebar";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import RetrievedReviews, { type Review } from "./retrieved-revies";
+import ReportSelect from "./report-select";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "프롬프트는 최소한 5글자 이상이어야 합니다."),
   product1: z.string(),
   product2: z.string(),
 });
+
+export type AiResponse = {
+  [key: string]: string;
+};
 
 const getProductsIds = (project_id: number) => {
   switch (project_id) {
@@ -103,7 +102,8 @@ const StreamingPromptContainer = ({
   const [selectedReportId, setSelectedReportId] = useState(
     String(selectedProject?.report_list[0].id)
   );
-  const [retrievedReviews, setRetrievedReviews] = useState([]);
+  const [review01, setReview01] = useState<Review[] | []>([]);
+  const [review02, setReview02] = useState<Review[] | []>([]);
 
   useEffect(() => {
     const defaultId = selectedProject?.report_list?.[0]?.id;
@@ -114,6 +114,8 @@ const StreamingPromptContainer = ({
     setAbortKey((prev) => prev + 1); // Triggers useEffect
     setSelectedPrompt(null);
   };
+
+  console.log(selectedProject);
 
   const { data: prompts, isLoading: isPromptsLoading } = useQuery({
     queryKey: ["prompts", selectedPart],
@@ -133,6 +135,8 @@ const StreamingPromptContainer = ({
   useEffect(() => {
     form.reset();
     setAiResponse("");
+    setReview01([]);
+    setReview02([]);
     abortControllerRef.current?.abort();
     abortControllerRef.current = null;
   }, [project_id, selectedPart, abortKey]);
@@ -190,7 +194,9 @@ const StreamingPromptContainer = ({
       const json = await response.json();
       // console.log("😀 AI response:", json);
 
-      let parsedData: any = json.data;
+      console.log(json);
+
+      let parsedData: AiResponse = json.data;
       let rawText: string;
 
       // Attempt to unwrap if json.data is a stringified object
@@ -216,6 +222,8 @@ const StreamingPromptContainer = ({
       }
 
       setAiResponse(rawText);
+      setReview01(json.review01);
+      setReview02(json.review02);
 
       const updatedPage = {
         ...state[currentFocusPage],
@@ -311,22 +319,19 @@ const StreamingPromptContainer = ({
   return (
     <main className="p-12 rounded-md overflow-scroll w-[550px]">
       <section className="flex flex-col gap-2">
-        <Select
-          value={String(selectedReportId)}
-          onValueChange={(reportId) => setSelectedReportId(reportId)}
-        >
-          <SelectTrigger className="w-full">
-            <SelectValue placeholder="리포트 선택" />
-          </SelectTrigger>
-          <SelectContent>
-            {selectedProject?.report_list.map((report) => (
-              <SelectItem key={report.id} value={String(report.id)}>
-                {report.title}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <ReportSelect
+          key={project_id}
+          selectedProject={selectedProject}
+          selectedReportId={selectedReportId}
+          setSelectedReportId={setSelectedReportId}
+        />
         <AIResponsePanel aiResponse={aiResponse} isStreaming={isStreaming} />
+        <RetrievedReviews
+          review01={review01}
+          review02={review02}
+          product01Name={selectedProject?.product_1_name}
+          product02Name={selectedProject?.product_2_name}
+        />
         <DataGoal
           selectedPart={selectedPart}
           setSelectedPart={setSelectedPart}
