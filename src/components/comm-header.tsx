@@ -39,7 +39,7 @@ export default function Commheader() {
               to="/prompt-test/9?project_title=헤드폰 비교"
               className="hover:text-blue-400 text-blue-700 font-medium text-[15px]"
             >
-              테스트
+              프롬프트 테스트
             </Link>
           </li>
           <li>

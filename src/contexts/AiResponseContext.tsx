@@ -346,7 +346,7 @@ const partsTargets = {
 
 const chunkConstraints = {
   coverPage: {
-    r_0_1: "제품 리뷰 기반 감정 분석 보고서",
+    r_0_1: "제품 리뷰 기반 AI 분석 보고서",
     r_0_2: "자사 vs 경쟁사 비교 분석",
     r_0_3: { logo2 },
     r_0_4: "2025-06-13",
