@@ -35,7 +35,7 @@ function HeroSection() {
       </p>
       <button
         className="bg-white text-blue-600 cursor-pointer font-semibold px-6 py-3 rounded hover:bg-gray-100 transition"
-        onClick={() => navigator("/dashboard")}
+        onClick={() => navigator("/auth/login")}
       >
         지금 시작하기
       </button>
