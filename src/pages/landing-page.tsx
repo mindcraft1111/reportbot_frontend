@@ -1,6 +1,7 @@
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 export default function LandingPage() {
   useEffect(() => {
@@ -18,6 +19,7 @@ export default function LandingPage() {
 }
 
 function HeroSection() {
+  const navigator = useNavigate();
   return (
     <section
       className="text-center py-24 px-6 text-white bg-cover bg-center bg-no-repeat"
@@ -31,7 +33,10 @@ function HeroSection() {
       <p className="text-lg md:text-xl mb-8">
         소셜과 상품 리뷰에서 핵심 정보를 빠르게 도출하세요.
       </p>
-      <button className="bg-white text-blue-600 cursor-pointer font-semibold px-6 py-3 rounded hover:bg-gray-100 transition">
+      <button
+        className="bg-white text-blue-600 cursor-pointer font-semibold px-6 py-3 rounded hover:bg-gray-100 transition"
+        onClick={() => navigator("/dashboard")}
+      >
         지금 시작하기
       </button>
     </section>
@@ -72,9 +77,18 @@ function LandingSection() {
   );
 }
 
-function Feature({ title, description }: { title: string; description: string }) {
+function Feature({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
   return (
-    <div className="p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition" data-aos="fade-up">
+    <div
+      className="p-6 border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition"
+      data-aos="fade-up"
+    >
       <h3 className="text-xl font-semibold mb-2 text-blue-500">{title}</h3>
       <p className="text-gray-600">{description}</p>
     </div>
@@ -87,7 +101,8 @@ function FeatureVisualSection() {
     {
       title: "이커머스 리뷰의 AI 기반 분석",
       description1: "소셜 및 리뷰 데이터를 통해 인사이트를 얻으세요",
-      description2: "국내외 이커머스와 주요 SNS에서 데이터를 안정적으로 수집합니다",
+      description2:
+        "국내외 이커머스와 주요 SNS에서 데이터를 안정적으로 수집합니다",
       img: `${src}1.png`,
     },
     {

@@ -95,6 +95,7 @@ export default function ReportPage() {
       const aiMessage = { role: "ai", content: data.response };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (e) {
+      console.log(e);
       setMessages((prev) => [
         ...prev,
         { role: "ai", content: "에러가 발생했습니다." },
