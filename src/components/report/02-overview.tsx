@@ -63,7 +63,7 @@ function OverviewPage_02({
         </div>
         <div className="circle-item item-2 text-right">
           <h3><b>데이터 범위</b></h3>
-          <p>10,000+ 고객 리뷰</p>
+          <p>700개 고객 리뷰</p>
         </div>
         <div className="circle-item item-3 text-right">
           <h3><b>분석 대상</b></h3>
