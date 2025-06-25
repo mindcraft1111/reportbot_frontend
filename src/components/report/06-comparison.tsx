@@ -77,7 +77,7 @@ function ComparisonPage_06({
     scales: {
       x: {
         beginAtZero: true,
-        max: 3000,
+        //max: 3000,
         ticks: { stepSize: 1 },
       },
     },

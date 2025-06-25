@@ -110,7 +110,7 @@ function ConclusionPage_12({
           <p>{r_12_2_2}</p>
         </div>
         <div className="rec-box">
-          <h3>미래 전망 및 제언</h3>
+          <h3>미래 전망 및 <br/>제언</h3>
           <p>{r_12_2_3}</p>
         </div>
       </div>
