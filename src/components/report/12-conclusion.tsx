@@ -89,7 +89,7 @@ function ConclusionPage_12({
       </p>
 
       <h2>리뷰 개수 및 예상치 분석</h2>
-      <div style={{ marginBottom: "40px 0" }}>
+      <div style={{ marginBottom: "20px 0" }}>
         <Bar data={barData} options={barOptions} width={600} height={300} />
       </div>
 
