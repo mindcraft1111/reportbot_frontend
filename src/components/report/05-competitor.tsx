@@ -99,14 +99,13 @@ function CompetitorPage_05({
       </p>
 
       <h2>자사와 경쟁사 감정 점수 분포 비교</h2>
-      <div style={{ margin: "24px 0 24px 0" }}>
+      <div style={{ margin: "40px 0" }}>
         <Bar data={barData} options={barOptions} width={500} height={300} />
       </div>
 
       <div
         style={{
-          backgroundColor: "#fff9f6",
-          padding: "20px 20px",
+          padding: "20px",
           borderRadius: "10px",
           marginTop: "20px"
         }}
@@ -136,7 +135,7 @@ function CompetitorPage_05({
           <li>✔ {r_5_4}</li>
           <li>✔ {r_5_5}</li>
         </ul>
-  <p style={{ fontSize: "17px", color: "#555", padding: "10px 0 0 0" }}>
+  <p style={{ padding: "10px 0 0 0" }}>
     {r_5_6}
   </p>
 </div>

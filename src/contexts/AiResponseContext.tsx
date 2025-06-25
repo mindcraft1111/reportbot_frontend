@@ -79,9 +79,6 @@ const partsTargets = {
       r_4_18: "negative_title_3",
       r_4_19: "negative_summary_3",
     },
-    C044: {
-      r_4_20: "overall_summary",
-    },
   },
   competitorPage: {
     C051: {
@@ -95,14 +92,20 @@ const partsTargets = {
       r_5_5: "competitor_strength_3",
     },
     C053: {
-      r_5_6: "competitor_summary",
+      r_5_6: {"max_length": "166", "format": "경쟁사 분석 요약"}
+
+      //r_5_6: "competitor_summary",
     },
   },
   comparisonPage: {
     C061: {
-      r_6_1_1: "list_of_evaluation_categories",
+      r_6_1_1: {max_length: "100", format: "자사와 경쟁사 감정 비교 카테고리 리스트 6개\n ex) ['사용 편의성', '기능 다양성', '성능/속도', '배터리 수명', '가격 경쟁력', '디자인', '고객 지원']"},
+      r_6_1_2: {max_length: "40", format: "자사 감정 카테고리별 점수 리스트, 5점 만점, 소수점 한 자리 ex) [4.3, 4.4, 4.3, 3.1, 3.5, 4.2, 3.6]"},
+      r_6_1_3: {max_length: "40", format: "경쟁사 감정 카테고리별 점수 리스트, 5점 만점, 소수점 한 자리 ex) [4.5, 4.1, 4.0, 4.4, 4.2, 4.0, 4.5]"},
+
+      /*r_6_1_1: "list_of_evaluation_categories",
       r_6_1_2: "list_of_our_product_scores_by_category",
-      r_6_1_3: "list_of_competitor_product_scores_by_category",
+      r_6_1_3: "list_of_competitor_product_scores_by_category",*/
     },
     C062: {
       r_6_2: "gap_strength_area",
@@ -133,9 +136,9 @@ const partsTargets = {
     },
   },
   improvementPage: {
-    C071: {
+    C071: /*{
       r_7_5_1: "priority_1_icon",
-      r_7_5_2: "priority_1_title",
+      r_7_5_2: "priority_1_title, 15자 이내",
       r_7_5_3: "priority_1_description",
       r_7_5_4: "priority_2_icon",
       r_7_5_6: "priority_2_title",
@@ -149,7 +152,24 @@ const partsTargets = {
       r_7_5_14: "priority_5_icon",
       r_7_5_15: "priority_5_title",
       r_7_5_16: "priority_5_description",
-    },
+    },*/
+    {
+      r_7_5_1: {max_length: "200", format: "1순위 개선 영역 아이콘"},
+      r_7_5_2: {max_length: "15", format: "1순위 개선 영역 제목 ex) 고객지원 품질"},
+      r_7_5_3: {max_length: "22", format: "1순위 개선 영역 설명 ex) 응대 속도 및 전문성 개선 필요"},
+      r_7_5_4: {max_length: "200", format: "2순위 개선 영역 아이콘"},
+      r_7_5_6: {max_length: "15", format: "2순위 개선 영역 제목 ex) 설치 편의성"},
+      r_7_5_7: {max_length: "3", format: "2순위 개선 영역 설명 ex) 초기 설정 과정 간소화 요청 다수"},
+      r_7_5_8: {max_length: "200", format: "3순위 개선 영역 아이콘"},
+      r_7_5_9: {max_length: "15", format: "3순위 개선 영역 제목 ex) 배터리 수명"},
+      r_7_5_10: {max_length: "3", format: "3순위 개선 영역 설명 ex) 짧은 사용시간에 대한 반복적 불만"},
+      r_7_5_11: {max_length: "200", format: "4순위 개선 영역 아이콘"},
+      r_7_5_12: {max_length: "15", format: "4순위 개선 영역 제목 ex) 가격 경쟁력"},
+      r_7_5_13: {max_length: "3", format: "4순위 개선 영역 설명 ex) 기능 대비 높은 가격에 대한 피드백 존재"},
+      r_7_5_14: {max_length: "200", format: "5순위 개선 영역 아이콘"},
+      r_7_5_15: {max_length: "15", format: "5순위 개선 영역 제목 ex) 사용자 인터페이스"},
+      r_7_5_16: {max_length: "3", format: "5순위 개선 영역 설명 ex) 디자인은 좋으나 일부 기능 진입이 복잡"}
+  }
   },
   expectationGapPage: {
     C081: {
@@ -214,38 +234,20 @@ const partsTargets = {
       ],
     },
     C094: {
-      r_9_5_1: "detail_solution_1_title",
-      r_9_5_2: "detail_solution_1_subtitle",
-      r_9_5_3: [
-        {
-          solution: "detail_1_solution_1",
-        },
-        { solution: "detail_1_solution_2" },
-        {
-          solution: "detail_1_solution_3",
-        },
-      ],
+      r_9_5_1: {max_length: "15", format: "핵심 솔루션 상세1 제목 ex) 배터리 수명 개선 전략"},
+      r_9_5_2: {max_length: "25", format: "핵심 솔루션 상세1 부제목 ex) 에너지 효율 향상 방안"},
+      r_9_5_3: {max_length: "150", format: "단기, 중기, 장기로 구분된 핵심 솔루션 상세1 ex) [{solution: '배터리 사용량 최적화 알고리즘 적용 (15% 효율 향상 목표)'}, { solution: '신형 배터리 셀 도입 및 회로 개선 (30% 효율 향상)' }, {solution: '저전력 하드웨어 및 에너지 하베스팅 기술 도입 (50% 이상 향상)'}]"},
     },
     C095: {
-      r_9_5_4: "detail_solution_2_title",
-      r_9_5_5: "detail_solution_2_subtitle",
-      r_9_5_6: [
-        { solution: "detail_2_solution_1" },
-        { solution: "detail_2_solution_2" },
-        { solution: "detail_2_solution_3" },
-      ],
+      r_9_5_4: {max_length: "15", format: "핵심 솔루션 상세2 제목 ex) 설치 편의성 제고"},
+      r_9_5_5: {max_length: "25", format: "핵심 솔루션 상세2 부제목 ex) 고객 셀프설치 경험 개선"},
+      r_9_5_6: {max_length: "150", format: "단기, 중기, 장기로 구분된 핵심 솔루션 상세2 ex) [{ solution: '단계별 가이드 개선 및 QR코드 기반 빠른 설정 도입' }, { solution: 'AR 기반 설치 가이드 제공' }, { solution: 'AI 기반 자동 설치 시스템 구축' }]"},
+
     },
     C096: {
-      r_9_5_7: "detail_solution_3_title",
-      r_9_5_8: "detail_solution_3_subtitle",
-      r_9_5_9: [
-        { solution: "detail_3_solution_1" },
-        { solution: "detail_3_solution_2" },
-        { solution: "detail_3_solution_3" },
-      ],
-    },
-    C097: {
-      r_9_6: "solution_summary",
+      r_9_5_7: {max_length: "15", format: "핵심 솔루션 상세3 제목 ex) 가격 경쟁력 강화"},
+      r_9_5_8: {max_length: "25", format: "핵심 솔루션 상세3 부제목 ex) 시장 적정가 재설계"},
+      r_9_5_9: {max_length: "150", format: "단기, 중기, 장기로 구분된 핵심 솔루션 상세3 ex) [{ solution: '경쟁 가격 조정 및 번들 할인 프로모션' }, { solution: '기본/고급형 라인업 전략 분리' }, { solution: '제품+서비스 구독형 모델로 전환' }]"},
     },
   },
   executionPlanPage: {
@@ -402,8 +404,6 @@ const chunkConstraints = {
     r_4_17: "💰",
     r_4_18: "가격 대비 가치",
     r_4_19: "가격에 비해 기능이 아쉬워요.",
-    r_4_20:
-      "시간 경과에 따른 감정 변화 추이를 분석한 결과, 최근 6개월간 긍정적 감정 비율이 점진적으로 증가하는 추세를 보이고 있습니다. 이는 지난 분기에 실시한 소프트웨어 업데이트와 사용자 인터페이스 개선의 효과로 해석됩니다. 다만, 배터리 수명과 관련된 부정적 피드백은 지속적으로 발생하고 있어 하드웨어 측면의 개선이 시급한 것으로 판단됩니다.",
   },
   competitorPage: {
     r_5_2: "젠하이저",
@@ -490,30 +490,28 @@ const chunkConstraints = {
     r_9_5_3: [
       {
         solution:
-          "단기: 배터리 사용량 최적화 알고리즘 적용 (15% 효율 향상 목표)",
+          "배터리 사용량 최적화 알고리즘 적용 (15% 효율 향상 목표)",
       },
-      { solution: "중기: 신형 배터리 셀 도입 및 회로 개선 (30% 효율 향상)" },
+      { solution: "신형 배터리 셀 도입 및 회로 개선 (30% 효율 향상)" },
       {
         solution:
-          "장기: 저전력 하드웨어 및 에너지 하베스팅 기술 도입 (50% 이상 향상)",
+          "저전력 하드웨어 및 에너지 하베스팅 기술 도입 (50% 이상 향상)",
       },
     ],
     r_9_5_4: "설치 편의성 제고",
     r_9_5_5: "고객 셀프설치 경험 개선",
     r_9_5_6: [
-      { solution: "단기: 단계별 가이드 개선 및 QR코드 기반 빠른 설정 도입" },
-      { solution: "중기: AR 기반 설치 가이드 제공" },
-      { solution: "장기: AI 기반 자동 설치 시스템 구축" },
+      { solution: "단계별 가이드 개선 및 QR코드 기반 빠른 설정 도입" },
+      { solution: "AR 기반 설치 가이드 제공" },
+      { solution: "AI 기반 자동 설치 시스템 구축" },
     ],
     r_9_5_7: "가격 경쟁력 강화",
     r_9_5_8: "시장 적정가 재설계",
     r_9_5_9: [
-      { solution: "단기: 경쟁 가격 조정 및 번들 할인 프로모션" },
-      { solution: "중기: 기본/고급형 라인업 전략 분리" },
-      { solution: "장기: 제품+서비스 구독형 모델로 전환" },
+      { solution: "경쟁 가격 조정 및 번들 할인 프로모션" },
+      { solution: "기본/고급형 라인업 전략 분리" },
+      { solution: "제품+서비스 구독형 모델로 전환" },
     ],
-    r_9_6:
-      "각 솔루션은 실행 우선순위와 시장 반응을 고려하여 전략적으로 운영되어야 하며, 기술 투자와 동시에 고객 중심 접근이 병행되어야 합니다.",
   },
   executionPlanPage: {
     r_10_1: [

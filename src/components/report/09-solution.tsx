@@ -13,7 +13,6 @@ type Props = {
   r_9_5_7: string;
   r_9_5_8: string;
   r_9_5_9: { solution: string }[];
-  r_9_6: string;
   isCurrentWorkingPage?: boolean; // 추가된 prop
 };
 
@@ -30,15 +29,14 @@ function SolutionPage_09({
   r_9_5_7,
   r_9_5_8,
   r_9_5_9,
-  r_9_6,
   isCurrentWorkingPage = false,
 }: Props) {
   return (
     <section className="relative page-container small-layout">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h1>솔루션 제안</h1>
-      <p>
+      <h1 className="content-h1">솔루션 제안</h1>
+      <p style={{marginBottom: "25px"}}>
         앞서 도출된 개선 영역을 바탕으로, 자사 제품의 경쟁력 강화와 고객 만족도
         향상을 위한 구체적인 솔루션을 제안합니다. 각 솔루션은 실행 가능성과 예상
         효과를 고려하여 단기, 중기, 장기로 구분하였습니다.
@@ -94,40 +92,37 @@ function SolutionPage_09({
         </div>
       </div>
 
-      <h2>핵심 솔루션 상세</h2>
-      <div className="solution-grid compact">
-        <div className="solution-card">
-          <h3>{r_9_5_1}</h3>
-          <p className="subtitle">{r_9_5_2}:</p>
-          <ul>
-            {r_9_5_3.map((item, idx) => (
-              <li key={idx}>{item.solution}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="solution-card">
-          <h3>{r_9_5_4}</h3>
-          <p className="subtitle">{r_9_5_5}:</p>
-          <ul>
-            {r_9_5_6.map((item, idx) => (
-              <li key={idx}>{item.solution}</li>
-            ))}
-          </ul>
-        </div>
-
-        <div className="solution-card">
-          <h3>{r_9_5_7}</h3>
-          <p className="subtitle">{r_9_5_8}:</p>
-          <ul>
-            {r_9_5_9.map((item, idx) => (
-              <li key={idx}>{item.solution}</li>
-            ))}
-          </ul>
-        </div>
-      </div>
-
-      <p className="solution-description">{r_9_6}</p>
+      <h2 style={{marginTop: "45px"}}>핵심 솔루션 상세</h2>
+      <table className="solution-table">
+        <thead>
+          <tr>
+            <td></td>
+            <td>{r_9_5_1}<br /><small>{r_9_5_2}</small></td>
+            <td>{r_9_5_4}<br /><small>{r_9_5_5}</small></td>
+            <td>{r_9_5_7}<br /><small>{r_9_5_8}</small></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th>단기</th>
+            <td>{r_9_5_3[0]?.solution}</td>
+            <td>{r_9_5_6[0]?.solution}</td>
+            <td>{r_9_5_9[0]?.solution}</td>
+          </tr>
+          <tr>
+            <th>중기</th>
+            <td>{r_9_5_3[1]?.solution}</td>
+            <td>{r_9_5_6[1]?.solution}</td>
+            <td>{r_9_5_9[1]?.solution}</td>
+          </tr>
+          <tr>
+            <th>장기</th>
+            <td>{r_9_5_3[2]?.solution}</td>
+            <td>{r_9_5_6[2]?.solution}</td>
+            <td>{r_9_5_9[2]?.solution}</td>
+          </tr>
+        </tbody>
+      </table>
 
       <div className="page-footer">
         <span className="page-number">9</span>

@@ -15,78 +15,47 @@ function ExecutionPlanPage_10({ r_10_1, isCurrentWorkingPage = false }: Props) {
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h1>실행 계획 및 KPI</h1>
+      <h1 className="content-h1">실행 계획 및 KPI</h1>
       <p>
-        앞서 제안된 솔루션을 효과적으로 구현하기 위한 단계별 실행 계획과 성과
-        측정을 위한 핵심 성과 지표(KPI)를 수립했습니다. 체계적인 실행 계획은
-        리소스의 효율적 배분과 프로젝트의 성공적인 완수를 위해 필수적입니다.
+      제안된 솔루션의 효과적 구현을 위해 단계별 실행 계획과 핵심 성과 지표(KPI)를 수립하였습니다. 이는 리소스를 효율적으로 배분하고 프로젝트를 성공적으로 완수하는 데 기여합니다.
       </p>
 
       <h2>솔루션 이행을 위한 단계별 실행 계획</h2>
-      <div className="execution-plan">
-        <div className="plan-step">
-          <div className="plan-icon">
-            <img
-              src="https://img.icons8.com/ios-filled/32/search--v1.png"
-              alt="상세 분석"
-            />
-          </div>
-          <div className="plan-content">
+      <div className="compact-step-grid">
+        <div className="step-item">
+          <img src="https://img.icons8.com/ios-filled/32/search--v1.png" alt="상세 분석" />
+          <div>
             <strong>상세 분석</strong>
-            <p>주요 개선 영역에 대한 깊이 있는 분석 및 요구사항 정의</p>
+            <p>개선 영역 분석 및 요구사항 정의</p>
           </div>
         </div>
-
-        <div className="plan-step">
-          <div className="plan-icon">
-            <img
-              src="https://img.icons8.com/ios-filled/32/000000/airplane-take-off.png"
-              alt="계획 수립"
-            />
-          </div>
-          <div className="plan-content">
+        <div className="step-item">
+          <img src="https://img.icons8.com/ios-filled/32/000000/airplane-take-off.png" alt="계획 수립" />
+          <div>
             <strong>계획 수립</strong>
-            <p>우선순위 설정, 리소스 할당 및 상세 일정 계획</p>
+            <p>우선순위 설정 및 일정 계획</p>
           </div>
         </div>
-
-        <div className="plan-step">
-          <div className="plan-icon">
-            <img
-              src="https://img.icons8.com/ios-filled/32/000000/source-code.png"
-              alt="개발 실행"
-            />
-          </div>
-          <div className="plan-content">
-            <strong>개발/실행</strong>
-            <p>솔루션 개발 및 구현 (단계별 접근)</p>
+        <div className="step-item">
+          <img src="https://img.icons8.com/ios-filled/32/000000/source-code.png" alt="개발 실행" />
+          <div>
+            <strong>개발 실행</strong>
+            <p>솔루션 개발 및 단계별 구현</p>
           </div>
         </div>
-
-        <div className="plan-step">
-          <div className="plan-icon">
-            <img
-              src="https://img.icons8.com/ios-filled/32/000000/test-tube.png"
-              alt="테스트 검증"
-            />
-          </div>
-          <div className="plan-content">
-            <strong>테스트/검증</strong>
-            <p>품질 보증 테스트 및 초기 사용자 피드백 수집</p>
+        <div className="step-item">
+          <img src="https://img.icons8.com/ios-filled/32/000000/test-tube.png" alt="테스트 검증" />
+          <div>
+            <strong>테스트 검증</strong>
+            <p>테스트 및 사용자 피드백 수집</p>
           </div>
         </div>
-
-        <div className="plan-step">
-          <div className="plan-icon">
-            <img
-              src="https://img.icons8.com/ios-filled/32/000000/rocket.png"
-              alt="출시 모니터링"
-            />
-          </div>
-          <div className="plan-content">
-            <strong>출시/모니터링</strong>
-            <p>솔루션 출시 및 지속적인 성과 모니터링</p>
-          </div>
+      </div>
+      <div className="step-item single">
+        <img src="https://img.icons8.com/ios-filled/32/000000/rocket.png" alt="출시 모니터링" />
+        <div>
+          <strong>출시 모니터링</strong>
+          <p>성과 측정 및 지속 개선</p>
         </div>
       </div>
 
@@ -95,7 +64,7 @@ function ExecutionPlanPage_10({ r_10_1, isCurrentWorkingPage = false }: Props) {
         <thead>
           <tr>
             <th>솔루션</th>
-            <th>주관 부서</th>
+            <th style={{width: "100px"}}>주관 부서</th>
             <th>협업 부서</th>
             <th>주요 역할</th>
           </tr>

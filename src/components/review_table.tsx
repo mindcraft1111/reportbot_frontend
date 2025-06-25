@@ -20,7 +20,7 @@ export default function ReviewTable({ reviewList }: { reviewList: Review[] }) {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {reviewList.map((review) => (
+        {reviewList?.map((review) => (
           <TableRow key={review.id}>
             {/* <TableCell className="font-medium">
               {review.metadata.review_date}

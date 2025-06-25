@@ -66,7 +66,7 @@ function ComparisonPage_06({
       {
         label: r_6_5,
         data: r_6_1_3,
-        backgroundColor: "#CI887A",
+        backgroundColor: "#574a4a",
       },
     ],
   };
@@ -77,7 +77,6 @@ function ComparisonPage_06({
     scales: {
       x: {
         beginAtZero: true,
-        //max: 3000,
         ticks: { stepSize: 1 },
       },
     },
@@ -102,72 +101,61 @@ function ComparisonPage_06({
   };
 
   return (
-    <section className="relative page-container">
+    <section className="relative page-container report-section">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
       <h1 className="content-h1">자사와 경쟁사 비교 분석</h1>
-      <p>
-        자사와 경쟁사 제품의 감정 분석 결과를 직접 비교하여 시장 내 경쟁력을
-        종합적으로 평가했습니다. 이를 통해 자사 제품의 상대적 강점과 약점을
-        명확히 파악하고, 경쟁 우위를 확보하기 위한 전략적 방향성을 도출했습니다.
-      </p>
+      <p className="summary">자사와 경쟁사 제품의 감정 분석 결과를 비교하여 전략적 시사점을 도출하였습니다.</p>
 
-      <h2 style={{background: "#fdf3ef"}}>카테고리별 감정 점수 비교</h2>
-      <div style={{ marginBottom: "24px" }}>
-        <Bar data={barData} options={barOptions} width={580} height={280} />
+      <div className="graph-section">
+      <h2 style={{marginTop: "0"}}>카테고리별 감정 점수 비교</h2>
+        <div style={{ marginBottom: "24px" }}>
+            <Bar data={barData} options={barOptions} width={580} height={280} />
+          </div>
       </div>
 
-      <h2>GAP 분석</h2>
-      <div className="gap-box-group">
-        <div className="gap-box">
-          <h3>강점 영역</h3>
-          <p>{r_6_2}</p>
-        </div>
-        <div className="gap-box">
-          <h3>개선 필요 영역</h3>
-          <p>{r_6_3}</p>
-        </div>
-        <div className="gap-box">
-          <h3>기회 영역</h3>
-          <p>{r_6_4}</p>
-        </div>
+      <div className="gap-analysis">
+        <div className="gap-box"><strong>강점 영역</strong><p>{r_6_2}</p></div>
+        <div className="gap-box"><strong>개선 필요 영역</strong><p>{r_6_3}</p></div>
+        <div className="gap-box"><strong>기회 영역</strong><p>{r_6_4}</p></div>
       </div>
 
-      <h2>고객 충성도 및 추천 의향 비교</h2>
-      <table className="gap-table">
-        <thead>
-          <tr>
-            <th>지표</th>
-            <th>자사</th>
-            <th>{r_6_5}</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>NPS(순추천지수)</td>
-            <td>{r_6_6}</td>
-            <td>{r_6_7}</td>
-          </tr>
-          <tr>
-            <td>재구매 의향(%)</td>
-            <td>{r_6_8}</td>
-            <td>{r_6_9}</td>
-          </tr>
-          <tr>
-            <td>브랜드 충성도(5점 만점)</td>
-            <td>{r_6_10}</td>
-            <td>{r_6_11}</td>
-          </tr>
-        </tbody>
-      </table>
+      <div className="loyalty-table">
+        <h2>고객 충성도 및 추천 의향 비교</h2>
+        <table className="gap-table">
+            <thead>
+              <tr>
+                <th>지표</th>
+                <th>자사</th>
+                <th>{r_6_5}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>NPS(순추천지수)</td>
+                <td>{r_6_6}</td>
+                <td>{r_6_7}</td>
+              </tr>
+              <tr>
+                <td>재구매 의향(%)</td>
+                <td>{r_6_8}</td>
+                <td>{r_6_9}</td>
+              </tr>
+              <tr>
+                <td>브랜드 충성도(5점 만점)</td>
+                <td>{r_6_10}</td>
+                <td>{r_6_11}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
 
-      <p className="gap-summary">{r_6_12}</p>
-
+      <p className="bottom-summary">{r_6_12}</p>
       <div className="page-footer">
         <span className="page-number">6</span>
       </div>
     </section>
-  );
+  )
 }
 
 export default ComparisonPage_06;

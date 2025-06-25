@@ -18,7 +18,7 @@ function OverviewPage_02({
       <h1 className="content-h1">개요</h1>
       <p className="break-all">{r_2_1}</p>
 
-      <h1 className="content-h1">분석 대상 및 방법론</h1>
+      <h1 className="content-h1 mt-10">분석 대상 및 방법론</h1>
       <p className="break-all">{r_2_2}</p>
 
       <div

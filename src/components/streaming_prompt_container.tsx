@@ -228,7 +228,7 @@ const StreamingPromptContainer = ({
       if (typeof rawText === "string" && rawText.includes("```json")) {
         toast.error("응답에 ```json``` 문법이 포함되어 있습니다");
       }
-
+      console.log("🎈🎈🎈json: ", json);
       setAiResponse(rawText);
       setReview01(json.review01);
       setReview02(json.review02);

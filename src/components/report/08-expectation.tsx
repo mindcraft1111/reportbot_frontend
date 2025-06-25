@@ -20,7 +20,7 @@ function ExpectationGapPage_08({
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h2>고객 기대치와 실제 경험 간 차이 분석</h2>
+      <h2 style={{marginTop: "0"}}>고객 기대치와 실제 경험 간 차이 분석</h2>
 
       <table className="data-table">
         <thead>

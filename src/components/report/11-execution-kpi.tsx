@@ -20,12 +20,11 @@ function ExecutionKPIPage_11({
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h2>성과 측정을 위한 핵심 성과 지표(KPI)</h2>
-
-      <div className="kpi-grid">
+      <h2 style={{marginTop: "0"}}>성과 측정을 위한 핵심 성과 지표(KPI)</h2>
+      <div className="metric-container">
         {r_11_1.map((kpi, index) => (
-          <div className="kpi-card" key={index}>
-            <h3>{kpi.title}</h3>
+          <div className="metric-card" key={index}>
+            <h4>{kpi.title}</h4>
             <ul>
               {kpi.items.map((item, i) => (
                 <li key={i}>{item}</li>

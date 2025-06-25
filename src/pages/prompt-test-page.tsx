@@ -8,6 +8,7 @@ import ContentsPage_01 from "@/components/report/01-contents";
 import OverviewPage_02 from "@/components/report/02-overview";
 import SwotPage_03 from "@/components/report/03-swot";
 import SelfProductPage_04 from "@/components/report/04-my-product";
+//import SelfProductPage_04_2 from "@/components/report/04-my-product2";
 import CompetitorPage_05 from "@/components/report/05-competitor";
 import ComparisonPage_06 from "@/components/report/06-comparison";
 import ImprovementPage_07 from "@/components/report/07-improve";
@@ -31,6 +32,7 @@ const chunkPageComponents: [ChunkType, React.ComponentType<any>][] = [
   ["overviewPage", OverviewPage_02],
   ["swotPage", SwotPage_03],
   ["selfProductPage", SelfProductPage_04],
+//  ["selfProductPage_2", SelfProductPage_04_2],
   ["competitorPage", CompetitorPage_05],
   ["comparisonPage", ComparisonPage_06],
   ["improvementPage", ImprovementPage_07],
@@ -63,6 +65,7 @@ export default function PromptTestPage2() {
     overviewPage: null,
     swotPage: null,
     selfProductPage: null,
+//    selfProductPage_2: null,
     competitorPage: null,
     comparisonPage: null,
     improvementPage: null,

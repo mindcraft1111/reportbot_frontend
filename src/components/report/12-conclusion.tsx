@@ -23,7 +23,6 @@ ChartJS.register(
 type Props = {
   r_12_1_1: number[]; // 자사 현재 데이터
   r_12_1_2: number[]; // 경쟁사 평균 데이터
-  //r_12_1_3: number[]; // 목표치 데이터
   r_12_2_1: string; // 현재 상황 인식
   r_12_2_2: string; // 전략적 방향성
   r_12_2_3: string; // 미래 전망 및 제언
@@ -33,7 +32,6 @@ type Props = {
 function ConclusionPage_12({
   r_12_1_1,
   r_12_1_2,
-  //r_12_1_3,
   r_12_2_1,
   r_12_2_2,
   r_12_2_3,
@@ -52,11 +50,6 @@ function ConclusionPage_12({
         data: r_12_1_2,
         backgroundColor: "rgba(255, 159, 64, 0.7)",
       },
-      // {
-      //   label: "목표치",
-      //   data: r_12_1_3,
-      //   backgroundColor: "rgba(75, 192, 192, 0.7)",
-      // },
     ],
   };
 
@@ -88,7 +81,7 @@ function ConclusionPage_12({
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h1>결론 및 전략적 제언</h1>
+      <h1 className="content-h1">결론 및 전략적 제언</h1>
       <p>
         본 리포트에서는 자사와 경쟁사 제품의 고객 리뷰를 분석하여 시장 내
         위치를 파악하고, 제품 개선을 위한 솔루션을 도출했습니다. 종합적인 분석
@@ -96,7 +89,7 @@ function ConclusionPage_12({
       </p>
 
       <h2>리뷰 개수 및 예상치 분석</h2>
-      <div style={{ marginBottom: "24px" }}>
+      <div style={{ marginBottom: "40px 0" }}>
         <Bar data={barData} options={barOptions} width={600} height={300} />
       </div>
 

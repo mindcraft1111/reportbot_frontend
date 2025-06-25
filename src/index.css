@@ -108,7 +108,7 @@ body {
 
     .data-table th,
     .data-table td {
-      border: 1px solid #ccc;
+      border-bottom: 1px solid #ccc;
       padding: 6pt 8pt;
       text-align: center;
     }
@@ -221,6 +221,10 @@ body {
       width: 150px;
       font-size: 11pt;
       text-align: center;
+    }
+
+    .circle-item > h3 {
+      font-size: 20px !important;
     }
 
     .item-1 {
@@ -360,6 +364,11 @@ body {
       margin-top: 10px;
     }
 
+    /* page4 */
+    .feedback-title {
+      margin: 0 0 5px 0;
+    }
+
     /* page5 */
     .competitor-box {
       display: flex;
@@ -405,29 +414,57 @@ body {
     }
 
     /* page6 */
-    /* GAP 박스 그룹 정렬 및 크기 조정 */
-    .gap-box-group {
+    .report-section {
+      line-height: 1.5;
+      padding: 24px 16px;
+    }
+    
+    .summary, .bottom-summary {
+      margin-bottom: 20px;
+    }
+    
+    .graph-section {
+      margin-bottom: 24px;
+    }
+    
+    .bar-chart img {
+      width: 100%;
+      max-width: 540px;
+      display: block;
+      margin: 0 auto;
+    }
+    
+    .gap-analysis {
       display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      margin-top: -10px;
-      margin-bottom: -10px;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
     }
 
     .gap-box {
       flex: 1;
       background: #f9f9f9;
-      padding: 0px 7px 0px 7px;
+      padding: 15px 7px 7px 7px;
       border-radius: 6px;
-      font-size: 9.5pt;
       line-height: 1;
       border: 1px solid #eee;
     }
 
-    .gap-box h3 {
-      font-size: 11.5pt;
+    
+    .loyalty-table table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
     }
-
+    
+    .loyalty-table th,
+    .loyalty-table td {
+      padding: 8px 10px;
+      border: 1px solid #ddd;
+      text-align: center;
+    }
+    
+    /* GAP 박스 그룹 정렬 및 크기 조정 */
     .gap-table {
       width: 100%;
       border-collapse: collapse;
@@ -454,6 +491,18 @@ body {
     }
 
     /* page7 */
+
+    .rp {
+      background: #fff9f6;
+      padding: 10px;
+      margin: 15px 0 !important;
+    }
+
+    .rp li {
+      list-style-type: square;
+      margin-left: 30px;
+    }
+
     .real-pyramid {
       width: 100%;
       max-width: 600px;
@@ -478,6 +527,8 @@ body {
       gap: 12px;
       color: #000;
       max-width: 90%;
+      width: 280px;
+      justify-content: flex-start;
     }
 
     .pyramid-content img {
@@ -486,21 +537,21 @@ body {
     }
 
     .row1 {
-      background: #0c3b68;
+      background: #ffbaa3;
       color: white;
     }
 
     .row2 {
-      background: #3d7edb;
+      background: #ffcdbb;
       color: white;
     }
 
     .row3 {
-      background: #9bc4f2;
+      background: #ffddd1;
     }
 
     .row4 {
-      background: #ededed;
+      background: #ffece5;
     }
 
     .row5 {
@@ -508,6 +559,60 @@ body {
     }
 
     /* page9 */
+    .solution-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      box-shadow: 0 0 10px rgba(0,0,0,0.05);
+      font-size: 14px;
+    }
+
+    .solution-table > thead {
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    .solution-table thead td {
+      background-color: #f2f2f2;
+      font-weight: bold;
+      text-align: center;
+      border-bottom: 2px solid #ccc;
+      padding: 10px 0;
+    }
+
+    .solution-table tbody {
+      border: none;
+    }
+
+    .solution-table tbody th {
+      width: 15px;
+      background-color: #f5f5f5;
+      text-align: center;
+      border-bottom: 2px solid #ccc;
+    }
+
+    .solution-table tbody td {
+      width: 60px;
+      border-bottom: 2px solid #ccc;
+      padding: 10px;
+    }
+    
+    .solution-table th {
+      background-color: #fafafa;
+      font-weight: bold;
+      width: 100px;
+      text-align: left;
+      color: #333;
+    }
+    
+    .solution-table small {
+      display: block;
+      font-size: 0.8rem;
+      color: #888;
+      margin-top: 4px;
+    }
+
+
     .solution-timeline {
       display: flex;
       flex-direction: column;
@@ -611,103 +716,106 @@ body {
     }
 
     /* page10 */
-    .execution-plan {
-      display: flex;
-      flex-direction: column;
+    .compact-step-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 12px;
-      margin: 20px 0;
-      font-size: 10pt;
+      margin: 24px 0 12px 0;
     }
-
-    .plan-step {
+    
+    .step-item {
       display: flex;
-      align-items: center;
-      gap: 16px;
+      align-items: flex-start;
+      gap: 10px;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.85rem;
+      line-height: 1.4;
+      border-left: 4px solid #fd8154;
+      box-shadow: 3px 3px 4px rgba(0,0,0,0.05);
     }
-
-    .plan-icon {
-      width: 50px;
-      height: 50px;
-      background-color: #f4f4f4;
-      clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    
+    .step-item img {
+      width: 22px;
+      height: 22px;
+      margin-top: 2px;
       flex-shrink: 0;
     }
-
-    .plan-icon img {
-      width: 24px;
-      height: 24px;
+    
+    .step-item strong {
+      font-size: 0.9rem;
+      color: #222;
+      margin-bottom: 2px;
+      display: block;
     }
-
-    .plan-content p {
-      margin: 4px 0 0;
-      font-size: 9.5pt;
-      color: #444;
+    
+    .step-item p {
+      margin: 2px 0 0;
+      color: #555;
     }
-
+    
     .role-table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 10pt;
-      margin-top: 12px;
+      margin-top: 24px;
+      font-family: Arial, sans-serif;
     }
-
-    .role-table thead {
-      background-color: #f5f5f5;
-    }
-
-    .role-table th,
-    .role-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
+    
+    .role-table th, .role-table td {
+      border-bottom: 1px solid #ddd;
+      padding: 8px 12px;
+      font-size: 0.95rem;
       text-align: left;
-      vertical-align: top;
     }
-
-    .role-table th {
+    
+    .role-table thead th {
+      background-color: #f2f2f2f2;
       font-weight: bold;
     }
-
-    .role-table tbody tr:nth-child(even) {
-      background-color: #fcfcfc;
+    
+    .role-table tbody tr:hover {
+      background-color: #f9f9f9;
     }
 
     /* page11 */
-    .kpi-grid {
+    .metric-container {
       display: flex;
-      gap: 10px;
-      margin: 20px 0;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin: 30px 0 40px 0;
     }
-
-    .kpi-card {
-      flex: 1;
-      background-color: #f9f9f9;
-      padding: 14px 16px;
+    
+    .metric-card {
+      background: #ffffff;
       border: 1px solid #e0e0e0;
-      border-radius: 6px;
-      font-size: 10pt;
+      border-left: 6px solid #fd8154;
+      border-radius: 12px;
+      padding: 10px 20px 10px 20px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      flex: 1 1 280px;
+      min-width: 250px;
     }
-
-    .kpi-card h3 {
-      font-size: 11pt;
-      margin-bottom: 8px;
+    
+    .metric-card h4 {
+      font-weight: bold;
+      margin-bottom: 12px;
     }
-
-    .kpi-card ul {
-      padding-left: 18px;
-      margin: 0;
+    
+    .metric-card ul {
+      list-style-type: disc;
     }
-
-    .kpi-card li {
-      margin-bottom: 5px;
-    }
-
-    .kpi-grid + p {
-      font-size: 10pt;
+    
+    .metric-card li {
+      margin-bottom: 10px;
+      font-size: 0.95rem;
       line-height: 1.6;
-      margin-bottom: 8px;
+      color: #444;
+    }
+    
+    .metric-card .highlight {
+      font-weight: bold;
+      color: #ff6027;
     }
 
     /* page12 */
@@ -770,7 +878,7 @@ body {
 
     /* 공통 스타일 */
     .page-container {
-      padding: 40px 50px;
+      padding: 30px;
       font-family: "Arial", sans-serif;
       font-size: 12pt;
       line-height: 1.6;

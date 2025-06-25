@@ -41,7 +41,7 @@ function ImprovementPage_07({
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h1>주요 개선 영역 도출</h1>
+      <h1 className="content-h1">주요 개선 영역 도출</h1>
       <p>
         감정 분석 결과와 경쟁사 비교를 통해 자사 제품의 주요 개선 영역을
         도출했습니다. 이는 고객 만족도 향상과 시장 경쟁력 강화를 위해 우선적으로
@@ -49,7 +49,7 @@ function ImprovementPage_07({
       </p>
 
       <h2>우선 개선 영역 도출 기준</h2>
-      <ol>
+      <ol className="rp">
         <li>부정적 감정 비율 - 해당 요소에 대한 부정적 피드백의 비중</li>
         <li>경쟁사 대비 격차 - 경쟁사와의 감정 점수 차이</li>
         <li>고객 중요도 - 고객이 해당 요소에 부여하는 중요성</li>
