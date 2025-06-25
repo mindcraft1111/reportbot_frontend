@@ -32,7 +32,7 @@ const chunkPageComponents: [ChunkType, React.ComponentType<any>][] = [
   ["overviewPage", OverviewPage_02],
   ["swotPage", SwotPage_03],
   ["selfProductPage", SelfProductPage_04],
-//  ["selfProductPage_2", SelfProductPage_04_2],
+  //  ["selfProductPage_2", SelfProductPage_04_2],
   ["competitorPage", CompetitorPage_05],
   ["comparisonPage", ComparisonPage_06],
   ["improvementPage", ImprovementPage_07],
@@ -50,7 +50,6 @@ export default function PromptTestPage2() {
   }>();
 
   useRequireLogin();
-
   const { data: projectList, isLoading } = useQuery({
     queryKey: ["projectList"],
     queryFn: () => apiClient.getProjectList(),
@@ -65,7 +64,7 @@ export default function PromptTestPage2() {
     overviewPage: null,
     swotPage: null,
     selfProductPage: null,
-//    selfProductPage_2: null,
+    //    selfProductPage_2: null,
     competitorPage: null,
     comparisonPage: null,
     improvementPage: null,

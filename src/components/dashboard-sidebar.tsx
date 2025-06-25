@@ -3,8 +3,6 @@ import {
   Search,
   ChevronDown,
   LogsIcon,
-  InboxIcon,
-  MessageSquareTextIcon,
   ChevronRight,
   FolderKanbanIcon,
 } from "lucide-react";
@@ -20,10 +18,12 @@ type DashboardItem = {
   icon: LucideIcon;
   children?: ChildMenu[];
   isLink?: string | null;
+  value: string;
 };
 
 type ChildMenu = {
   name: string | null;
+  value: string;
 };
 
 const dashboardItems = [
@@ -32,27 +32,28 @@ const dashboardItems = [
     icon: LogsIcon,
     children: [
       {
-        name: "프로젝트 1",
-      },
-      {
-        name: "프로젝트 2",
-      },
-      {
-        name: "프로젝트 3",
+        name: "소니 vs. 젠하이저",
+        value: "viewReportPage",
       },
     ],
     isLink: null,
+    value: "viewReportPage",
   },
-  { name: "AI와 분석하기", icon: MessageSquareTextIcon, isLink: null },
-  { name: "데이터 관리", icon: InboxIcon, isLink: null },
+  // { name: "AI와 분석하기", icon: MessageSquareTextIcon, isLink: null },
+  // { name: "데이터 관리", icon: InboxIcon, isLink: null },
   {
     name: "프로젝트 생성하기",
     icon: FolderKanbanIcon,
     isLink: null,
+    value: "createProject",
   },
 ];
 
-export default function DashboardSidebar() {
+export default function DashboardSidebar({
+  onNavItemClick,
+}: {
+  onNavItemClick: (value: string) => void;
+}) {
   const { isSidebarOpen } = useGeneralContext();
   return (
     <div
@@ -62,7 +63,10 @@ export default function DashboardSidebar() {
       style={{ height: "calc(100vh - 70px)" }}
     >
       <div className="py-2">
-        <Button className="bg-blue-600 text-white hover:bg-blue-600/90 cursor-pointer w-full py-6">
+        <Button
+          onClick={() => onNavItemClick("requestPage")}
+          className="bg-blue-600 text-white hover:bg-blue-600/90 cursor-pointer w-full py-6"
+        >
           ViewBoth 시작하기
         </Button>
       </div>
@@ -75,7 +79,13 @@ export default function DashboardSidebar() {
       </div>
       <ul className="my-0 ml-0">
         {dashboardItems.map((item) => {
-          return <DashboardItem key={item.name} {...item} />;
+          return (
+            <DashboardItem
+              key={item.name}
+              item={item}
+              onNavItemClick={onNavItemClick}
+            />
+          );
         })}
       </ul>
       <p className="mt-auto text-xs text-center">
@@ -85,17 +95,17 @@ export default function DashboardSidebar() {
   );
 }
 
-function DashboardItem(item: DashboardItem) {
+function DashboardItem({ item, onNavItemClick }: DashboardItemProps) {
   const parentItem = item.children;
 
   return parentItem ? (
-    <ParentDashboardItem {...item} />
+    <ParentDashboardItem item={item} onNavItemClick={onNavItemClick} />
   ) : (
-    <ChildDashboardItem {...item} />
+    <ChildDashboardItem item={item} onNavItemClick={onNavItemClick} />
   );
 }
 
-function ParentDashboardItem(item: DashboardItem) {
+function ParentDashboardItem({ item, onNavItemClick }: DashboardItemProps) {
   const [isOpen, setIsOpen] = useState(false);
   const Icon = item.icon;
   const toggleMenu = () => {
@@ -110,6 +120,7 @@ function ParentDashboardItem(item: DashboardItem) {
       >
         <Icon className="w-4" />
         <button
+          onClick={() => onNavItemClick(item.value)}
           className={`block w-full text-left px-3 py-2 rounded-md transition-colors !text-sm cursor-pointer  text-gray-700"
         `}
         >
@@ -122,7 +133,7 @@ function ParentDashboardItem(item: DashboardItem) {
           ? item.children?.map((prj) => (
               <li
                 key={prj.name}
-                onClick={toggleMenu}
+                onClick={() => onNavItemClick(prj.value)}
                 className="flex gap-2 items-center ml-4 hover:bg-gray-200 rounded px-2"
               >
                 <ChevronRight className="w-4" />
@@ -135,7 +146,12 @@ function ParentDashboardItem(item: DashboardItem) {
   );
 }
 
-function ChildDashboardItem(item: DashboardItem) {
+type DashboardItemProps = {
+  item: DashboardItem;
+  onNavItemClick: (value: string) => void;
+};
+
+function ChildDashboardItem({ item, onNavItemClick }: DashboardItemProps) {
   const Icon = item.icon;
   const itemStyle =
     "block w-full text-left px-3 py-2 rounded-md transition-colors !text-sm cursor-pointer text-gray-700";
@@ -150,7 +166,12 @@ function ChildDashboardItem(item: DashboardItem) {
           {item.name}
         </Link>
       ) : (
-        <button className={itemStyle}>{item.name}</button>
+        <button
+          className={itemStyle}
+          onClick={() => onNavItemClick(item.value)}
+        >
+          {item.name}
+        </button>
       )}
     </li>
   );

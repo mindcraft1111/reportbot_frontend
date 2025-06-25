@@ -30,7 +30,7 @@ const chunkPageComponents: [ChunkType, React.ComponentType<any>][] = [
   ["overviewPage", OverviewPage_02],
   ["swotPage", SwotPage_03],
   ["selfProductPage", SelfProductPage_04],
-//  ["selfProductPage_2", SelfProductPage_04_2],
+  //  ["selfProductPage_2", SelfProductPage_04_2],
   ["competitorPage", CompetitorPage_05],
   ["comparisonPage", ComparisonPage_06],
   ["improvementPage", ImprovementPage_07],
@@ -50,7 +50,7 @@ export default function ReportPage() {
     overviewPage: null,
     swotPage: null,
     selfProductPage: null,
-//    selfProductPage_2: null,
+    //    selfProductPage_2: null,
     competitorPage: null,
     comparisonPage: null,
     improvementPage: null,
@@ -176,7 +176,7 @@ export default function ReportPage() {
             <Input
               value={input}
               onChange={(e) => setInput(e.target.value)}
-              placeholder="메시지를 입력하세요"
+              placeholder="노이즈캔슬링에 대한 리뷰 몇개만 보여줘"
               className="flex-1 rounded-full bg-gray-100 border border-gray-300 px-4 py-2"
             />
             <Button type="submit" className="rounded-full px-6">

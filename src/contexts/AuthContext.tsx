@@ -40,7 +40,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       const parsed: UserAndToken = JSON.parse(stored);
       setUser(parsed);
       setIsLoggedIn(true);
-      navigator("/prompt-test/9");
+      navigator("/");
     }
   }, []);
 
@@ -79,7 +79,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     if (!response.success) {
       if (response.message) {
         toast.error(response.message);
-        return
+        return;
       }
       toast.error("서버 에러 : 로그아웃 실패");
     } else {

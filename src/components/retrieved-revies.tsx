@@ -31,8 +31,8 @@ export default function RetrievedReviews({
   product01Name: string | undefined;
   product02Name: string | undefined;
 }) {
-  console.log(product01Name);
-  console.log(product02Name);
+  // console.log(product01Name);
+  // console.log(product02Name);
   return (
     <Dialog>
       <DialogTrigger asChild>

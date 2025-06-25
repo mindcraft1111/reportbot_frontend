@@ -116,7 +116,7 @@ const StreamingPromptContainer = ({
     setSelectedPrompt(null);
   };
 
-  console.log(selectedProject);
+  // console.log(selectedProject);
 
   const { data: prompts, isLoading: isPromptsLoading } = useQuery({
     queryKey: ["prompts", selectedPart],

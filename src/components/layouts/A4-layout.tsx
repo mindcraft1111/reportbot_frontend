@@ -2,24 +2,22 @@ import React, { forwardRef } from "react";
 
 interface A4LayoutProps {
   children: React.ReactNode;
-  chunkType: string
+  chunkType: string;
 }
 
 const pageCover = (pageType: String) => {
-  if (pageType === "coverPage")
-    return "url('/assets/cover/cover2.png')";
+  if (pageType === "coverPage") return "url('/assets/cover/cover2.png')";
   else if (pageType === "contentsPage")
     return "url('/assets/cover/contents1.png')";
   else if (pageType === "overviewPage")
     return "url('/assets/cover/contents2.png')";
   else return "white"; // default
-}
+};
 
 // ✅ enable ref forwarding
 const A4Layout = forwardRef<HTMLDivElement, A4LayoutProps>(
   ({ children, chunkType }, ref) => {
     // const isCover = chunkType === "coverPage";
-    console.log("chunkType: ", chunkType);
 
     return (
       <div
@@ -31,10 +29,10 @@ const A4Layout = forwardRef<HTMLDivElement, A4LayoutProps>(
           padding: "20mm",
           margin: "auto",
           //backgroundColor: "white",
-          backgroundColor: pageCover(chunkType) !== "white" ? "transparent" : "white",
-          backgroundImage: pageCover(chunkType) !== "white"
-            ? pageCover(chunkType)
-            : undefined,
+          backgroundColor:
+            pageCover(chunkType) !== "white" ? "transparent" : "white",
+          backgroundImage:
+            pageCover(chunkType) !== "white" ? pageCover(chunkType) : undefined,
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",

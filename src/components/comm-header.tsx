@@ -33,24 +33,26 @@ export default function Commheader() {
         </Link>
 
         {/* Desktop Menu */}
-        <ul className="sm:flex gap-4 hidden">
-          <li>
-            <Link
-              to="/prompt-test/9?project_title=헤드폰 비교"
-              className="hover:text-blue-400 text-blue-700 font-medium text-[15px]"
-            >
-              프롬프트 테스트
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/dashboard"
-              className="hover:text-blue-400 text-blue-700 font-medium text-[15px]"
-            >
-              리포트
-            </Link>
-          </li>
-        </ul>
+        {auth?.isLoggedIn && (
+          <ul className="sm:flex gap-4 hidden">
+            <li>
+              <Link
+                to="/prompt-test/9?project_title=헤드폰 비교"
+                className="hover:text-blue-400 text-blue-700 font-medium text-[15px]"
+              >
+                프롬프트 테스트
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/dashboard"
+                className="hover:text-blue-400 text-blue-700 font-medium text-[15px]"
+              >
+                리포트
+              </Link>
+            </li>
+          </ul>
+        )}
 
         {/* Auth Buttons */}
         <div className="flex space-x-4">

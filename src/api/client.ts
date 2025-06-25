@@ -122,7 +122,7 @@ export const getPromptsByCode = async ({
 }) => {
   if (promptCode == "no_part") return;
   try {
-    console.log(promptCode);
+    // console.log(promptCode);
     const res = await axiosInstance.get(
       `http://localhost:8000/api/prompts-tests/${promptCode}`
     );
