@@ -1,3 +1,4 @@
+import { useAuthContext } from "@/contexts/AuthContext";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { useEffect } from "react";
@@ -20,6 +21,7 @@ export default function LandingPage() {
 
 function HeroSection() {
   const navigator = useNavigate();
+  const auth = useAuthContext();
   return (
     <section
       className="text-center py-24 px-6 text-white bg-cover bg-center bg-no-repeat"
@@ -35,7 +37,9 @@ function HeroSection() {
       </p>
       <button
         className="bg-white text-blue-600 cursor-pointer font-semibold px-6 py-3 rounded hover:bg-gray-100 transition"
-        onClick={() => navigator("/auth/login")}
+        onClick={() =>
+          auth.isLoggedIn ? navigator("/dashboard") : navigator("/auth/login")
+        }
       >
         지금 시작하기
       </button>

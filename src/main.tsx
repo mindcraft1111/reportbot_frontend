@@ -20,6 +20,7 @@ import AIDataProvider from "./contexts/AiResponseContext";
 import { AuthProvider } from "./contexts/AuthContext";
 import GeneralContextProvider from "./contexts/GeneralContext";
 import DashboardPage from "./pages/dashboard-page";
+import RequireAuth from "./components/require-auth";
 
 const queryClient = new QueryClient();
 
@@ -32,10 +33,26 @@ createRoot(document.getElementById("root")!).render(
             <AIDataProvider>
               <Routes>
                 <Route element={<CommLayout />}>
-                  <Route index element={<LandingPage />} /> *
-                  <Route path="/test" element={<PromptTestPage />} />*
-                  <Route path="/dashboard" element={<DashboardPage />} />*
-                  <Route path="/report" element={<ReportPage />} />
+                  <Route index element={<LandingPage />} />
+
+                  <Route
+                    path="/test"
+                    element={
+                      <RequireAuth>
+                        <PromptTestPage />
+                      </RequireAuth>
+                    }
+                  />
+
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <RequireAuth>
+                        <DashboardPage />
+                      </RequireAuth>
+                    }
+                  />
+
                   <Route
                     path="/prompt-test/:project_id"
                     element={<PromptTestPage2 />}
