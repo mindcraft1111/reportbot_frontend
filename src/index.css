@@ -800,10 +800,10 @@ body {
 
     .page-footer {
       position: absolute;
-      bottom: 10mm;
+      top: 0mm;
       left: 0%;
       width: 100%;
-      text-align: center;
+      text-align: right;
       font-size: 10pt;
       color: #666;
     }

@@ -40,7 +40,7 @@ function ExecutionKPIPage_11({
       <p>{budget_allocation_summary}</p>
 
       <div className="page-footer">
-        <span className="page-number">- 11 -</span>
+        <span className="page-number">11</span>
       </div>
     </section>
   );

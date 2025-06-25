@@ -35,7 +35,7 @@ function ContentsPage_01({ r_1_1, isCurrentWorkingPage = false }: Props) {
       </div>
 
       <div className="page-footer">
-        <span className="page-number">- 1 -</span>
+        <span className="page-number">1</span>
       </div>
     </section>
   );

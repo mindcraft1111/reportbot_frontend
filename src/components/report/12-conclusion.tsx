@@ -116,7 +116,7 @@ function ConclusionPage_12({
       </div>
 
       <div className="page-footer">
-        <span className="page-number">- 12 -</span>
+        <span className="page-number">12</span>
       </div>
     </section>
   );

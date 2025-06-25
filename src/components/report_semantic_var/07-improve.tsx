@@ -114,7 +114,7 @@ function ImprovementPage_07({
       </div>
 
       <div className="page-footer">
-        <span className="page-number">- 7 -</span>
+        <span className="page-number">7</span>
       </div>
     </section>
   );
