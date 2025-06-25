@@ -130,7 +130,7 @@ function SolutionPage_09({
       <p className="solution-description">{r_9_6}</p>
 
       <div className="page-footer">
-        <span className="page-number">- 9 -</span>
+        <span className="page-number">9</span>
       </div>
     </section>
   );

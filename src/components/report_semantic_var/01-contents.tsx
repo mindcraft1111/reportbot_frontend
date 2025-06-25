@@ -34,7 +34,7 @@ function ContentsPage_01({
       </div>
 
       <div className="page-footer">
-        <span className="page-number">- 1 -</span>
+        <span className="page-number">1</span>
       </div>
     </section>
   );

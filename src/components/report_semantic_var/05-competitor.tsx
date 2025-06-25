@@ -117,7 +117,7 @@ function CompetitorPage_05({
       <p className="competitor-commentary">{competitor_summary}</p>
 
       <div className="page-footer">
-        <span className="page-number">- 5 -</span>
+        <span className="page-number">5</span>
       </div>
     </section>
   );

@@ -60,7 +60,7 @@ function ExecutiveSummaryPage_13({
       </p>
 
       <div className="page-footer">
-        <span className="page-number">- 13 -</span>
+        <span className="page-number">13</span>
       </div>
     </section>
   );

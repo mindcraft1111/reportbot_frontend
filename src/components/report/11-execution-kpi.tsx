@@ -40,7 +40,7 @@ function ExecutionKPIPage_11({
       <p>{r_11_3}</p>
 
       <div className="page-footer">
-        <span className="page-number">- 11 -</span>
+        <span className="page-number">11</span>
       </div>
     </section>
   );

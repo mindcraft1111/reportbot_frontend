@@ -91,7 +91,7 @@ function CompetitorPage_05({
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h1>경쟁사 제품 리뷰 감정 분석 결과</h1>
+      <h1 className="content-h1">경쟁사 제품 리뷰 감정 분석 결과</h1>
       <p>
         주요 경쟁사 브랜드({r_5_2})의 제품에 대한 고객 리뷰를 동일한 방법론으로
         분석하여 경쟁 환경을 파악했습니다. 이를 통해 경쟁사 제품의 강점과 약점을
@@ -99,24 +99,49 @@ function CompetitorPage_05({
       </p>
 
       <h2>자사와 경쟁사 감정 점수 분포 비교</h2>
-      <div style={{ marginBottom: "24px" }}>
+      <div style={{ margin: "24px 0 24px 0" }}>
         <Bar data={barData} options={barOptions} width={500} height={300} />
       </div>
 
-      <h2>경쟁사 핵심 키워드</h2>
-      <div className="competitor-box">
-        <div className="competitor-name">{r_5_2}</div>
-        <ul className="competitor-strengths">
-          <li>{r_5_3}</li>
-          <li>{r_5_4}</li>
-          <li>{r_5_5}</li>
+      <div
+        style={{
+          backgroundColor: "#fff9f6",
+          padding: "20px 20px",
+          borderRadius: "10px",
+          marginTop: "20px"
+        }}
+      >
+        <h4
+          style={{
+            fontWeight: "bold",
+            fontSize: "16px",
+            marginBottom: "12px",
+            color: "#333",
+          }}
+        >
+          🚩 {r_5_2} 핵심 키워드
+        </h4>
+        <ul
+          className="competitor-ul"
+          style={{
+            gridTemplateColumns: "1fr 1fr",
+            rowGap: "8px",
+            columnGap: "20px",
+            listStyleType: "none",
+            paddingLeft: 0,
+            marginBottom: "12px",
+          }}
+        >
+          <li>✔ {r_5_3}</li>
+          <li>✔ {r_5_4}</li>
+          <li>✔ {r_5_5}</li>
         </ul>
-      </div>
-
-      <p className="competitor-commentary">{r_5_6}</p>
-
+  <p style={{ fontSize: "17px", color: "#555", padding: "10px 0 0 0" }}>
+    {r_5_6}
+  </p>
+</div>
       <div className="page-footer">
-        <span className="page-number">- 5 -</span>
+        <span className="page-number">5</span>
       </div>
     </section>
   );

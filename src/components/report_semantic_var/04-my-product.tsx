@@ -169,7 +169,7 @@ function SelfProductPage_04({
       <p>{overall_summary}</p>
 
       <div className="page-footer">
-        <span className="page-number">- 4 -</span>
+        <span className="page-number">4</span>
       </div>
     </section>
   );

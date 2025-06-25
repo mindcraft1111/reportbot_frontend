@@ -116,7 +116,7 @@ function ExecutionPlanPage_10({
       </table>
 
       <div className="page-footer">
-        <span className="page-number">- 10 -</span>
+        <span className="page-number">10</span>
       </div>
     </section>
   );

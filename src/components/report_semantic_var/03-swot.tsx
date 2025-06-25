@@ -102,7 +102,7 @@ function SwotPage_03({
       </div>
 
       <div className="page-footer">
-        <span className="page-number">- 3 -</span>
+        <span className="page-number">3</span>
       </div>
     </section>
   );

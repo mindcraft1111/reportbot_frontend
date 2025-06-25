@@ -46,7 +46,7 @@ function ExpectationGapPage_08({
       <p>{expectation_gap_summary}</p>
 
       <div className="page-footer">
-        <span className="page-number">- 8 -</span>
+        <span className="page-number">8</span>
       </div>
     </section>
   );

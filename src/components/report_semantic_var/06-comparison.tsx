@@ -164,7 +164,7 @@ function ComparisonPage_06({
       <p className="gap-summary">{comparison_summary}</p>
 
       <div className="page-footer">
-        <span className="page-number">- 6 -</span>
+        <span className="page-number">6</span>
       </div>
     </section>
   );

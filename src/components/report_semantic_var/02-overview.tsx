@@ -84,7 +84,7 @@ function OverviewPage_02({
       </div>
 
       <div className="page-footer">
-        <span className="page-number">- 2 -</span>
+        <span className="page-number">2</span>
       </div>
     </section>
   );

@@ -15,11 +15,11 @@ function OverviewPage_02({
     <section className="relative page-container">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h1>개요</h1>
-      <p>{r_2_1}</p>
+      <h1 className="content-h1">개요</h1>
+      <p className="break-all">{r_2_1}</p>
 
-      <h1>분석 대상 및 방법론</h1>
-      <p>{r_2_2}</p>
+      <h1 className="content-h1">분석 대상 및 방법론</h1>
+      <p className="break-all">{r_2_2}</p>
 
       <div
         className="circle-diagram"
@@ -57,24 +57,24 @@ function OverviewPage_02({
           </div>
         </div>
 
-        <div className="circle-item item-1">
-          <h3>분석 목적</h3>
+        <div className="circle-item item-1 text-left">
+          <h3><b>분석 목적</b></h3>
           <p>고객 만족도 요인 파악 및 제품 개선점 도출</p>
         </div>
-        <div className="circle-item item-2">
-          <h3>데이터 범위</h3>
+        <div className="circle-item item-2 text-right">
+          <h3><b>데이터 범위</b></h3>
           <p>10,000+ 고객 리뷰</p>
         </div>
-        <div className="circle-item item-3">
-          <h3>분석 대상</h3>
+        <div className="circle-item item-3 text-right">
+          <h3><b>분석 대상</b></h3>
           <p>
             자사 제품 및
             <br />
             경쟁사 1개 브랜드
           </p>
         </div>
-        <div className="circle-item item-4">
-          <h3>활용 방안</h3>
+        <div className="circle-item item-4 text-left">
+          <h3><b>활용 방안</b></h3>
           <p>
             전략적 제품 개선 및
             <br />
@@ -84,7 +84,7 @@ function OverviewPage_02({
       </div>
 
       <div className="page-footer">
-        <span className="page-number">- 2 -</span>
+        <span className="page-number">2</span>
       </div>
     </section>
   );

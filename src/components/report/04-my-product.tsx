@@ -80,17 +80,17 @@ function SelfProductPage_04({
   };
 
   return (
-    <section className="relative page-container">
+    <section className="relative page-container ">
       {isCurrentWorkingPage && <SpinnerOverlay />}
 
-      <h1>자사 제품 리뷰 감정 분석 결과</h1>
+      <h1 className="content-h1">자사 제품 리뷰 감정 분석 결과</h1>
       <p>
         자사 제품에 대한 고객 리뷰를 심층 분석한 결과, 전반적인 감정 지수와 주요
         피드백 패턴을 확인할 수 있었습니다. 본 섹션에서는 분석 방법론과 주요
         발견 사항을 상세히 설명합니다.
       </p>
 
-      <h2>분석 방법론</h2>
+      <h2><b>분석 방법론</b></h2>
       <p>
         감정 점수는 3점을 제외하고 1-5점 척도로 산출되었으며, 1-2점은 부정적
         감정, 4-5점은 긍정적 감정으로 분류했습니다. 추가적으로 텍스트 마이닝을
@@ -101,7 +101,7 @@ function SelfProductPage_04({
         <Pie data={chartData} options={chartOptions} width={500} height={300} />
       </div>
 
-      <h2 style={{ fontSize: "12pt" }}>주요 긍정적 피드백</h2>
+      <h2 style={{ fontSize: "12pt", background: "#fdf3ef" }}>주요 긍정적 피드백</h2>
       <div className="compact-feedback-grid">
         <div className="cf-item">
           <span className="cf-icon">{r_4_2}</span>
@@ -129,7 +129,7 @@ function SelfProductPage_04({
         </div>
       </div>
 
-      <h2 style={{ fontSize: "12pt", marginTop: "16pt" }}>
+      <h2 style={{ fontSize: "12pt", marginTop: "16pt", background: "#fdf3ef" }}>
         주요 부정적 피드백
       </h2>
       <div className="compact-feedback-grid">
@@ -162,7 +162,7 @@ function SelfProductPage_04({
       <p>{r_4_20}</p>
 
       <div className="page-footer">
-        <span className="page-number">- 4 -</span>
+        <span className="page-number">4</span>
       </div>
     </section>
   );
