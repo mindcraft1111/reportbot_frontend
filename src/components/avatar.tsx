@@ -34,6 +34,7 @@ export default function HeaderAvatar() {
           onClick={() => {
             if (auth.user) auth.logout();
           }}
+          className="cursor-pointer"
         >
           Logout
         </DropdownMenuItem>
@@ -44,6 +45,7 @@ export default function HeaderAvatar() {
               e.stopPropagation();
               setCanSetWorkingPage((prev) => !prev);
             }}
+            className="cursor-pointer"
           />
           AI 작업중 화면 표시
         </DropdownMenuItem>

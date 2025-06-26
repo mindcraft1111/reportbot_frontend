@@ -12,9 +12,7 @@ import { Toaster } from "sonner";
 import LandingPage from "./pages/landing-page";
 import LoginPage from "./pages/login-page";
 import Register from "./pages/register-page";
-import PromptTestPage from "./pages/test-page";
 import PromptTestPage2 from "./pages/prompt-test-page";
-import ReportPage from "./pages/report-page";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import AIDataProvider from "./contexts/AiResponseContext";
 import { AuthProvider } from "./contexts/AuthContext";
@@ -36,15 +34,6 @@ createRoot(document.getElementById("root")!).render(
                   <Route index element={<LandingPage />} />
 
                   <Route
-                    path="/test"
-                    element={
-                      <RequireAuth>
-                        <PromptTestPage />
-                      </RequireAuth>
-                    }
-                  />
-
-                  <Route
                     path="/dashboard"
                     element={
                       <RequireAuth>
@@ -55,7 +44,11 @@ createRoot(document.getElementById("root")!).render(
 
                   <Route
                     path="/prompt-test/:project_id"
-                    element={<PromptTestPage2 />}
+                    element={
+                      <RequireAuth>
+                        <PromptTestPage2 />
+                      </RequireAuth>
+                    }
                   />
                 </Route>
                 <Route path="/auth/login" element={<LoginPage />} />

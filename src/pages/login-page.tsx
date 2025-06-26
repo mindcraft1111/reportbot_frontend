@@ -28,7 +28,7 @@ const loginSchema = z.object({
 export type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
-  const { login } = useAuthContext();
+  const { login, isLoggingin } = useAuthContext();
   const navigator = useNavigate();
   const form = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
@@ -118,6 +118,7 @@ export default function LoginPage() {
                     gradientBlueButton,
                     "mt-6 cursor-pointer py-5"
                   )}
+                  disabled={isLoggingin}
                 >
                   로그인
                 </Button>

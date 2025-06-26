@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { z } from "zod";
 import { useAIData } from "../contexts/AiResponseContext";
 import { DataGoal } from "./data-goal";
-import axiosInstance from "@/axios";
+import axiosInstance, { baseURL } from "@/axios";
 import { useAuthContext } from "@/contexts/AuthContext";
 import { PromptList } from "./prompt-list";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -178,7 +178,7 @@ const StreamingPromptContainer = ({
     try {
       handleSetCurrentlyWorkingPage(currentFocusPage);
 
-      const response = await fetch(`http://localhost:8000/prompt/test/`, {
+      const response = await fetch(`${baseURL}/prompt/test/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -275,7 +275,7 @@ const StreamingPromptContainer = ({
     // console.log(`😀 handleSavePrompt_payload: ${payload}`);
     setIsPromptSubmitting(true);
     try {
-      await axiosInstance.post("http://localhost:8000/api/prompts-tests/", {
+      await axiosInstance.post("/api/prompts-tests/", {
         ...payload,
       });
       toast.success("프롬프트 저장 완료");

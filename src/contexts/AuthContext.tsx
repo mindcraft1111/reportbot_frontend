@@ -5,7 +5,6 @@ import React, {
   type ReactNode,
   useContext,
 } from "react";
-import { toast } from "sonner";
 import * as apiClient from "../api/client";
 import { type AuthResponse } from "../api/client";
 import { type UserAndToken } from "../api/client";
@@ -19,6 +18,7 @@ interface AuthContextType {
     password: string;
   }) => Promise<AuthResponse | undefined>;
   logout: () => void;
+  isLoggingin: boolean;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(
@@ -32,7 +32,10 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<UserAndToken | null>(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggingin, setIsLoggingin] = useState(false);
   const navigator = useNavigate();
+
+  console.log(isLoggingin);
 
   useEffect(() => {
     const stored = localStorage.getItem("userAndToken");
@@ -49,6 +52,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     password: string;
   }): Promise<AuthResponse | undefined> => {
     try {
+      setIsLoggingin(true);
       const response = await apiClient.login(values);
       console.log(response);
 
@@ -64,6 +68,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       }
     } catch (error) {
       console.error("Login failed", error);
+    } finally {
+      setIsLoggingin(false);
     }
   };
 
@@ -93,7 +99,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, isLoggedIn, login, logout, isLoggingin }}
+    >
       {children}
     </AuthContext.Provider>
   );

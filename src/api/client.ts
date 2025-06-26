@@ -32,7 +32,7 @@ export type AuthResponse = {
 };
 
 export const register = async (args: RegisterSchema): Promise<AuthResponse> => {
-  const res = await fetch("http://localhost:8000/api/register/", {
+  const res = await fetch("/api/register/", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -53,51 +53,50 @@ export const register = async (args: RegisterSchema): Promise<AuthResponse> => {
 };
 
 export const login = async (args: LoginSchema): Promise<AuthResponse> => {
-  const res = await fetch("http://localhost:8000/api/login/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(args),
-  });
+  try {
+    const res = await axiosInstance.post("/api/login/", args);
 
-  const result = await res.json();
-
-  console.log(result);
-
-  return {
-    success: res.ok,
-    status: res.status,
-    data: res.ok ? result : null,
-    error: res.ok ? null : result,
-  };
+    return {
+      success: true,
+      status: res.status,
+      data: res.data,
+      error: null,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      status: error.response?.status || 500,
+      data: null,
+      error: error.response?.data || error.message,
+    };
+  }
 };
 
 export const chat_with_gemini = async (args: Gemini_Prompt) => {
-  const res = await fetch("http://localhost:8000/api/ai/", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(args),
-  });
+  try {
+    const res = await axiosInstance.post("/api/ai/", args);
 
-  const result = await res.json();
-  console.log(result);
-
-  return {
-    success: res.ok,
-    status: res.status,
-    data: res.ok ? result : null,
-    error: res.ok ? null : result,
-  };
+    return {
+      success: true,
+      status: res.status,
+      data: res.data,
+      error: null,
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      status: error.response?.status || 500,
+      data: null,
+      error: error.response?.data || error.message,
+    };
+  }
 };
 
 export const logout = async (
   refreshToken: string
 ): Promise<{ success: boolean; message: string }> => {
   try {
-    const res = await axiosInstance.post("http://localhost:8000/api/logout/", {
+    const res = await axiosInstance.post("/api/logout/", {
       refresh: refreshToken,
     });
 
@@ -123,9 +122,7 @@ export const getPromptsByCode = async ({
   if (promptCode == "no_part") return;
   try {
     // console.log(promptCode);
-    const res = await axiosInstance.get(
-      `http://localhost:8000/api/prompts-tests/${promptCode}`
-    );
+    const res = await axiosInstance.get(`/api/prompts-tests/${promptCode}`);
 
     const groupedPrompts = groupByReviewer(res.data.data);
     return groupedPrompts;
@@ -145,7 +142,7 @@ export const getPromptsByCode = async ({
 
 export const getProjectList = async () => {
   try {
-    const res = await axiosInstance.get("http://localhost:8000/api/projects/");
+    const res = await axiosInstance.get("/api/projects/");
 
     return res.data.data;
   } catch (error) {
@@ -168,12 +165,9 @@ export type ReportSectionPayload = {
 export const saveReport = async (payload: ReportSectionPayload) => {
   try {
     console.log(payload);
-    const res = await axiosInstance.post(
-      "http://localhost:8000/api/report-sections-result/",
-      {
-        ...payload,
-      }
-    );
+    const res = await axiosInstance.post("/api/report-sections-result/", {
+      ...payload,
+    });
     return res.data.data;
   } catch (error) {
     console.log(error);

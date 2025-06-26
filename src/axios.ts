@@ -1,7 +1,11 @@
 import axios from "axios";
 import { toast } from "sonner";
 
-const baseURL = "http://localhost:8000"; // Adjust to your backend address
+const mode = import.meta.env.MODE;
+export const baseURL =
+  mode == "development"
+    ? import.meta.env.VITE_BASE_URL_DEV
+    : import.meta.env.VITE_BASE_URL_PROD;
 
 const axiosInstance = axios.create({
   baseURL,
@@ -66,7 +70,7 @@ axiosInstance.interceptors.response.use(
         });
 
         const newAccessToken = data.access;
-        const newRefreshToken = data.refresh
+        const newRefreshToken = data.refresh;
 
         const newUserAndToken = {
           tokens: {
@@ -107,7 +111,6 @@ axiosInstance.interceptors.request.use((config) => {
   const userAndTokenRaw = localStorage.getItem("userAndToken");
 
   if (!userAndTokenRaw) {
-    toast.error("Access Token이 없습니다.");
     return config;
   }
 

@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from "react";
 import A4Layout from "@/components/layouts/A4-layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-
+import { baseURL } from "@/axios";
 import PageSeparator from "@/components/page-separator";
 import CoverPage_00 from "@/components/report/00-report-cover";
 import ContentsPage_01 from "@/components/report/01-contents";
@@ -82,7 +82,7 @@ export default function ReportPage() {
     setInput("");
 
     try {
-      const res = await fetch("http://localhost:8000/api/chatbot/chat/", {
+      const res = await fetch(`${baseURL}/api/chatbot/chat/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

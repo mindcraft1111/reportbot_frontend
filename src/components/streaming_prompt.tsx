@@ -15,6 +15,7 @@ import { toast } from "sonner";
 import useAnimatedText from "@/hooks/useTextAnimation";
 import { Spinner } from "./spinner";
 import MarkdownRenderer from "./MarkdownRenderer";
+import { baseURL } from "@/axios";
 
 const formSchema = z.object({
   user_prompt: z.string().min(5, "Prompt must be at least 5 characters."),
@@ -78,7 +79,7 @@ export default function StreamingPrompt({
     abortControllerRef.current = controller;
 
     try {
-      const response = await fetch("http://localhost:8000/api/ai/streaming/", {
+      const response = await fetch(`${baseURL}/api/ai/streaming/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
