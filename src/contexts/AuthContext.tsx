@@ -63,7 +63,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         return response;
       }
     } catch (error) {
-      toast.error("로그인 실패");
       console.error("Login failed", error);
     }
   };
