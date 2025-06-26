@@ -17,6 +17,7 @@ import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 import { buttonBase, gradientBlueButton } from "@/styles/classnames";
 import { useAuthContext } from "@/contexts/AuthContext";
+import type { AuthResponse } from "@/api/client";
 
 const loginSchema = z.object({
   email: z.string().email("올바른 이메일 형식이 아닙니다."),
@@ -39,8 +40,8 @@ export default function LoginPage() {
   });
 
   async function onSubmit(values: LoginSchema) {
-    const result = await login(values);
-    if (!result) return toast.error("로그인 에러");
+    const result = (await login(values)) as AuthResponse;
+    if (result.status == 500) return toast.error("네트워크 에러");
     if (!result.success && result.error) {
       toast.error("입력하신 정보가 일치하지 않습니다.");
       return;
